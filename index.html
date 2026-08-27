@@ -1,0 +1,1741 @@
+<!DOCTYPE html>
+
+<html lang="it">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<meta content="Immobili in vendita di Living Gruppo Immobiliare e ricerca personalizzata nelle province di Pescara e Chieti." name="description"/>
+<title>Living Gruppo Immobiliare — Case in vendita</title>
+<style>
+    :root {
+      --paper: #f2efe8;
+      --panel: #fffdf8;
+      --ink: #181815;
+      --muted: #706d66;
+      --line: #d5d0c6;
+      --accent: #dc603d;
+      --accent-dark: #be4728;
+      --pe: #fbfaf6;
+      --ch: #e9e7e1;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      min-width: 320px;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      text-rendering: optimizeLegibility;
+      display: flex;
+      flex-direction: column;
+    }
+
+    button, input { font: inherit; }
+
+    button { -webkit-tap-highlight-color: transparent; }
+
+    .topbar {
+      min-height: 72px;
+      padding: 12px clamp(18px, 4vw, 60px);
+      border-bottom: 1px solid rgba(24, 24, 21, .16);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      background: rgba(242, 239, 232, .95);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: var(--ink);
+      color: white;
+      font-size: 20px;
+    }
+
+    .brand strong, .brand small { display: block; }
+
+    .brand strong {
+      font-size: .88rem;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+    }
+
+    .brand small {
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: .73rem;
+    }
+
+    .top-note {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: .76rem;
+      font-weight: 650;
+    }
+
+    .top-note::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 4px rgba(220, 96, 61, .14);
+    }
+
+    .page {
+      width: min(1540px, 100%);
+      min-height: calc(100vh - 72px);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(350px, 430px);
+    }
+
+    .map-column {
+      min-width: 0;
+      padding: clamp(32px, 4vw, 62px) clamp(18px, 4vw, 62px) 44px;
+      border-right: 1px solid rgba(24, 24, 21, .16);
+    }
+
+    .intro {
+      max-width: 930px;
+      margin: 0 auto 26px;
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 25px;
+    }
+
+    .eyebrow {
+      margin: 0 0 10px;
+      color: var(--accent);
+      font-size: .69rem;
+      font-weight: 800;
+      letter-spacing: .2em;
+    }
+
+    h1, h2, p { margin-top: 0; }
+
+    h1 {
+      max-width: 740px;
+      margin-bottom: 12px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.55rem, 4.4vw, 4.9rem);
+      font-weight: 500;
+      line-height: .98;
+      letter-spacing: -.045em;
+    }
+
+    .intro-copy {
+      max-width: 680px;
+      margin-bottom: 0;
+      color: #65625c;
+      line-height: 1.6;
+    }
+
+    .total-box {
+      min-width: 112px;
+      padding: 13px 15px;
+      border-top: 1px solid var(--ink);
+      border-bottom: 1px solid var(--ink);
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+    }
+
+    .total-box strong {
+      font: 500 2rem Georgia, serif;
+    }
+
+    .total-box span {
+      color: var(--muted);
+      font-size: .68rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .map-card {
+      max-width: 930px;
+      margin: 0 auto;
+      overflow: hidden;
+      border: 1px solid rgba(24, 24, 21, .28);
+      border-radius: 5px;
+      background: #e8e4dc;
+    }
+
+    .map-meta, .map-footer {
+      min-height: 48px;
+      padding: 9px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      background: rgba(255, 253, 248, .84);
+      color: #625f59;
+      font-size: .75rem;
+      font-weight: 650;
+    }
+
+    .map-meta { border-bottom: 1px solid rgba(24, 24, 21, .17); }
+    .map-footer { border-top: 1px solid rgba(24, 24, 21, .17); }
+
+    .legend { display: flex; flex-wrap: wrap; gap: 13px; }
+    .legend span { display: inline-flex; align-items: center; gap: 6px; }
+
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border: 1px solid var(--ink);
+      border-radius: 2px;
+    }
+
+    .legend-dot.pe { background: var(--pe); }
+    .legend-dot.ch { background: var(--ch); }
+
+    .map-wrap {
+      position: relative;
+      width: 100%;
+      background:
+        radial-gradient(circle, rgba(24, 24, 21, .11) 1px, transparent 1.2px) 0 0 / 19px 19px,
+        #e8e4dc;
+    }
+
+    #province-map {
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 1.06 / 1;
+      min-height: 390px;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .map-area {
+      cursor: pointer;
+      pointer-events: all;
+      vector-effect: non-scaling-stroke;
+      transition: fill .15s ease, opacity .15s ease;
+      outline: none;
+    }
+
+    .map-area:hover { fill: #d7d3cb !important; }
+    .map-area.selected:hover { fill: var(--accent-dark) !important; }
+    .map-area.muted-area { opacity: .16; }
+    .map-area.selected { opacity: 1; }
+
+    .map-area:focus-visible {
+      stroke: var(--accent-dark) !important;
+      stroke-width: 3 !important;
+    }
+
+    .property-map-count {
+      fill: white;
+      stroke: rgba(24, 24, 21, .4);
+      stroke-width: 2.4px;
+      paint-order: stroke fill;
+      font-size: 18px;
+      font-weight: 900;
+      text-anchor: middle;
+      dominant-baseline: central;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .tooltip {
+      position: absolute;
+      z-index: 5;
+      display: none;
+      max-width: 190px;
+      padding: 8px 10px;
+      border-radius: 3px;
+      background: var(--ink);
+      color: white;
+      font-size: .72rem;
+      font-weight: 700;
+      line-height: 1.3;
+      pointer-events: none;
+      transform: translate(-50%, calc(-100% - 12px));
+    }
+
+    .tooltip.show { display: block; }
+    .tooltip small { display: block; margin-top: 3px; color: #bbb7ae; font-weight: 500; }
+
+    .reset-map {
+      border: 0;
+      padding: 7px 9px;
+      background: transparent;
+      color: var(--ink);
+      cursor: pointer;
+      font-size: .73rem;
+      font-weight: 700;
+    }
+
+    .panel {
+      min-width: 0;
+      padding: clamp(32px, 4vw, 62px) clamp(20px, 3vw, 40px) 40px;
+      background: var(--panel);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .panel-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+    }
+
+    h2 {
+      margin-bottom: 0;
+      font: 500 clamp(2rem, 2.7vw, 2.7rem)/1 Georgia, serif;
+      letter-spacing: -.035em;
+    }
+
+    .counter {
+      min-width: 60px;
+      height: 34px;
+      padding: 0 11px;
+      border: 1px solid #c9c4ba;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      color: #5c5953;
+      font-size: .7rem;
+      font-weight: 750;
+    }
+
+    .filters {
+      margin-top: 25px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 7px;
+    }
+
+    .filters { display: none; }
+
+    .search-picker {
+      position: relative;
+      margin-top: 25px;
+      z-index: 20;
+    }
+
+    .filter-btn {
+      min-height: 38px;
+      padding: 7px 8px;
+      border: 1px solid #cec9c0;
+      border-radius: 3px;
+      background: transparent;
+      color: #625f59;
+      cursor: pointer;
+      font-size: .7rem;
+      font-weight: 700;
+    }
+
+    .filter-btn.active {
+      border-color: var(--ink);
+      background: var(--ink);
+      color: white;
+    }
+
+    .search {
+      position: relative;
+      display: block;
+      margin-top: 0;
+    }
+
+    .search::before {
+      content: "⌕";
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-53%);
+      color: #77736c;
+      font-size: 1.25rem;
+      pointer-events: none;
+    }
+
+    #search-input {
+      width: 100%;
+      height: 47px;
+      padding: 0 13px 0 42px;
+      border: 1px solid #cbc6bd;
+      border-radius: 3px;
+      outline: 0;
+      background: #f5f2ec;
+      color: var(--ink);
+      font-size: .84rem;
+    }
+
+    #search-input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(220, 96, 61, .13);
+    }
+
+    .municipality-list {
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 0;
+      right: 0;
+      display: none;
+      height: auto;
+      max-height: 320px;
+      margin-top: 0;
+      border: 1px solid #cbc6bd;
+      border-radius: 3px;
+      background: var(--panel);
+      box-shadow: 0 16px 34px rgba(24, 24, 21, .16);
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: #aaa49b transparent;
+    }
+
+    .municipality-list.open { display: block; }
+
+    .municipality-row {
+      min-height: 45px;
+      width: 100%;
+      padding: 0 12px;
+      border: 0;
+      border-bottom: 1px solid #ebe7df;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 10px;
+      background: transparent;
+      text-align: left;
+      cursor: pointer;
+      color: #4e4b46;
+      font-size: .8rem;
+    }
+
+    .municipality-row:hover { background: #f5f2ec; color: var(--ink); }
+    .municipality-row.selected { color: var(--ink); font-weight: 700; }
+
+    .province-tag {
+      padding: 3px 6px;
+      border-radius: 2px;
+      background: #e7e3dc;
+      color: #77736c;
+      font-size: .56rem;
+      font-weight: 800;
+      letter-spacing: .08em;
+    }
+
+    .empty {
+      padding: 28px 6px;
+      color: var(--muted);
+      font-size: .82rem;
+    }
+
+    .selection-summary {
+      min-height: 73px;
+      padding: 14px 0 11px;
+      color: var(--muted);
+      font-size: .75rem;
+      line-height: 1.45;
+    }
+
+    .selection-summary strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--ink);
+      font-size: .65rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    #selected-names {
+      max-height: 43px;
+      overflow: auto;
+    }
+
+    .confirm {
+      width: 100%;
+      min-height: 53px;
+      border: 0;
+      border-radius: 3px;
+      background: var(--ink);
+      color: white;
+      cursor: pointer;
+      font-size: .82rem;
+      font-weight: 750;
+    }
+
+    .confirm:hover { background: var(--accent); }
+    .confirm:disabled { background: #d7d2c9; color: #8d8981; cursor: default; }
+
+    .success {
+      display: none;
+      margin-top: 11px;
+      padding: 12px;
+      border: 1px solid rgba(220, 96, 61, .38);
+      border-radius: 3px;
+      background: rgba(220, 96, 61, .08);
+      color: #49362f;
+      font-size: .75rem;
+      line-height: 1.4;
+    }
+
+    .success.show { display: block; }
+
+    .catalog {
+      width: min(1540px, 100%);
+      margin: 0 auto;
+      padding: clamp(42px, 6vw, 84px) clamp(18px, 4vw, 62px) 70px;
+      order: 2;
+    }
+
+    .page { order: 1; }
+    .topbar { order: 0; }
+    .site-footer { order: 3; }
+
+    .catalog-hero {
+      max-width: 1040px;
+      margin-bottom: 34px;
+    }
+
+    .catalog-hero h1 { max-width: 900px; }
+
+    .catalog-hero .intro-copy { font-size: 1rem; }
+
+    .catalog-tools {
+      padding: 18px;
+      border: 1px solid rgba(24, 24, 21, .2);
+      border-radius: 5px;
+      background: var(--panel);
+      display: grid;
+      grid-template-columns: minmax(220px, 1.7fr) repeat(3, minmax(130px, .8fr));
+      gap: 10px;
+    }
+
+    .catalog-tools { display: none; }
+
+    .catalog-tools input, .catalog-tools select {
+      width: 100%;
+      min-height: 47px;
+      padding: 0 13px;
+      border: 1px solid #cbc6bd;
+      border-radius: 3px;
+      outline: 0;
+      background: #f7f4ee;
+      color: var(--ink);
+    }
+
+    .catalog-tools input:focus, .catalog-tools select:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(220, 96, 61, .13);
+    }
+
+    .results-line {
+      margin: 20px 0 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      color: var(--muted);
+      font-size: .78rem;
+    }
+
+    .results-line strong { color: var(--ink); }
+
+    .property-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .property-card {
+      min-width: 0;
+      overflow: hidden;
+      border: 1px solid rgba(24, 24, 21, .22);
+      border-radius: 5px;
+      background: var(--panel);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .property-image {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      display: block;
+      background: #ddd8cf;
+    }
+
+    .property-body {
+      padding: 18px;
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+    }
+
+    .property-city {
+      margin: 0 0 8px;
+      color: var(--accent-dark);
+      font-size: .66rem;
+      font-weight: 800;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+
+    .property-title {
+      margin: 0 0 8px;
+      font: 500 1.45rem/1.08 Georgia, serif;
+      letter-spacing: -.025em;
+    }
+
+    .property-address {
+      min-height: 38px;
+      margin: 0 0 15px;
+      color: var(--muted);
+      font-size: .75rem;
+      line-height: 1.45;
+    }
+
+    .property-facts {
+      margin-top: auto;
+      padding: 13px 0;
+      border-top: 1px solid #e1ddd4;
+      border-bottom: 1px solid #e1ddd4;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px 16px;
+      font-size: .76rem;
+      font-weight: 700;
+    }
+
+    .property-price {
+      margin: 15px 0;
+      font: 600 1.35rem Georgia, serif;
+    }
+
+    .property-actions { display: grid; grid-template-columns: 1fr auto; gap: 8px; }
+
+    .property-link, .whatsapp-link, .catalog-cta {
+      min-height: 43px;
+      padding: 0 14px;
+      border-radius: 3px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      font-size: .75rem;
+      font-weight: 800;
+    }
+
+    .property-link { background: var(--ink); color: white; }
+    .property-link:hover { background: var(--accent); }
+    .whatsapp-link { border: 1px solid #cbc6bd; color: var(--ink); }
+
+    .catalog-empty {
+      grid-column: 1 / -1;
+      padding: 42px 20px;
+      border: 1px dashed #bdb7ac;
+      text-align: center;
+      color: var(--muted);
+    }
+
+    .search-next {
+      width: min(1540px, 100%);
+      margin: 0 auto;
+      padding: 34px clamp(18px, 4vw, 62px);
+      border-top: 1px solid rgba(24, 24, 21, .16);
+      border-bottom: 1px solid rgba(24, 24, 21, .16);
+      background: var(--ink);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .search-next { display: none; }
+
+    .zone-contact {
+      margin-top: 24px;
+      padding: 22px;
+      border-radius: 5px;
+      background: var(--ink);
+      color: white;
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .zone-contact.show { display: flex; }
+    .zone-contact h3 { margin: 0 0 6px; font: 500 1.45rem Georgia, serif; }
+    .zone-contact p { margin: 0; color: #c8c4bb; font-size: .82rem; }
+    .zone-contact a {
+      min-height: 45px;
+      padding: 0 18px;
+      border-radius: 3px;
+      background: var(--accent);
+      color: white;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      font-size: .78rem;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .search-next h2 { margin-bottom: 8px; }
+    .search-next p { margin: 0; color: #c8c4bb; }
+    .catalog-cta { min-width: 215px; background: var(--accent); color: white; }
+    .catalog-cta:hover { background: #ef7350; }
+
+    .site-footer {
+      padding: 26px 18px;
+      border-top: 1px solid rgba(24, 24, 21, .16);
+      text-align: center;
+      color: var(--muted);
+      font-size: .74rem;
+    }
+
+    .site-footer a { color: var(--ink); }
+
+    @media (max-width: 980px) {
+      .catalog-tools { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .property-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .page { grid-template-columns: 1fr; }
+      .map-column { border-right: 0; border-bottom: 1px solid rgba(24, 24, 21, .16); }
+      .panel { padding-bottom: 55px; }
+      .municipality-list { height: 390px; }
+      .search-picker .municipality-list { height: auto; max-height: 300px; }
+    }
+
+    @media (max-width: 620px) {
+      .topbar { min-height: 64px; padding: 10px 16px; }
+      .brand-icon { width: 38px; height: 38px; }
+      .top-note { width: 9px; overflow: hidden; white-space: nowrap; }
+      .map-column, .panel { padding: 30px 15px; }
+      h1 { font-size: 2.65rem; }
+      .total-box { display: none; }
+      .map-meta { align-items: flex-start; flex-direction: column; }
+      #province-map { min-height: 315px; aspect-ratio: 1 / 1.04; }
+      .map-footer { padding: 9px 12px; font-size: .69rem; }
+      .filters { grid-template-columns: 1fr; }
+      .filter-btn { min-height: 41px; }
+      .municipality-list { height: 380px; }
+      .search-picker .municipality-list { height: auto; max-height: 280px; }
+      .tooltip { display: none !important; }
+      .catalog { padding: 36px 15px 50px; }
+      .catalog-tools, .property-grid { grid-template-columns: 1fr; }
+      .catalog-tools { padding: 12px; }
+      .search-next { align-items: stretch; flex-direction: column; padding: 28px 15px; }
+      .catalog-cta { width: 100%; }
+      .zone-contact { align-items: stretch; flex-direction: column; }
+      .zone-contact a { width: 100%; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition-duration: .01ms !important; scroll-behavior: auto !important; }
+    }
+  
+/* === V6: modifiche minime, logica originale intatta === */
+.topbar {
+  background:#0b0b0b !important;
+  border-bottom-color:#242424 !important;
+}
+.living-logo {
+  display:block;
+  width:min(310px, 55vw);
+  max-height:54px;
+  object-fit:contain;
+  object-position:left center;
+}
+.top-note { color:#eee !important; }
+
+/* Ordine visuale obbligatorio */
+.page { order:1 !important; }
+.catalog { order:2 !important; }
+.custom-search { order:3 !important; }
+.site-footer { order:4 !important; }
+
+/* Modulo SOLO alla fine e compatto */
+.custom-search {
+  width:min(1540px,100%);
+  margin:0 auto;
+  padding:40px clamp(18px,4vw,62px) 56px;
+  background:#f2efe8;
+  border-top:1px solid #d5d0c6;
+}
+.custom-copy { max-width:760px; margin-bottom:18px; }
+.custom-copy h2 {
+  margin:5px 0 9px;
+  font:500 clamp(2rem,3vw,3.15rem)/1.05 Georgia,serif;
+}
+.custom-copy p:last-child {
+  margin:0;
+  color:#706d66;
+  font-size:.92rem;
+  line-height:1.5;
+}
+.custom-details {
+  border:1px solid #cfc9be;
+  background:#fffdf8;
+}
+.custom-details > summary {
+  list-style:none;
+  min-height:52px;
+  padding:10px 16px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#181815;
+  color:#fff;
+  cursor:pointer;
+  font-size:.9rem;
+  font-weight:800;
+}
+.custom-details > summary::-webkit-details-marker { display:none; }
+
+.custom-form { padding:16px; }
+.form-block {
+  padding:14px 0;
+  border-bottom:1px solid #e2ddd5;
+}
+.form-block:first-child { padding-top:2px; }
+.form-block:last-of-type { border-bottom:0; }
+.form-block h3 {
+  margin:0 0 11px;
+  font-size:.78rem;
+  letter-spacing:.07em;
+  text-transform:uppercase;
+}
+.form-grid {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px 12px;
+}
+.form-grid label {
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+  min-width:0;
+}
+.form-grid label span {
+  color:#35322e;
+  font-size:.74rem;
+  font-weight:700;
+}
+.form-grid .full { grid-column:1/-1; }
+
+.form-grid input,
+.form-grid select,
+.form-grid textarea {
+  width:100%;
+  min-height:39px;
+  height:39px;
+  padding:6px 9px;
+  border:1px solid #c9c3b8;
+  border-radius:3px;
+  background:#fff;
+  color:#181815 !important;
+  font:inherit;
+  font-size:.84rem;
+}
+.form-grid textarea {
+  height:68px;
+  min-height:68px;
+  resize:vertical;
+}
+.form-grid input::placeholder,
+.form-grid textarea::placeholder { color:#8a857d; opacity:1; }
+
+.option-row {
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+  margin-top:11px;
+}
+.option-row label {
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  min-height:31px;
+  padding:5px 8px;
+  border:1px solid #d5d0c6;
+  background:#f7f4ee;
+  font-size:.74rem;
+}
+.option-row input,
+.privacy input {
+  width:14px;
+  height:14px;
+  margin:0;
+}
+.privacy {
+  display:flex;
+  align-items:flex-start;
+  gap:7px;
+  margin-top:11px;
+  color:#615d56;
+  font-size:.72rem;
+  line-height:1.35;
+}
+.send-custom {
+  width:100%;
+  min-height:47px;
+  margin-top:14px;
+  border:0;
+  border-radius:3px;
+  background:#dc603d;
+  color:#fff;
+  font-weight:850;
+  cursor:pointer;
+}
+
+@media(max-width:620px) {
+  .topbar { justify-content:center; }
+  .top-note { display:none !important; }
+  .living-logo { width:min(270px,78vw); max-height:48px; }
+  .custom-search { padding:28px 14px 40px; }
+  .custom-form { padding:13px; }
+  .form-grid { grid-template-columns:1fr 1fr; gap:9px; }
+  .form-grid input,.form-grid select { height:38px; min-height:38px; font-size:.8rem; }
+}
+@media(max-width:420px) {
+  .form-grid { grid-template-columns:1fr; }
+  .form-grid .full { grid-column:auto; }
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+<div class="brand"><img alt="Living Gruppo Immobiliare" class="living-logo" src="data:image/png;base64,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"/></div>
+<div class="top-note">Nessun login richiesto</div>
+</header><main class="page" id="zone-search">
+<section aria-labelledby="page-title" class="map-column">
+<div class="intro">
+<div>
+<p class="eyebrow">CERCA SULLA MAPPA</p>
+<h1 id="page-title">Dove vuoi cercare casa?</h1>
+<p class="intro-copy">Clicca uno o più comuni: le zone si colorano e sotto la mappa appariranno soltanto gli immobili disponibili nelle aree scelte.</p>
+</div>
+<div aria-label="150 comuni disponibili" class="total-box">
+<strong>150</strong><span>comuni</span>
+</div>
+</div>
+<div class="map-card">
+<div class="map-meta">
+<div aria-label="Legenda della mappa" class="legend">
+<span><i class="legend-dot pe"></i>Pescara · 46</span>
+<span><i class="legend-dot ch"></i>Chieti · 104</span>
+</div>
+<span id="map-selection-count">Nessuna zona scelta</span>
+</div>
+<div class="map-wrap">
+<svg aria-label="Mappa interattiva dei comuni delle province di Pescara e Chieti" id="province-map" role="group" viewbox="0 0 900 860"></svg>
+<div aria-hidden="true" class="tooltip" id="tooltip"></div>
+</div>
+<div class="map-footer">
+<span>☝ Tocca o clicca un comune per selezionarlo</span>
+<button class="reset-map" hidden="" id="reset-map" type="button">↻ Azzera</button>
+</div>
+</div>
+</section>
+<aside aria-labelledby="panel-title" class="panel">
+<div class="panel-title">
+<div>
+<p class="eyebrow">LA TUA RICERCA</p>
+<h2 id="panel-title">Scegli i comuni</h2>
+</div>
+<span aria-live="polite" class="counter" id="counter">0/150</span>
+</div>
+<div aria-label="Filtra per provincia" class="filters" role="group">
+<button class="filter-btn active" data-province="all" type="button">Tutte · 150</button>
+<button class="filter-btn" data-province="68" type="button">Pescara · 46</button>
+<button class="filter-btn" data-province="69" type="button">Chieti · 104</button>
+</div>
+<div class="search-picker" id="search-picker">
+<label class="search">
+<span style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">Cerca un comune</span>
+<input aria-controls="municipality-list" aria-expanded="false" autocomplete="off" id="search-input" placeholder="Cerca un comune…" type="search"/>
+</label>
+<div aria-label="Comuni trovati" class="municipality-list" id="municipality-list" role="listbox"></div>
+</div>
+<div aria-live="polite" class="selection-summary">
+<strong id="summary-title">Nessuna zona selezionata</strong>
+<div id="selected-names">Scegli almeno un comune per impostare la ricerca.</div>
+</div>
+<button class="confirm" disabled="" id="confirm" type="button">Invia le zone a Living</button>
+<div class="success" id="success" role="status">✓ Richiesta pronta: si aprirà WhatsApp con le zone selezionate.</div>
+</aside>
+</main><section aria-labelledby="catalog-title" class="catalog">
+<div class="catalog-hero">
+<p class="eyebrow">RISULTATI DELLA MAPPA</p>
+<h1 id="catalog-title">Immobili nelle zone selezionate</h1>
+<p class="intro-copy">Gli annunci compaiono qui solo dopo aver scelto uno o più comuni sulla mappa.</p>
+</div>
+<div aria-label="Filtri degli immobili" class="catalog-tools">
+<input autocomplete="off" id="property-search" placeholder="Cerca località, indirizzo o tipologia…" type="search"/>
+<select aria-label="Prezzo massimo" id="property-price">
+<option value="">Qualsiasi prezzo</option>
+<option value="150000">Fino a € 150.000</option>
+<option value="250000">Fino a € 250.000</option>
+<option value="400000">Fino a € 400.000</option>
+<option value="500000">Fino a € 500.000</option>
+<option value="1000000">Fino a € 1.000.000</option>
+</select>
+<select aria-label="Superficie minima" id="property-size">
+<option value="">Qualsiasi superficie</option>
+<option value="80">Da 80 m²</option>
+<option value="120">Da 120 m²</option>
+<option value="200">Da 200 m²</option>
+<option value="400">Da 400 m²</option>
+</select>
+<select aria-label="Numero minimo di locali" id="property-rooms">
+<option value="">Qualsiasi numero di locali</option>
+<option value="2">Da 2 locali</option>
+<option value="3">Da 3 locali</option>
+<option value="4">Da 4 locali</option>
+<option value="5">Da 5 locali</option>
+</select>
+</div>
+<div class="results-line">
+<strong aria-live="polite" id="property-count">Nessuna zona selezionata</strong>
+<span>Schede complete su Idealista</span>
+</div>
+<div class="property-grid" id="property-grid"></div>
+<div class="zone-contact" id="zone-contact">
+<div>
+<h3>Vuoi essere ricontattato?</h3>
+<p id="zone-contact-copy">Invia a Living le zone che hai scelto.</p>
+</div>
+<a href="#" id="zone-contact-link" rel="noopener" target="_blank">Contatta Living su WhatsApp</a>
+</div>
+</section><section class="custom-search" id="custom-search">
+<div class="custom-copy">
+<p class="eyebrow">NON HAI TROVATO LA CASA GIUSTA?</p>
+<h2>Dicci cosa stai cercando</h2>
+<p>Compila le preferenze principali e lascia i tuoi dati: Living potrà ricontattarti con proposte più adatte alle tue esigenze.</p>
+</div>
+<details class="custom-details" id="custom-details">
+<summary>🏠 Descrivi la casa che cerchi</summary>
+<form class="custom-form" id="custom-form">
+<div class="form-block">
+<h3>Caratteristiche</h3>
+<div class="form-grid">
+<label class="full">
+<span>Comuni / zone</span>
+<input id="custom-zones" name="zones" placeholder="Es. Pescara, Montesilvano, Città Sant'Angelo" type="text"/>
+</label>
+<label><span>Camere minime</span>
+<select name="bedrooms"><option value="">Indifferente</option><option>1</option><option>2</option><option>3</option><option>4</option><option value="5+">5+</option></select>
+</label>
+<label><span>Bagni minimi</span>
+<select name="bathrooms"><option value="">Indifferente</option><option>1</option><option>2</option><option>3</option><option value="4+">4+</option></select>
+</label>
+<label><span>Mq minimi</span><input min="0" name="sqm_min" placeholder="90" step="10" type="number"/></label>
+<label><span>Mq massimi</span><input min="0" name="sqm_max" placeholder="160" step="10" type="number"/></label>
+<label><span>Piano preferito</span>
+<select name="floor"><option value="">Indifferente</option><option>Piano terra</option><option>Primo piano</option><option>Piano intermedio</option><option>Ultimo piano</option></select>
+</label>
+<label><span>Ascensore</span>
+<select name="elevator"><option value="">Indifferente</option><option>Indispensabile</option><option>Preferibile</option><option>Non necessario</option></select>
+</label>
+</div>
+<div class="option-row">
+<label><input name="garage" type="checkbox"/> Garage</label>
+<label><input name="parking" type="checkbox"/> Posto auto</label>
+<label><input name="cellar" type="checkbox"/> Cantina</label>
+<label><input name="terrace" type="checkbox"/> Terrazzo / balcone</label>
+<label><input name="garden" type="checkbox"/> Giardino</label>
+</div>
+</div>
+<div class="form-block">
+<h3>Budget e condizioni</h3>
+<div class="form-grid">
+<label><span>Budget minimo €</span><input min="0" name="budget_min" placeholder="120000" step="5000" type="number"/></label>
+<label><span>Budget massimo €</span><input min="0" name="budget_max" placeholder="250000" step="5000" type="number"/></label>
+<label class="full"><span>Condizioni</span>
+<select name="condition"><option value="">Indifferente</option><option>Già abitabile</option><option>Va bene anche da ristrutturare</option><option>Nuova costruzione</option></select>
+</label>
+</div>
+</div>
+<div class="form-block">
+<h3>I tuoi dati</h3>
+<div class="form-grid">
+<label><span>Nome *</span><input name="name" required="" type="text"/></label>
+<label><span>Cognome *</span><input name="surname" required="" type="text"/></label>
+<label><span>Telefono *</span><input name="phone" required="" type="tel"/></label>
+<label><span>Email</span><input name="email" type="email"/></label>
+<label class="full"><span>Contatto preferito</span>
+<select name="contact_pref"><option>WhatsApp</option><option>Telefono</option><option>Email</option></select>
+</label>
+<label class="full"><span>Note</span><textarea name="notes" placeholder="Altre esigenze importanti..." rows="3"></textarea></label>
+</div>
+<label class="privacy"><input required="" type="checkbox"/> Acconsento all'invio dei dati a Living Gruppo Immobiliare per essere ricontattato.</label>
+</div>
+<button class="send-custom" type="submit">INVIA RICHIESTA A LIVING</button>
+</form>
+</details>
+</section><footer class="site-footer">
+    Living Gruppo Immobiliare · <a href="https://www.living-gruppoimmobiliare.com/" rel="noopener" target="_blank">Sito ufficiale</a> ·
+    <a href="https://www.idealista.it/pro/living-gruppo-immobiliare/" rel="noopener" target="_blank">Idealista</a> ·
+    <a href="https://www.immobiliare.it/agenzie-immobiliari/31333/living-pescara/" rel="noopener" target="_blank">Immobiliare.it</a>
+</footer>
+
+
+
+
+<script>
+    const GEOJSON = {"type":"FeatureCollection", "features": [
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[915084.6447999999,4688547.602600001],[913627.4068999998,4688252.606699999],[912728.5620999997,4687394.142899999],[912306.6639999999,4685581.6296],[913224.9046,4683744.644200001],[914081.1457000002,4682445.1537],[916116.8783999998,4681367.1603],[919947.5954,4681225.157],[918126.6114999996,4682083.152000001],[916461.3753000004,4682036.1543000005],[915119.3877999997,4683088.6472],[914701.8925000001,4684195.6384],[914772.3958999999,4687239.113600001],[915229.8925000001,4687561.6109],[915084.6447999999,4688547.602600001]]]},"properties":{"OBJECTID":5580,"COD_RIP":4,"COD_REG":13,"COD_PROV":68,"COD_CM":0,"COD_UTS":68,"PRO_COM":68001,"PRO_COM_T":"068001","COMUNE":"Abbateggio","COMUNE_A":"","CC_UTS":0,"Shape_Leng":26253.4195051,"Shape_Le_1":26253.4195051,"Shape_Area":15196912.7801}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[915109.6516000004,4694966.173599999],[912240.4282,4697598.2797],[912269.4283999996,4697856.5276],[911364.1852000002,4697306.2831999995],[909182.9518999998,4696202.7947],[907724.1117000002,4694626.9255],[907516.2127999999,4693636.3179],[907726.4588000001,4691415.3364],[908087.4550999999,4690869.340600001],[910308.4187000003,4691750.3440000005],[913189.4140999997,4691775.327500001],[914255.6566000003,4692836.067600001],[913983.1596999997,4693436.563100001],[915109.6516000004,4694966.173599999]]]},"properties":{"OBJECTID":5581,"COD_RIP":4,"COD_REG":13,"COD_PROV":68,"COD_CM":0,"COD_UTS":68,"PRO_COM":68002,"PRO_COM_T":"068002","COMUNE":"Alanno","COMUNE_A":"","CC_UTS":0,"Shape_Leng":23701.1188608,"Shape_Le_1":23701.1188608,"Shape_Area":32575501.478}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[909037.6457000002,4689403.501700001],[908205.0027999999,4689741.0496],[907302.4583,4687988.3652],[907050.2094999999,4687306.871099999],[907877.9534,4686797.1258000005],[908061.6995000001,4685740.008099999],[907507.2017000001,4683763.6501],[908157.9453999996,4682939.657199999],[907244.7000000002,4680264.4296],[908432.9407000002,4680795.673800001],[909746.6818000004,4682045.9125],[909374.4572999999,4682780.4594],[909899.4336999999,4685319.134500001],[909531.9387999997,4686856.1225000005],[910284.6845000004,4688556.6074],[909037.6457000002,4689403.501700001]]]},"properties":{"OBJECTID":5582,"COD_RIP":4,"COD_REG":13,"COD_PROV":68,"COD_CM":0,"COD_UTS":68,"PRO_COM":68003,"PRO_COM_T":"068003","COMUNE":"Bolognano","COMUNE_A":"","CC_UTS":0,"Shape_Leng":23948.5902993,"Shape_Le_1":23948.5902993,"Shape_Area":17070820.4661}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[899470.7780999998,4692360.8376],[900411.7714,4693301.3287],[902559.5045999996,4694175.8191],[902719.5045999996,4695522.307600001],[901812.7631000001,4696386.3014],[901824.7642000001,4697254.794399999],[901250.0188999996,4697299.294600001],[900317.7763999999,4697260.7958],[898703.5387000004,4696295.805600001],[897613.0476000002,4696164.8079],[897698.5458000004,4695140.066299999],[898086.5409000004,4693673.0781],[899470.7780999998,4692360.8376]]]},"properties":{"OBJECTID":5583,"COD_RIP":4,"COD_REG":13,"COD_PROV":68,"COD_CM":0,"COD_UTS":68,"PRO_COM":68004,"PRO_COM_T":"068004","COMUNE":"Brittoli","COMUNE_A":"","CC_UTS":0,"Shape_Leng":16212.5660657,"Shape_Le_1":16212.5660657,"Shape_Area":15940028.6402}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[896027.301,4687278.1336],[896034.5509000001,4687232.134],[896779.5433999998,4686083.6427],[896601.1523000002,4683414.0725],[897232.2862,4682832.919399999],[899108.0201000003,4682416.4208],[901688.4994000001,4683180.911499999],[902699.8656000001,4683329.7006],[901057.5078999996,4686044.8883],[899953.2668000003,4685810.3915],[899470.0250000004,4689616.485300001],[898751.2796999998,4688470.6207],[897699.5392000005,4689157.6161],[896027.301,4687278.1336]]]},"properties":{"OBJECTID":5584,"COD_RIP":4,"COD_REG":13,"COD_PROV":68,"COD_CM":0,"COD_UTS":68,"PRO_COM":68005,"PRO_COM_T":"068005","COMUNE":"Bussi sul Tirino","COMUNE_A":"","CC_UTS":0,"Shape_Leng":25045.252912,"Shape_Le_1":25045.252912,"Shape_Area":26111672.9497}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[921245.3731000004,4714113.383199999],[920212.8837000001,4715597.372300001],[919245.6423000004,4716203.8686999995],[918994.1445000004,4716278.3684],[918869.3942999998,4715048.879000001],[918128.7268000003,4713804.2696],[918920.1413000003,4713059.3948],[921245.3731000004,4714113.383199999]]]},"properties":{"OBJECTID":5585,"COD_RIP":4,"COD_REG":13,"COD_PROV":68,"COD_CM":0,"COD_UTS":68,"PRO_COM":68006,"PRO_COM_T":"068006","COMUNE":"Cappelle sul Tavo","COMUNE_A":"","CC_UTS":0,"Shape_Leng":9797.22237551,"Shape_Le_1":9797.22237551,"Shape_Area":5518134.88454}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[911330.4083000002,4673529.7312],[912775.3968000002,4674045.725299999],[914302.6357000005,4675324.7129],[914180.1381999999,4676692.2015],[915648.1266999999,4677015.6976],[918136.3554999996,4676969.694700001],[919240.5954999998,4676289.199100001],[920963.3277000003,4673286.722200001],[922333.3163999999,4673393.719699999],[922950.8124000002,4674353.710899999],[922922.8142999997,4675795.198899999],[922298.8224,4678288.6788],[922954.8181999996,4679341.419199999],[919947.5954,4681225.157],[916116.8783999998,4681367.1603],[914081.1457000002,4682445.1537],[913224.9046,4683744.644200001],[911452.9201999996,4684883.136299999],[909899.4336999999,4685319.134500001],[909374.4572999999,4682780.4594],[909746.6818000004,4682045.9125],[910992.6693000002,4680113.427300001],[909951.1721999999,4675667.3399],[911330.4083000002,4673529.7312]]]},"properties":{"OBJECTID":5586,"COD_RIP":4,"COD_REG":13,"COD_PROV":68,"COD_CM":0,"COD_UTS":68,"PRO_COM":68007,"PRO_COM_T":"068007","COMUNE":"Caramanico Terme","COMUNE_A":"","CC_UTS":0,"Shape_Leng":50204.0915665,"Shape_Le_1":50204.0915665,"Shape_Area":85132653.8164}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[895463.0706000002,4700918.5208],[895896.7073999997,4698527.8092],[897613.0476000002,4696164.8079],[898703.5387000004,4696295.805600001],[900317.7763999999,4697260.7958],[901250.0188999996,4697299.294600001],[901166.7703999998,4698093.2881000005],[902216.7627999997,4699024.279200001],[901444.0208999999,4700549.2674],[898859.2925000004,4700866.7675],[898235.2983999997,4701523.762800001],[897707.3028999995,4701638.762399999],[896323.0723000001,4701898.5275],[895463.0706000002,4700918.5208]]]},"properties":{"OBJECTID":5587,"COD_RIP":4,"COD_REG":13,"COD_PROV":68,"COD_CM":0,"COD_UTS":68,"PRO_COM":68008,"PRO_COM_T":"068008","COMUNE":"Carpineto della Nora","COMUNE_A":"","CC_UTS":0,"Shape_Leng":21282.4364062,"Shape_Le_1":21282.4364062,"Shape_Area":23940844.2533}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[907302.4583,4687988.3652],[905799.6991999997,4688473.8946],[906259.4700999996,4690894.8421],[905098.9801000003,4690701.3456],[904461.2339000003,4689747.3539],[904687.7304999996,4688334.3654],[903335.4908999996,4687652.3726],[901057.5078999996,4686044.8883],[902699.8656000001,4683329.7006],[904296.7302999999,4685062.3934],[904843.7274000002,4686263.883099999],[907050.2094999999,4687306.871099999],[907302.4583,4687988.3652]]]},"properties":{"OBJECTID":5588,"COD_RIP":4,"COD_REG":13,"COD_PROV":68,"COD_CM":0,"COD_UTS":68,"PRO_COM":68009,"PRO_COM_T":"068009","COMUNE":"Castiglione a Casauria","COMUNE_A":"","CC_UTS":0,"Shape_Leng":22859.714862,"Shape_Le_1":22859.714862,"Shape_Area":16254845.9341}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[911532.1902999999,4702644.1141],[910964.4448999995,4702899.237299999],[908325.9663000004,4702611.2425999995],[906657.7276999997,4700421.762800001],[906659.1222000001,4699335.6965],[907823.3398000002,4697635.534399999],[909112.4549000002,4698154.0287999995],[909837.2001999998,4699483.016799999],[912343.6830000002,4702133.9925],[911532.1902999999,4702644.1141]]]},"properties":{"OBJECTID":5589,"COD_RIP":4,"COD_REG":13,"COD_PROV":68,"COD_CM":0,"COD_UTS":68,"PRO_COM":68010,"PRO_COM_T":"068010","COMUNE":"Catignano","COMUNE_A":"","CC_UTS":0,"Shape_Leng":17423.8361039,"Shape_Le_1":17423.8361039,"Shape_Area":17047934.8024}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[924556.5876000002,4706742.941199999],[924335.5917999996,4708955.4223],[922907.9479999999,4707621.376800001],[921152.1164999995,4707846.934900001],[921436.6128000002,4706351.9474],[920796.5444,4704856.1416],[918508.8838,4703917.4703],[917434.8934000004,4704543.966399999],[916399.6507000001,4703485.976299999],[916375.0645000003,4701694.658500001],[919488.1231000004,4700570.499],[918762.3767999997,4699042.511700001],[919522.1176000005,4699473.469900001],[921155.8563999999,4699278.0055],[922336.0990000004,4701238.9879],[922147.3521999996,4702228.9805],[922338.4534999998,4704830.4088],[922812.3503999999,4705737.450200001],[924556.5876000002,4706742.941199999]]]},"properties":{"OBJECTID":5590,"COD_RIP":4,"COD_REG":13,"COD_PROV":68,"COD_CM":0,"COD_UTS":68,"PRO_COM":68011,"PRO_COM_T":"068011","COMUNE":"Cepagatti","COMUNE_A":"","CC_UTS":0,"Shape_Leng":36307.554584,"Shape_Le_1":36307.554584,"Shape_Area":30897380.6625}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[910281.9722999996,4721850.331900001],[909936.2246000003,4721177.838099999],[910269.7187000001,4718344.361099999],[911554.2063999996,4716678.873400001],[912688.6951000001,4715611.8802000005],[914295.4326,4716240.373199999],[915030.4256999996,4715253.880799999],[918994.1445000004,4716278.3684],[919245.6423000004,4716203.8686999995],[920031.3870000001,4717530.356000001],[923032.9200999998,4720897.160800001],[922691.1204000004,4721543.070900001],[921334.8803000003,4721064.825300001],[918766.4018999999,4721568.324100001],[917742.4117,4722649.3166000005],[916059.6754000001,4722693.318],[915599.6776,4721277.3302],[910281.9722999996,4721850.331900001]]]},"properties":{"OBJECTID":5591,"COD_RIP":4,"COD_REG":13,"COD_PROV":68,"COD_CM":0,"COD_UTS":68,"PRO_COM":68012,"PRO_COM_T":"068012","COMUNE":"Città Sant'Angelo","COMUNE_A":"","CC_UTS":0,"Shape_Leng":37832.2290635,"Shape_Le_1":37832.2290635,"Shape_Area":61986354.4121}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[902719.5045999996,4695522.307600001],[903678.9499000004,4695854.1722],[904036.2449000003,4696559.297499999],[905687.2311000004,4696421.796800001],[907823.3398000002,4697635.534399999],[906659.1222000001,4699335.6965],[906657.7276999997,4700421.762800001],[908325.9663000004,4702611.2425999995],[908292.7177999998,4703720.7334],[906069.2357999999,4703416.738399999],[904894.2432000004,4701269.2576],[904936.9917000001,4700256.266000001],[903923.7479999997,4698446.7820999995],[901824.7642000001,4697254.794399999],[901812.7631000001,4696386.3014],[902719.5045999996,4695522.307600001]]]},"properties":{"OBJECTID":5592,"COD_RIP":4,"COD_REG":13,"COD_PROV":68,"COD_CM":0,"COD_UTS":68,"PRO_COM":68013,"PRO_COM_T":"068013","COMUNE":"Civitaquana","COMUNE_A":"","CC_UTS":0,"Shape_Leng":26628.8113802,"Shape_Le_1":26628.8113802,"Shape_Area":22139663.0917}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[901444.0208999999,4700549.2674],[904894.2432000004,4701269.2576],[906069.2357999999,4703416.738399999],[904122.0026000002,4704079.235099999],[905220.7461999999,4706379.2149],[904632.0351,4707150.099300001],[903494.2611999996,4707018.9617],[899578.5416000001,4705490.228399999],[901531.7739000004,4703923.239399999],[901860.1524,4703004.377800001],[900785.0285,4702465.2524],[899942.5341999996,4701440.261600001],[898498.5484999996,4703579.7454],[897235.5586000001,4703277.749299999],[896323.0723000001,4701898.5275],[897707.3028999995,4701638.762399999],[898235.2983999997,4701523.762800001],[898859.2925000004,4700866.7675],[901444.0208999999,4700549.2674]]]},"properties":{"OBJECTID":5593,"COD_RIP":4,"COD_REG":13,"COD_PROV":68,"COD_CM":0,"COD_UTS":68,"PRO_COM":68014,"PRO_COM_T":"068014","COMUNE":"Civitella Casanova","COMUNE_A":"","CC_UTS":0,"Shape_Leng":37230.8039283,"Shape_Le_1":37230.8039283,"Shape_Area":31102437.5475}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[918994.1445000004,4716278.3684],[915030.4256999996,4715253.880799999],[914295.4326,4716240.373199999],[912688.6951000001,4715611.8802000005],[911554.2063999996,4716678.873400001],[911012.2103000004,4716182.3782],[911331.9549000002,4714301.3927],[910504.4604000002,4713150.903100001],[911772.9480999997,4711681.7886],[914144.5767999999,4710018.074999999],[916093.9127000002,4711405.161900001],[916549.6605000002,4712714.1504],[918128.7268000003,4713804.2696],[918869.3942999998,4715048.879000001],[918994.1445000004,4716278.3684]]]},"properties":{"OBJECTID":5594,"COD_RIP":4,"COD_REG":13,"COD_PROV":68,"COD_CM":0,"COD_UTS":68,"PRO_COM":68015,"PRO_COM_T":"068015","COMUNE":"Collecorvino","COMUNE_A":"","CC_UTS":0,"Shape_Leng":27876.4658951,"Shape_Le_1":27876.4658951,"Shape_Area":31891467.7451}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[899470.0250000004,4689616.485300001],[900579.2666999996,4690430.352299999],[903990.7391999997,4690835.3455],[903710.9921000004,4691553.3396000005],[904288.7392999995,4693327.824200001],[902549.2538999999,4693596.823799999],[902559.5045999996,4694175.8191],[900411.7714,4693301.3287],[899470.7780999998,4692360.8376],[899470.0250000004,4689616.485300001]]]},"properties":{"OBJECTID":5595,"COD_RIP":4,"COD_REG":13,"COD_PROV":68,"COD_CM":0,"COD_UTS":68,"PRO_COM":68016,"PRO_COM_T":"068016","COMUNE":"Corvara","COMUNE_A":"","CC_UTS":0,"Shape_Leng":16317.2746114,"Shape_Le_1":16317.2746114,"Shape_Area":13675064.2956}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[911364.1852000002,4697306.2831999995],[909112.4549000002,4698154.0287999995],[907823.3398000002,4697635.534399999],[905687.2311000004,4696421.796800001],[904036.2449000003,4696559.297499999],[903678.9499000004,4695854.1722],[904829.5915000001,4694011.0668],[907516.2127999999,4693636.3179],[907724.1117000002,4694626.9255],[909182.9518999998,4696202.7947],[911364.1852000002,4697306.2831999995]]]},"properties":{"OBJECTID":5596,"COD_RIP":4,"COD_REG":13,"COD_PROV":68,"COD_CM":0,"COD_UTS":68,"PRO_COM":68017,"PRO_COM_T":"068017","COMUNE":"Cugnoli","COMUNE_A":"","CC_UTS":0,"Shape_Leng":19998.0316952,"Shape_Le_1":19998.0316952,"Shape_Area":16031853.3891}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[909778.4765999997,4722023.331],[908467.4857000001,4720935.841],[906726.2494999999,4720491.8466],[907380.7413999997,4717815.3683],[908936.9792999998,4717605.369100001],[909061.977,4716820.3751],[911012.2103000004,4716182.3782],[911554.2063999996,4716678.873400001],[910269.7187000001,4718344.361099999],[909936.2246000003,4721177.838099999],[910281.9722999996,4721850.331900001],[909778.4765999997,4722023.331]]]},"properties":{"OBJECTID":5597,"COD_RIP":4,"COD_REG":13,"COD_PROV":68,"COD_CM":0,"COD_UTS":68,"PRO_COM":68018,"PRO_COM_T":"068018","COMUNE":"Elice","COMUNE_A":"","CC_UTS":0,"Shape_Leng":18362.055723,"Shape_Le_1":18362.055723,"Shape_Area":14009521.6183}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[896005.0676999995,4702353.508300001],[896988.5640000002,4706341.224300001],[896696.0672000004,4707067.7184999995],[897715.3106000004,4708786.203199999],[900049.6924,4709627.093800001],[899879.7982000001,4710855.7368],[900622.5406999998,4711409.429400001],[898703.8068000004,4712663.9201],[897705.4411000004,4713659.538000001],[895927.8304000003,4713373.667300001],[894107.7933,4711469.6850000005],[892522.1041000001,4709435.703500001],[892082.0555999996,4707437.920499999],[893038.5970000001,4706795.9748],[894016.3366,4704617.491699999],[895908.5691999998,4703041.002699999],[896005.0676999995,4702353.508300001]]]},"properties":{"OBJECTID":5598,"COD_RIP":4,"COD_REG":13,"COD_PROV":68,"COD_CM":0,"COD_UTS":68,"PRO_COM":68019,"PRO_COM_T":"068019","COMUNE":"Farindola","COMUNE_A":"","CC_UTS":0,"Shape_Leng":31990.9026133,"Shape_Le_1":31990.9026133,"Shape_Area":45511566.2556}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[915229.8925000001,4687561.6109],[916115.3831000002,4686074.1214000005],[920090.0975000001,4684012.1336],[920869.3399,4683005.6414],[921235.3277000003,4683393.9366],[919108.3585999999,4685939.620100001],[916831.631,4688691.100199999],[915872.6409,4690848.5824],[913463.6604000004,4690082.341600001],[915084.6447999999,4688547.602600001],[915229.8925000001,4687561.6109]]]},"properties":{"OBJECTID":5599,"COD_RIP":4,"COD_REG":13,"COD_PROV":68,"COD_CM":0,"COD_UTS":68,"PRO_COM":68020,"PRO_COM_T":"068020","COMUNE":"Lettomanoppello","COMUNE_A":"","CC_UTS":0,"Shape_Leng":23461.4033843,"Shape_Le_1":23461.4033843,"Shape_Area":15090871.1331}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[911532.1902999999,4702644.1141],[912107.4386,4705528.464400001],[911888.1915999996,4706594.955700001],[913242.6816999996,4707954.4428],[913516.6807000004,4708903.934800001],[914144.5767999999,4710018.074999999],[911772.9480999997,4711681.7886],[910504.4604000002,4713150.903100001],[909451.0185000002,4712856.9065000005],[908625.9737999998,4711535.168400001],[906127.9918,4709215.940300001],[905834.9943000004,4708386.9475],[906817.1330000004,4706852.659600001],[905220.7461999999,4706379.2149],[904122.0026000002,4704079.235099999],[906069.2357999999,4703416.738399999],[908292.7177999998,4703720.7334],[908325.9663000004,4702611.2425999995],[910964.4448999995,4702899.237299999],[911532.1902999999,4702644.1141]]]},"properties":{"OBJECTID":5600,"COD_RIP":4,"COD_REG":13,"COD_PROV":68,"COD_CM":0,"COD_UTS":68,"PRO_COM":68021,"PRO_COM_T":"068021","COMUNE":"Loreto Aprutino","COMUNE_A":"","CC_UTS":0,"Shape_Leng":35865.0965369,"Shape_Le_1":35865.0965369,"Shape_Area":59518498.034}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[914255.6566000003,4692836.067600001],[915994.3918000003,4692508.568600001],[915872.6409,4690848.5824],[916831.631,4688691.100199999],[919108.3585999999,4685939.620100001],[918735.6144000003,4687791.106000001],[918865.6166000003,4690275.5857],[919298.6122000003,4691001.076400001],[919356.8642999995,4693224.5578000005],[920856.8530000001,4694171.5482],[921233.1013000002,4695426.5374],[920015.8624999998,4696033.534399999],[919055.6220000004,4697480.5233],[918259.6294,4698363.5166],[917542.8850999996,4698133.019300001],[915579.1492999997,4696356.0363],[915109.6516000004,4694966.173599999],[913983.1596999997,4693436.563100001],[914255.6566000003,4692836.067600001]]]},"properties":{"OBJECTID":5601,"COD_RIP":4,"COD_REG":13,"COD_PROV":68,"COD_CM":0,"COD_UTS":68,"PRO_COM":68022,"PRO_COM_T":"068022","COMUNE":"Manoppello","COMUNE_A":"","CC_UTS":0,"Shape_Leng":32493.1037353,"Shape_Le_1":32493.1037353,"Shape_Area":39302249.805}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[903494.2611999996,4707018.9617],[902857.2675000001,4707894.4551],[903071.0170999998,4709303.693],[902618.7714999998,4709844.939200001],[900049.6924,4709627.093800001],[897715.3106000004,4708786.203199999],[896696.0672000004,4707067.7184999995],[896988.5640000002,4706341.224300001],[898180.8027999997,4705075.7335],[899578.5416000001,4705490.228399999],[903494.2611999996,4707018.9617]]]},"properties":{"OBJECTID":5602,"COD_RIP":4,"COD_REG":13,"COD_PROV":68,"COD_CM":0,"COD_UTS":68,"PRO_COM":68023,"PRO_COM_T":"068023","COMUNE":"Montebello di Bertona","COMUNE_A":"","CC_UTS":0,"Shape_Leng":19228.612805,"Shape_Le_1":19228.612805,"Shape_Area":21672304.988}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[921245.3731000004,4714113.383199999],[923813.6026999997,4714688.875399999],[923769.8304000003,4716554.541300001],[926219.0862999996,4717671.8477],[923333.5389,4721059.833000001],[923032.9200999998,4720897.160800001],[920031.3870000001,4717530.356000001],[919245.6423000004,4716203.8686999995],[920212.8837000001,4715597.372300001],[921245.3731000004,4714113.383199999]]]},"properties":{"OBJECTID":5603,"COD_RIP":4,"COD_REG":13,"COD_PROV":68,"COD_CM":0,"COD_UTS":68,"PRO_COM":68024,"PRO_COM_T":"068024","COMUNE":"Montesilvano","COMUNE_A":"","CC_UTS":0,"Shape_Leng":21464.9503003,"Shape_Le_1":21464.9503003,"Shape_Area":23744437.0303}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[918128.7268000003,4713804.2696],[916549.6605000002,4712714.1504],[916093.9127000002,4711405.161900001],[914144.5767999999,4710018.074999999],[913516.6807000004,4708903.934800001],[914909.4177000001,4707664.9432],[916425.9057999998,4707725.942],[919150.8842000002,4708910.928099999],[919537.3822999997,4710046.918299999],[918506.6418000003,4710842.913000001],[919399.8857000005,4711706.4054000005],[918920.1413000003,4713059.3948],[918128.7268000003,4713804.2696]]]},"properties":{"OBJECTID":5604,"COD_RIP":4,"COD_REG":13,"COD_PROV":68,"COD_CM":0,"COD_UTS":68,"PRO_COM":68025,"PRO_COM_T":"068025","COMUNE":"Moscufo","COMUNE_A":"","CC_UTS":0,"Shape_Leng":20517.1829905,"Shape_Le_1":20517.1829905,"Shape_Area":19970092.945}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[912269.4283999996,4697856.5276],[914446.6634999998,4700676.501599999],[913864.1697000004,4701768.493799999],[912343.6830000002,4702133.9925],[909837.2001999998,4699483.016799999],[909112.4549000002,4698154.0287999995],[911364.1852000002,4697306.2831999995],[912269.4283999996,4697856.5276]]]},"properties":{"OBJECTID":5605,"COD_RIP":4,"COD_REG":13,"COD_PROV":68,"COD_CM":0,"COD_UTS":68,"PRO_COM":68026,"PRO_COM_T":"068026","COMUNE":"Nocciano","COMUNE_A":"","CC_UTS":0,"Shape_Leng":15660.2031818,"Shape_Le_1":15660.2031818,"Shape_Area":13755231.504}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[894107.7933,4711469.6850000005],[895927.8304000003,4713373.667300001],[897705.4411000004,4713659.538000001],[898703.8068000004,4712663.9201],[900622.5406999998,4711409.429400001],[899879.7982000001,4710855.7368],[900049.6924,4709627.093800001],[902618.7714999998,4709844.939200001],[903071.0170999998,4709303.693],[902857.2675000001,4707894.4551],[903494.2611999996,4707018.9617],[904632.0351,4707150.099300001],[905220.7461999999,4706379.2149],[906817.1330000004,4706852.659600001],[905834.9943000004,4708386.9475],[906127.9918,4709215.940300001],[908625.9737999998,4711535.168400001],[909451.0185000002,4712856.9065000005],[908261.2319,4715988.382099999],[909061.977,4716820.3751],[908936.9792999998,4717605.369100001],[907380.7413999997,4717815.3683],[904788.5140000004,4718693.8642],[904383.0778999999,4718562.8083999995],[903502.0231999997,4717700.873500001],[902005.7860000003,4718249.3706],[901063.5422999999,4717131.8806],[901417.2878,4715684.392200001],[899433.0538999997,4715410.3967],[897561.8202999998,4716417.3903],[897201.5727000004,4715932.8947],[895358.0876000002,4715726.898399999],[895083.0877999999,4713614.4164],[894083.0944999997,4712366.4276],[894107.7933,4711469.6850000005]]]},"properties":{"OBJECTID":5606,"COD_RIP":4,"COD_REG":13,"COD_PROV":68,"COD_CM":0,"COD_UTS":68,"PRO_COM":68027,"PRO_COM_T":"068027","COMUNE":"Penne","COMUNE_A":"","CC_UTS":0,"Shape_Leng":56508.0591904,"Shape_Le_1":56508.0591904,"Shape_Area":91033823.5103}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[923813.6026999997,4714688.875399999],[926938.5758999996,4713746.3795],[926631.3267999999,4712499.889699999],[925402.8355999999,4711231.401900001],[926516.8876999998,4710265.486199999],[927129.1580999997,4711023.7106],[929618.2988,4709575.910599999],[930255.5149999997,4709170.612400001],[931216.7949000001,4710486.9145],[931408.2896999996,4711684.8961],[932158.3937999997,4712563.763499999],[929850.8060999997,4715016.119200001],[928140.9256999996,4715932.4461],[926219.0862999996,4717671.8477],[923769.8304000003,4716554.541300001],[923813.6026999997,4714688.875399999]]]},"properties":{"OBJECTID":5607,"COD_RIP":4,"COD_REG":13,"COD_PROV":68,"COD_CM":0,"COD_UTS":68,"PRO_COM":68028,"PRO_COM_T":"068028","COMUNE":"Pescara","COMUNE_A":"","CC_UTS":1,"Shape_Leng":30803.8733147,"Shape_Le_1":30803.8733147,"Shape_Area":34578532.3068}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[901057.5078999996,4686044.8883],[903335.4908999996,4687652.3726],[904687.7304999996,4688334.3654],[904461.2339000003,4689747.3539],[905098.9801000003,4690701.3456],[903990.7391999997,4690835.3455],[900579.2666999996,4690430.352299999],[899470.0250000004,4689616.485300001],[899953.2668000003,4685810.3915],[901057.5078999996,4686044.8883]]]},"properties":{"OBJECTID":5608,"COD_RIP":4,"COD_REG":13,"COD_PROV":68,"COD_CM":0,"COD_UTS":68,"PRO_COM":68029,"PRO_COM_T":"068029","COMUNE":"Pescosansonesco","COMUNE_A":"","CC_UTS":0,"Shape_Leng":18328.6518172,"Shape_Le_1":18328.6518172,"Shape_Area":18382295.7522}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[912343.6830000002,4702133.9925],[913864.1697000004,4701768.493799999],[915366.9080999997,4702268.9879],[916399.6507000001,4703485.976299999],[917434.8934000004,4704543.966399999],[918508.8838,4703917.4703],[920796.5444,4704856.1416],[921436.6128000002,4706351.9474],[921152.1164999995,4707846.934900001],[920398.875,4709799.919399999],[919537.3822999997,4710046.918299999],[919150.8842000002,4708910.928099999],[916425.9057999998,4707725.942],[914909.4177000001,4707664.9432],[913516.6807000004,4708903.934800001],[913242.6816999996,4707954.4428],[911888.1915999996,4706594.955700001],[912107.4386,4705528.464400001],[911532.1902999999,4702644.1141],[912343.6830000002,4702133.9925]]]},"properties":{"OBJECTID":5609,"COD_RIP":4,"COD_REG":13,"COD_PROV":68,"COD_CM":0,"COD_UTS":68,"PRO_COM":68030,"PRO_COM_T":"068030","COMUNE":"Pianella","COMUNE_A":"","CC_UTS":0,"Shape_Leng":32928.7731326,"Shape_Le_1":32928.7731326,"Shape_Area":47021612.1848}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[911012.2103000004,4716182.3782],[909061.977,4716820.3751],[908261.2319,4715988.382099999],[909451.0185000002,4712856.9065000005],[910504.4604000002,4713150.903100001],[911331.9549000002,4714301.3927],[911012.2103000004,4716182.3782]]]},"properties":{"OBJECTID":5610,"COD_RIP":4,"COD_REG":13,"COD_PROV":68,"COD_CM":0,"COD_UTS":68,"PRO_COM":68031,"PRO_COM_T":"068031","COMUNE":"Picciano","COMUNE_A":"","CC_UTS":0,"Shape_Leng":11326.5065308,"Shape_Le_1":11326.5065308,"Shape_Area":7720999.856}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[907516.2127999999,4693636.3179],[904829.5915000001,4694011.0668],[903678.9499000004,4695854.1722],[902719.5045999996,4695522.307600001],[902559.5045999996,4694175.8191],[902549.2538999999,4693596.823799999],[904288.7392999995,4693327.824200001],[903710.9921000004,4691553.3396000005],[903990.7391999997,4690835.3455],[905098.9801000003,4690701.3456],[906259.4700999996,4690894.8421],[907726.4588000001,4691415.3364],[907516.2127999999,4693636.3179]]]},"properties":{"OBJECTID":5611,"COD_RIP":4,"COD_REG":13,"COD_PROV":68,"COD_CM":0,"COD_UTS":68,"PRO_COM":68032,"PRO_COM_T":"068032","COMUNE":"Pietranico","COMUNE_A":"","CC_UTS":0,"Shape_Leng":18615.5387398,"Shape_Le_1":18615.5387398,"Shape_Area":14945744.3371}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[896434.7918999996,4681959.6776],[896473.7890999997,4679609.6972],[895721.0433999998,4677980.7116],[896776.5340999998,4677508.714400001],[899583.2609999999,4677183.2148],[901019.7490999997,4677398.210999999],[901537.4960000003,4678957.196900001],[904710.9210000001,4679789.2371],[903611.4820999997,4681376.9254],[902927.7379999999,4681558.9246],[901688.4994000001,4683180.911499999],[899108.0201000003,4682416.4208],[897232.2862,4682832.919399999],[896434.7918999996,4681959.6776]]]},"properties":{"OBJECTID":5612,"COD_RIP":4,"COD_REG":13,"COD_PROV":68,"COD_CM":0,"COD_UTS":68,"PRO_COM":68033,"PRO_COM_T":"068033","COMUNE":"Popoli Terme","COMUNE_A":"","CC_UTS":0,"Shape_Leng":26423.4120834,"Shape_Le_1":26423.4120834,"Shape_Area":34862590.5934}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[919947.5954,4681225.157],[922954.8181999996,4679341.419199999],[923784.8123000003,4680154.661599999],[920869.3399,4683005.6414],[920090.0975000001,4684012.1336],[916115.3831000002,4686074.1214000005],[915229.8925000001,4687561.6109],[914772.3958999999,4687239.113600001],[914701.8925000001,4684195.6384],[915119.3877999997,4683088.6472],[916461.3753000004,4682036.1543000005],[918126.6114999996,4682083.152000001],[919947.5954,4681225.157]]]},"properties":{"OBJECTID":5613,"COD_RIP":4,"COD_REG":13,"COD_PROV":68,"COD_CM":0,"COD_UTS":68,"PRO_COM":68034,"PRO_COM_T":"068034","COMUNE":"Roccamorice","COMUNE_A":"","CC_UTS":0,"Shape_Leng":27290.9573015,"Shape_Le_1":27290.9573015,"Shape_Area":25036026.3594}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[915109.6516000004,4694966.173599999],[915579.1492999997,4696356.0363],[917542.8850999996,4698133.019300001],[918259.6294,4698363.5166],[918762.3767999997,4699042.511700001],[919488.1231000004,4700570.499],[916375.0645000003,4701694.658500001],[916399.6507000001,4703485.976299999],[915366.9080999997,4702268.9879],[913864.1697000004,4701768.493799999],[914446.6634999998,4700676.501599999],[912269.4283999996,4697856.5276],[912240.4282,4697598.2797],[915109.6516000004,4694966.173599999]]]},"properties":{"OBJECTID":5614,"COD_RIP":4,"COD_REG":13,"COD_PROV":68,"COD_CM":0,"COD_UTS":68,"PRO_COM":68035,"PRO_COM_T":"068035","COMUNE":"Rosciano","COMUNE_A":"","CC_UTS":0,"Shape_Leng":26563.9600885,"Shape_Le_1":26563.9600885,"Shape_Area":27311120.499}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[905352.7143000001,4679062.1918],[905404.2123999996,4677761.2026],[907177.8213,4676550.8357],[908686.4329000004,4675784.965399999],[909951.1721999999,4675667.3399],[910992.6693000002,4680113.427300001],[909746.6818000004,4682045.9125],[908432.9407000002,4680795.673800001],[907244.7000000002,4680264.4296],[906010.2098000003,4679224.9407],[905270.2156999996,4679200.691400001],[905352.7143000001,4679062.1918]]]},"properties":{"OBJECTID":5615,"COD_RIP":4,"COD_REG":13,"COD_PROV":68,"COD_CM":0,"COD_UTS":68,"PRO_COM":68036,"PRO_COM_T":"068036","COMUNE":"Salle","COMUNE_A":"","CC_UTS":0,"Shape_Leng":19263.4003412,"Shape_Le_1":19263.4003412,"Shape_Area":21841079.502}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[920630.7289000005,4671933.733899999],[920963.3277000003,4673286.722200001],[919240.5954999998,4676289.199100001],[918136.3554999996,4676969.694700001],[915648.1266999999,4677015.6976],[914180.1381999999,4676692.2015],[914302.6357000005,4675324.7129],[912775.3968000002,4674045.725299999],[911330.4083000002,4673529.7312],[911542.4561000001,4673151.9342],[912993.3925000001,4671891.493100001],[913596.1359999999,4670577.0034],[914423.1284999996,4670044.506899999],[916131.1156000001,4671241.494899999],[918956.3424000004,4671532.9892],[920630.7289000005,4671933.733899999]]]},"properties":{"OBJECTID":5616,"COD_RIP":4,"COD_REG":13,"COD_PROV":68,"COD_CM":0,"COD_UTS":68,"PRO_COM":68037,"PRO_COM_T":"068037","COMUNE":"Sant'Eufemia a Maiella","COMUNE_A":"","CC_UTS":0,"Shape_Leng":26928.936834,"Shape_Le_1":26928.936834,"Shape_Area":40624883.2595}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[912728.5620999997,4687394.142899999],[912173.4190999996,4688668.604499999],[912174.9203000003,4690137.5918000005],[911354.1778999995,4690531.3398],[909470.4430999998,4690444.8423999995],[909037.6457000002,4689403.501700001],[910284.6845000004,4688556.6074],[909531.9387999997,4686856.1225000005],[909899.4336999999,4685319.134500001],[911452.9201999996,4684883.136299999],[913224.9046,4683744.644200001],[912306.6639999999,4685581.6296],[912728.5620999997,4687394.142899999]]]},"properties":{"OBJECTID":5617,"COD_RIP":4,"COD_REG":13,"COD_PROV":68,"COD_CM":0,"COD_UTS":68,"PRO_COM":68038,"PRO_COM_T":"068038","COMUNE":"San Valentino in Abruzzo Citeriore","COMUNE_A":"","CC_UTS":0,"Shape_Leng":20191.4454173,"Shape_Le_1":20191.4454173,"Shape_Area":16119540.1668}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[915084.6447999999,4688547.602600001],[913463.6604000004,4690082.341600001],[912856.4159000004,4690401.5898],[913189.4140999997,4691775.327500001],[910308.4187000003,4691750.3440000005],[908087.4550999999,4690869.340600001],[908205.0027999999,4689741.0496],[909037.6457000002,4689403.501700001],[909470.4430999998,4690444.8423999995],[911354.1778999995,4690531.3398],[912174.9203000003,4690137.5918000005],[912173.4190999996,4688668.604499999],[912728.5620999997,4687394.142899999],[913627.4068999998,4688252.606699999],[915084.6447999999,4688547.602600001]]]},"properties":{"OBJECTID":5618,"COD_RIP":4,"COD_REG":13,"COD_PROV":68,"COD_CM":0,"COD_UTS":68,"PRO_COM":68039,"PRO_COM_T":"068039","COMUNE":"Scafa","COMUNE_A":"","CC_UTS":0,"Shape_Leng":21579.1017767,"Shape_Le_1":21579.1017767,"Shape_Area":10418734.4843}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[921235.3277000003,4683393.9366],[920674.0954,4685306.124399999],[921981.5854000002,4685923.617799999],[922379.0834999997,4687123.1074],[923669.6513,4687453.3029],[921765.0619000001,4689167.893999999],[921188.3476999998,4690996.076300001],[921888.8415000001,4691670.5678],[921730.3443,4692924.057600001],[919356.8642999995,4693224.5578000005],[919298.6122000003,4691001.076400001],[918865.6166000003,4690275.5857],[918735.6144000003,4687791.106000001],[919108.3585999999,4685939.620100001],[921235.3277000003,4683393.9366]]]},"properties":{"OBJECTID":5619,"COD_RIP":4,"COD_REG":13,"COD_PROV":68,"COD_CM":0,"COD_UTS":68,"PRO_COM":68040,"PRO_COM_T":"068040","COMUNE":"Serramonacesca","COMUNE_A":"","CC_UTS":0,"Shape_Leng":27252.0008162,"Shape_Le_1":27252.0008162,"Shape_Area":23621447.9007}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[918920.1413000003,4713059.3948],[919399.8857000005,4711706.4054000005],[918506.6418000003,4710842.913000001],[919537.3822999997,4710046.918299999],[920398.875,4709799.919399999],[921152.1164999995,4707846.934900001],[922907.9479999999,4707621.376800001],[924335.5917999996,4708955.4223],[925249.0855999999,4710029.9122],[925402.8355999999,4711231.401900001],[926631.3267999999,4712499.889699999],[926938.5758999996,4713746.3795],[923813.6026999997,4714688.875399999],[921245.3731000004,4714113.383199999],[918920.1413000003,4713059.3948]]]},"properties":{"OBJECTID":5620,"COD_RIP":4,"COD_REG":13,"COD_PROV":68,"COD_CM":0,"COD_UTS":68,"PRO_COM":68041,"PRO_COM_T":"068041","COMUNE":"Spoltore","COMUNE_A":"","CC_UTS":0,"Shape_Leng":26279.950078,"Shape_Le_1":26279.950078,"Shape_Area":36976290.4722}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[905270.2156999996,4679200.691400001],[906010.2098000003,4679224.9407],[907244.7000000002,4680264.4296],[908157.9453999996,4682939.657199999],[907507.2017000001,4683763.6501],[908061.6995000001,4685740.008099999],[907877.9534,4686797.1258000005],[907050.2094999999,4687306.871099999],[904843.7274000002,4686263.883099999],[904296.7302999999,4685062.3934],[902699.8656000001,4683329.7006],[901688.4994000001,4683180.911499999],[902927.7379999999,4681558.9246],[903611.4820999997,4681376.9254],[904710.9210000001,4679789.2371],[905270.2156999996,4679200.691400001]]]},"properties":{"OBJECTID":5621,"COD_RIP":4,"COD_REG":13,"COD_PROV":68,"COD_CM":0,"COD_UTS":68,"PRO_COM":68042,"PRO_COM_T":"068042","COMUNE":"Tocco da Casauria","COMUNE_A":"","CC_UTS":0,"Shape_Leng":23822.8954091,"Shape_Le_1":23822.8954091,"Shape_Area":29503745.328}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[907726.4588000001,4691415.3364],[906259.4700999996,4690894.8421],[905799.6991999997,4688473.8946],[907302.4583,4687988.3652],[908205.0027999999,4689741.0496],[908087.4550999999,4690869.340600001],[907726.4588000001,4691415.3364]]]},"properties":{"OBJECTID":5622,"COD_RIP":4,"COD_REG":13,"COD_PROV":68,"COD_CM":0,"COD_UTS":68,"PRO_COM":68043,"PRO_COM_T":"068043","COMUNE":"Torre de' Passeri","COMUNE_A":"","CC_UTS":0,"Shape_Leng":9735.71233677,"Shape_Le_1":9735.71233677,"Shape_Area":5914405.8568}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[913189.4140999997,4691775.327500001],[912856.4159000004,4690401.5898],[913463.6604000004,4690082.341600001],[915872.6409,4690848.5824],[915994.3918000003,4692508.568600001],[914255.6566000003,4692836.067600001],[913189.4140999997,4691775.327500001]]]},"properties":{"OBJECTID":5623,"COD_RIP":4,"COD_REG":13,"COD_PROV":68,"COD_CM":0,"COD_UTS":68,"PRO_COM":68044,"PRO_COM_T":"068044","COMUNE":"Turrivalignani","COMUNE_A":"","CC_UTS":0,"Shape_Leng":9774.69809288,"Shape_Le_1":9774.69809288,"Shape_Area":6210380.87949}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[901824.7642000001,4697254.794399999],[903923.7479999997,4698446.7820999995],[904936.9917000001,4700256.266000001],[904894.2432000004,4701269.2576],[901444.0208999999,4700549.2674],[902216.7627999997,4699024.279200001],[901166.7703999998,4698093.2881000005],[901250.0188999996,4697299.294600001],[901824.7642000001,4697254.794399999]]]},"properties":{"OBJECTID":5624,"COD_RIP":4,"COD_REG":13,"COD_PROV":68,"COD_CM":0,"COD_UTS":68,"PRO_COM":68045,"PRO_COM_T":"068045","COMUNE":"Vicoli","COMUNE_A":"","CC_UTS":0,"Shape_Leng":13878.0660715,"Shape_Le_1":13878.0660715,"Shape_Area":9160033.73295}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[896323.0723000001,4701898.5275],[897235.5586000001,4703277.749299999],[898498.5484999996,4703579.7454],[899942.5341999996,4701440.261600001],[900785.0285,4702465.2524],[901860.1524,4703004.377800001],[901531.7739000004,4703923.239399999],[899578.5416000001,4705490.228399999],[898180.8027999997,4705075.7335],[896988.5640000002,4706341.224300001],[896005.0676999995,4702353.508300001],[896323.0723000001,4701898.5275]]]},"properties":{"OBJECTID":5625,"COD_RIP":4,"COD_REG":13,"COD_PROV":68,"COD_CM":0,"COD_UTS":68,"PRO_COM":68046,"PRO_COM_T":"068046","COMUNE":"Villa Celiera","COMUNE_A":"","CC_UTS":0,"Shape_Leng":23042.0509164,"Shape_Le_1":23042.0509164,"Shape_Area":13202763.4626}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[945616.8518000003,4677431.098200001],[945799.3777000001,4678800.646500001],[944497.3876999998,4678136.1536],[944195.1392000001,4677366.1603999995],[941415.1626000004,4676974.168400001],[940025.4225000003,4675090.686899999],[939335.4250999996,4673688.696900001],[939747.1711999997,4673261.700099999],[942475.8978000004,4672711.201300001],[943707.8914999999,4675838.674000001],[945616.8518000003,4677431.098200001]]]},"properties":{"OBJECTID":5626,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69001,"PRO_COM_T":"069001","COMUNE":"Altino","COMUNE_A":"","CC_UTS":0,"Shape_Leng":20318.9459164,"Shape_Le_1":20318.9459164,"Shape_Area":15284364.1337}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[942475.8978000004,4672711.201300001],[942187.2079999996,4670975.6910999995],[942911.1412000004,4670212.221899999],[944379.1286000004,4670027.2214],[945361.3707999997,4670436.216700001],[946905.6069999998,4669639.2215],[946963.3565999996,4669702.720899999],[947497.8531,4670461.7138],[948421.0997000001,4673951.683499999],[949361.3436000003,4675295.1711],[949244.0965999998,4676303.9144],[947789.8575999998,4675955.4178],[948142.8529000003,4674665.1779],[944918.8809000002,4675322.926899999],[943707.8914999999,4675838.674000001],[942475.8978000004,4672711.201300001]]]},"properties":{"OBJECTID":5627,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69002,"PRO_COM_T":"069002","COMUNE":"Archi","COMUNE_A":"","CC_UTS":0,"Shape_Leng":25885.6115959,"Shape_Le_1":25885.6115959,"Shape_Area":28512195.4336}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[933879.9998000003,4697873.0023],[932734.7604,4698737.4967],[932391.2620999999,4697870.0044],[932629.2598000001,4697715.005100001],[932912.5069000004,4697261.0085],[931882.7629000004,4695071.027899999],[932725.1903999997,4693562.298800001],[932352.0055999998,4692253.5507],[932782.5012999997,4691650.055199999],[934056.2422000002,4692052.5502],[934099.2430999996,4693961.5342999995],[935031.2367000002,4695020.524499999],[933879.9998000003,4697873.0023]]]},"properties":{"OBJECTID":5628,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69003,"PRO_COM_T":"069003","COMUNE":"Ari","COMUNE_A":"","CC_UTS":0,"Shape_Leng":18903.1378604,"Shape_Le_1":18903.1378604,"Shape_Area":11697601.0473}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[939379.9488000004,4693376.033],[938471.2077000001,4693691.033500001],[938093.2114000004,4694633.024700001],[936773.5352999996,4694051.423800001],[935684.2275,4691849.0502],[935467.9775999999,4690315.5633000005],[937305.9617999997,4689376.0701],[939379.9488000004,4693376.033]]]},"properties":{"OBJECTID":5629,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69004,"PRO_COM_T":"069004","COMUNE":"Arielli","COMUNE_A":"","CC_UTS":0,"Shape_Leng":14367.3321746,"Shape_Le_1":14367.3321746,"Shape_Area":11719525.9669}},
+{"type":"Feature","geometry":{"type":"MultiPolygon","coordinates":[[[[945616.8518000003,4677431.098200001],[947789.8575999998,4675955.4178],[949244.0965999998,4676303.9144],[949361.3436000003,4675295.1711],[948421.0997000001,4673951.683499999],[947497.8531,4670461.7138],[946963.3565999996,4669702.720899999],[948538.5942000002,4670337.2136],[950086.5811000001,4670119.7137],[951833.3150000004,4668959.221000001],[951529.3154999996,4667309.735200001],[953716.7988,4668487.722999999],[954670.7931000004,4670155.707800001],[956524.0281999996,4670726.2004],[957027.2764999997,4672643.183700001],[958370.2655999996,4672964.179400001],[959274.9172,4673938.296700001],[957640.5229000002,4673953.6719],[956880.8014000002,4675282.293500001],[957773.2768999999,4677777.1403],[957365.0312999999,4678708.1326],[954116.5581999999,4678524.6383],[953928.0607000003,4679088.1346],[953049.8175999997,4678550.6404],[949928.5972999996,4682035.1142],[947011.3687000005,4679783.636600001],[945799.3777000001,4678800.646500001],[945616.8518000003,4677431.098200001]]],[[[952796.0528999995,4665631.748],[951881.0615999997,4666580.740900001],[951082.5663000001,4664973.5053],[949673.3266000003,4663791.767000001],[947717.8443,4664678.262499999],[945967.6106000002,4666087.252800001],[943634.6283999998,4664909.2651],[943983.3743000003,4663910.2731],[945931.1092999997,4664792.763599999],[946810.7016000003,4663712.4155],[948005.0903000003,4663542.771299999],[948307.8359000003,4662145.782500001],[949574.0768999998,4663388.770500001],[952294.8059999999,4664868.2546999995],[952796.0528999995,4665631.748]]]]},"properties":{"OBJECTID":5630,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69005,"PRO_COM_T":"069005","COMUNE":"Atessa","COMUNE_A":"","CC_UTS":0,"Shape_Leng":81079.5633833,"Shape_Le_1":81079.5633833,"Shape_Area":110131947.464}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[942911.1412000004,4670212.221899999],[942348.3931,4667512.2458999995],[942455.6414999999,4667401.246099999],[943283.1317999996,4665250.762700001],[943634.6283999998,4664909.2651],[945967.6106000002,4666087.252800001],[946450.6074000001,4666836.7456],[946351.8156000003,4668496.645300001],[946905.6069999998,4669639.2215],[945361.3707999997,4670436.216700001],[944379.1286000004,4670027.2214],[942911.1412000004,4670212.221899999]]]},"properties":{"OBJECTID":5631,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69006,"PRO_COM_T":"069006","COMUNE":"Bomba","COMUNE_A":"","CC_UTS":0,"Shape_Leng":16845.0358953,"Shape_Le_1":16845.0358953,"Shape_Area":17361938.0702}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[943248.1195999999,4655137.3476],[942282.1293000001,4656430.3379999995],[941729.3831000002,4655799.343900001],[940865.3903000001,4655427.3486],[939716.9003999997,4655812.8467999995],[938882.6562999999,4655287.3517],[938302.744,4653391.2042],[939714.8956000004,4652158.0439],[940783.1358000003,4651550.380899999],[941678.9627,4651998.210000001],[942020.8788999999,4653595.3621],[943298.8683000002,4654054.8576],[943248.1195999999,4655137.3476]]]},"properties":{"OBJECTID":5632,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69007,"PRO_COM_T":"069007","COMUNE":"Borrello","COMUNE_A":"","CC_UTS":0,"Shape_Leng":16746.9736136,"Shape_Le_1":16746.9736136,"Shape_Area":14512738.4528}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[929624.2883000001,4700843.4827],[928934.5449000001,4701568.977499999],[926936.3081,4698648.5044],[925474.5707,4699037.502599999],[924366.8296999997,4698890.0054],[922101.3476999998,4697995.515799999],[922119.0964000002,4697050.523600001],[923598.8322999999,4695897.0307],[925003.0689000003,4693941.0463],[925856.2824999997,4692501.0812],[927353.7675000001,4693103.6665],[928322.2904000003,4693033.0502],[929631.0318,4695159.030300001],[930323.4846999999,4696875.897299999],[929754.0336999996,4697868.507300001],[929248.9844000004,4699997.237],[929624.2883000001,4700843.4827]]]},"properties":{"OBJECTID":5633,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69008,"PRO_COM_T":"069008","COMUNE":"Bucchianico","COMUNE_A":"","CC_UTS":0,"Shape_Leng":28842.8085188,"Shape_Le_1":28842.8085188,"Shape_Area":38129244.2721}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[942283.8877999997,4663285.2806],[941335.8959999997,4663448.7805],[939053.4122000001,4661197.302100001],[939451.9082000004,4660630.306299999],[942605.3833999997,4661901.2918],[942283.8877999997,4663285.2806]]]},"properties":{"OBJECTID":5634,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69009,"PRO_COM_T":"069009","COMUNE":"Montebello sul Sangro","COMUNE_A":"","CC_UTS":0,"Shape_Leng":9707.42698967,"Shape_Le_1":9707.42698967,"Shape_Area":5452271.59597}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[934099.2430999996,4693961.5342999995],[935029.7346999999,4693349.0383],[934606.2370999996,4692490.5459],[935684.2275,4691849.0502],[936773.5352999996,4694051.423800001],[938093.2114000004,4694633.024700001],[937868.7153000003,4696401.5101],[938572.4623999996,4699094.9868],[936863.9764999999,4699114.988299999],[936222.9856000002,4698054.663899999],[936568.2260999996,4696503.5109],[935031.2367000002,4695020.524499999],[934099.2430999996,4693961.5342999995]]]},"properties":{"OBJECTID":5635,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69010,"PRO_COM_T":"069010","COMUNE":"Canosa Sannita","COMUNE_A":"","CC_UTS":0,"Shape_Leng":20440.3679232,"Shape_Le_1":20440.3679232,"Shape_Area":14039000.8297}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[952796.0528999995,4665631.748],[953658.5460999999,4665957.743899999],[954852.6431999998,4665284.3440000005],[955064.5318999998,4664000.7586],[956455.2674000002,4661841.274800001],[954737.2810000004,4661248.2820999995],[954860.0983999996,4660481.625600001],[956244.2663000003,4659379.2961],[957852.0037000002,4660243.786499999],[958701.7472999999,4660809.7807],[958355.0016999999,4661967.771299999],[959324.2451,4663162.2601],[958742.7515000002,4664329.751],[957622.7621999998,4665379.2436999995],[957289.7680000002,4667583.2259],[956469.0236999998,4666620.735200001],[955541.7839000002,4667972.7267],[953716.7988,4668487.722999999],[951529.3154999996,4667309.735200001],[951881.0615999997,4666580.740900001],[952796.0528999995,4665631.748]]]},"properties":{"OBJECTID":5636,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69011,"PRO_COM_T":"069011","COMUNE":"Carpineto Sinello","COMUNE_A":"","CC_UTS":0,"Shape_Leng":31545.9633359,"Shape_Le_1":31545.9633359,"Shape_Area":29598411.9713}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[956244.2663000003,4659379.2961],[956031.0166999996,4658182.306700001],[956434.0111999996,4656708.3181],[957314.5026000002,4655661.3258],[956927.5027999999,4653313.346000001],[957012.2488000002,4650916.366],[957037.7485999996,4650910.365900001],[959172.7319999998,4651910.354800001],[960667.9722999996,4653560.8401],[961401.4678999996,4654722.83],[963149.9804999996,4654878.378900001],[960873.6786000002,4658001.0956999995],[959947.4831999997,4657841.304],[958694.2459000004,4659598.290899999],[957852.0037000002,4660243.786499999],[956244.2663000003,4659379.2961]]]},"properties":{"OBJECTID":5637,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69012,"PRO_COM_T":"069012","COMUNE":"Carunchio","COMUNE_A":"","CC_UTS":0,"Shape_Leng":26940.3278775,"Shape_Le_1":26940.3278775,"Shape_Area":32381037.8697}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[928322.2904000003,4693033.0502],[928512.0018999996,4690250.754799999],[929702.7741999999,4689550.076199999],[931030.7644999996,4690589.066],[930864.0169000002,4691430.0592],[932106.2572999997,4692050.5526],[930937.5180000002,4692922.546700001],[931091.7095999997,4693619.823799999],[929631.0318,4695159.030300001],[928322.2904000003,4693033.0502]]]},"properties":{"OBJECTID":5638,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69013,"PRO_COM_T":"069013","COMUNE":"Casacanditella","COMUNE_A":"","CC_UTS":0,"Shape_Leng":16498.912822,"Shape_Le_1":16498.912822,"Shape_Area":12600169.6745}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[953716.7988,4668487.722999999],[955541.7839000002,4667972.7267],[956469.0236999998,4666620.735200001],[957289.7680000002,4667583.2259],[958291.5137999998,4670204.204500001],[957732.2692999998,4671636.191299999],[958370.2655999996,4672964.179400001],[957027.2764999997,4672643.183700001],[956524.0281999996,4670726.2004],[954670.7931000004,4670155.707800001],[953716.7988,4668487.722999999]]]},"properties":{"OBJECTID":5639,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69014,"PRO_COM_T":"069014","COMUNE":"Casalanguida","COMUNE_A":"","CC_UTS":0,"Shape_Leng":18818.5217365,"Shape_Le_1":18818.5217365,"Shape_Area":13515620.0361}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[957365.0312999999,4678708.1326],[959028.0190000003,4679896.6206],[959504.7660999997,4680717.1131],[962027.2452999996,4680893.1084],[963403.9844000004,4681309.6032],[965623.9685000004,4682881.5879999995],[966393.4619000005,4683047.585999999],[966109.7156999996,4684206.5756],[966653.4632000001,4685685.0627],[966355.3854999999,4686554.0320999995],[962955.9967,4687735.050799999],[961697.2560999999,4687108.5572999995],[960440.0168000003,4687335.0569],[959921.5185000002,4685324.574200001],[961546.2551999995,4685503.570699999],[961260.7555999998,4683695.5866],[960145.7620999999,4681748.603700001],[958573.5247999998,4681538.1076],[956935.2890999997,4682077.605],[956693.7925000004,4683053.5973000005],[956382.0438000001,4682171.605],[954404.5584000004,4680684.1197999995],[953928.0607000003,4679088.1346],[954116.5581999999,4678524.6383],[957365.0312999999,4678708.1326]]]},"properties":{"OBJECTID":5640,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69015,"PRO_COM_T":"069015","COMUNE":"Casalbordino","COMUNE_A":"","CC_UTS":0,"Shape_Leng":44605.8788055,"Shape_Le_1":44605.8788055,"Shape_Area":46370342.3564}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[919356.8642999995,4693224.5578000005],[921730.3443,4692924.057600001],[924826.5702999998,4693564.550000001],[925003.0689000003,4693941.0463],[923598.8322999999,4695897.0307],[922119.0964000002,4697050.523600001],[922101.3476999998,4697995.515799999],[920759.3971999995,4697621.4103999995],[920200.6131999996,4698079.017100001],[919055.6220000004,4697480.5233],[920015.8624999998,4696033.534399999],[921233.1013000002,4695426.5374],[920856.8530000001,4694171.5482],[919356.8642999995,4693224.5578000005]]]},"properties":{"OBJECTID":5641,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69016,"PRO_COM_T":"069016","COMUNE":"Casalincontrada","COMUNE_A":"","CC_UTS":0,"Shape_Leng":21809.8175519,"Shape_Le_1":21809.8175519,"Shape_Area":16207973.3485}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[944497.3876999998,4678136.1536],[943516.398,4679139.1479],[941037.6705,4680818.1369],[938280.6936999997,4681029.638499999],[937994.1961000003,4681400.6349],[936457.4583,4681063.1394],[934769.4738999996,4682405.1303],[933294.2352999998,4681693.138],[932510.2390000001,4679374.158],[934412.4714000002,4677830.1688],[934271.7204999998,4676078.183700001],[932983.4793999996,4674698.1963],[934152.4676999999,4673265.706700001],[934008.2171,4671771.2195],[936128.9504000004,4672508.210899999],[938171.6834000004,4672435.209000001],[937981.1881999997,4674571.1938000005],[940025.4225000003,4675090.686899999],[941415.1626000004,4676974.168400001],[944195.1392000001,4677366.1603999995],[944497.3876999998,4678136.1536]]]},"properties":{"OBJECTID":5642,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69017,"PRO_COM_T":"069017","COMUNE":"Casoli","COMUNE_A":"","CC_UTS":0,"Shape_Leng":40957.8255971,"Shape_Le_1":40957.8255971,"Shape_Area":66915672.5986}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[944992.6387,4682434.1172],[943798.6529000001,4685511.5934],[942951.9102999996,4686148.5886],[942687.6640999997,4687499.5776],[941749.0141000003,4687854.004799999],[941691.1747000003,4689161.565400001],[940592.1836000001,4689241.5657],[940315.6834000004,4687223.582800001],[939675.6880999999,4686680.088099999],[939445.1869000001,4684135.6097],[940005.6829000004,4684438.106799999],[941254.1703000003,4682705.6195],[942635.4080999997,4682100.6229],[944992.6387,4682434.1172]]]},"properties":{"OBJECTID":5643,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69018,"PRO_COM_T":"069018","COMUNE":"Castel Frentano","COMUNE_A":"","CC_UTS":0,"Shape_Leng":21676.4362485,"Shape_Le_1":21676.4362485,"Shape_Area":21887764.8131}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[961080.0318,4646444.6435],[957856.4863999998,4646730.4001],[956607.4983000001,4647801.8927],[956443.7494000001,4647644.394200001],[956950.9929,4645868.408500001],[959567.2166999998,4642456.768100001],[960225.3366,4642682.931700001],[961367.3491000002,4644444.3456999995],[962716.2768000001,4644944.0757],[962898.9965000004,4645277.2695],[961080.0318,4646444.6435]]]},"properties":{"OBJECTID":5644,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69019,"PRO_COM_T":"069019","COMUNE":"Castelguidone","COMUNE_A":"","CC_UTS":0,"Shape_Leng":18508.5155557,"Shape_Le_1":18508.5155557,"Shape_Area":15174755.7766}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[957012.2488000002,4650916.366],[954472.2702000001,4650850.8697999995],[953706.6933000004,4651911.575099999],[951305.5488,4652453.860300001],[949866.5626999997,4654001.849099999],[948412.3623000002,4653294.8277],[947310.0822999999,4652523.364700001],[947770.0768999998,4651226.375],[946169.8589000003,4650771.4058],[946191.3389999997,4650442.7173],[946501.1679999996,4648885.062999999],[947987.0691,4649419.891100001],[950017.2828000002,4647935.069599999],[951195.1670000004,4646475.410700001],[952336.7814999996,4645756.4153],[954907.7620000001,4647417.3981],[956443.7494000001,4647644.394200001],[956607.4983000001,4647801.8927],[957677.9916000003,4649593.3762],[957037.7485999996,4650910.365900001],[957012.2488000002,4650916.366]]]},"properties":{"OBJECTID":5645,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69020,"PRO_COM_T":"069020","COMUNE":"Castiglione Messer Marino","COMUNE_A":"","CC_UTS":0,"Shape_Leng":33145.9719232,"Shape_Le_1":33145.9719232,"Shape_Area":47204909.0898}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[960667.9722999996,4653560.8401],[962255.4590999996,4653408.8399],[961093.2159000002,4651826.8532],[961937.2055000002,4649264.8737],[964373.6835000003,4648083.214199999],[964749.9308000002,4648410.3773],[965131.0138999997,4650560.0254],[965845.5105999997,4652738.006100001],[966129.9250999996,4653010.670399999],[964965.1864999998,4653967.830499999],[963149.9804999996,4654878.378900001],[961401.4678999996,4654722.83],[960667.9722999996,4653560.8401]]]},"properties":{"OBJECTID":5646,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69021,"PRO_COM_T":"069021","COMUNE":"Celenza sul Trigno","COMUNE_A":"","CC_UTS":0,"Shape_Leng":21446.9174357,"Shape_Le_1":21446.9174357,"Shape_Area":22642771.2002}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[918762.3767999997,4699042.511700001],[918259.6294,4698363.5166],[919055.6220000004,4697480.5233],[920200.6131999996,4698079.017100001],[920759.3971999995,4697621.4103999995],[922101.3476999998,4697995.515799999],[924366.8296999997,4698890.0054],[925474.5707,4699037.502599999],[926936.3081,4698648.5044],[928934.5449000001,4701568.977499999],[930122.7107999995,4703302.1666],[929551.551,4704037.969900001],[927931.8071999997,4704761.4526],[929066.3011999996,4706973.9343],[930088.5494999997,4708820.6752],[930255.5149999997,4709170.612400001],[929618.2988,4709575.910599999],[926614.3196,4706088.943],[924556.5876000002,4706742.941199999],[922812.3503999999,4705737.450200001],[922338.4534999998,4704830.4088],[922147.3521999996,4702228.9805],[922336.0990000004,4701238.9879],[921155.8563999999,4699278.0055],[919522.1176000005,4699473.469900001],[918762.3767999997,4699042.511700001]]]},"properties":{"OBJECTID":5647,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69022,"PRO_COM_T":"069022","COMUNE":"Chieti","COMUNE_A":"","CC_UTS":1,"Shape_Leng":46228.3048433,"Shape_Le_1":46228.3048433,"Shape_Area":59659582.2478}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[941729.3831000002,4655799.343900001],[940462.1897999998,4656805.6526999995],[940436.1473000003,4658130.3269],[939867.6536999997,4659833.8123],[939451.9082000004,4660630.306299999],[939053.4122000001,4661197.302100001],[937964.1714000003,4661298.802300001],[935408.4403999997,4659033.325200001],[934505.4467000002,4657898.836100001],[935824.6841000002,4656751.343800001],[936387.6798999999,4656963.841700001],[938025.9145,4655608.8511],[938882.6562999999,4655287.3517],[939716.9003999997,4655812.8467999995],[940865.3903000001,4655427.3486],[941729.3831000002,4655799.343900001]]]},"properties":{"OBJECTID":5648,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69023,"PRO_COM_T":"069023","COMUNE":"Civitaluparella","COMUNE_A":"","CC_UTS":0,"Shape_Leng":21632.5948933,"Shape_Le_1":21632.5948933,"Shape_Area":22447866.9099}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[932983.4793999996,4674698.1963],[932820.9804999996,4674640.696799999],[931890.523,4673513.7027],[928614.5114000002,4671194.730699999],[930960.4907999998,4670308.735300001],[932520.2274000002,4670032.7357],[934008.2171,4671771.2195],[934152.4676999999,4673265.706700001],[932983.4793999996,4674698.1963]]]},"properties":{"OBJECTID":5649,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69024,"PRO_COM_T":"069024","COMUNE":"Civitella Messer Raimondo","COMUNE_A":"","CC_UTS":0,"Shape_Leng":16062.681312,"Shape_Le_1":16062.681312,"Shape_Area":12682263.7777}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[930746.4867000002,4665438.2763],[929811.4945999999,4665445.7774],[929885.7400000002,4662175.8047],[930077.7374,4661344.3115],[931602.7235000003,4660358.3179],[933209.1878000004,4661862.6654],[932880.7159000002,4662789.2963],[931386.9808,4664959.7796],[930746.4867000002,4665438.2763]]]},"properties":{"OBJECTID":5650,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69025,"PRO_COM_T":"069025","COMUNE":"Colledimacine","COMUNE_A":"","CC_UTS":0,"Shape_Leng":13657.0896458,"Shape_Le_1":13657.0896458,"Shape_Area":11246317.7891}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[943983.3743000003,4663910.2731],[944625.8662,4661703.2908],[945500.3596999999,4662100.2871],[946453.6009,4661631.7892],[946901.8455999997,4660457.2984],[947872.5873999996,4660355.7982],[948307.8359000003,4662145.782500001],[948005.0903000003,4663542.771299999],[946810.7016000003,4663712.4155],[945931.1092999997,4664792.763599999],[943983.3743000003,4663910.2731]]]},"properties":{"OBJECTID":5651,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69026,"PRO_COM_T":"069026","COMUNE":"Colledimezzo","COMUNE_A":"","CC_UTS":0,"Shape_Leng":15232.9778741,"Shape_Le_1":15232.9778741,"Shape_Area":11148998.0745}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[939379.9488000004,4693376.033],[940416.6901000002,4693246.5327],[941366.4310999997,4692407.038699999],[941922.1789999995,4694508.520300001],[940117.4507999998,4700011.977],[939744.7038000003,4699994.9778],[938572.4623999996,4699094.9868],[937868.7153000003,4696401.5101],[938093.2114000004,4694633.024700001],[938471.2077000001,4693691.033500001],[939379.9488000004,4693376.033]]]},"properties":{"OBJECTID":5652,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69027,"PRO_COM_T":"069027","COMUNE":"Crecchio","COMUNE_A":"","CC_UTS":0,"Shape_Leng":19677.1332239,"Shape_Le_1":19677.1332239,"Shape_Area":18987552.8714}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[972856.1414999999,4670215.183800001],[971623.1535,4671593.673599999],[970718.6615000004,4671974.671599999],[970697.6401000004,4673733.0251],[970160.4205999998,4674852.149599999],[967713.9380000001,4673151.6657],[965352.7077000001,4672751.673],[965392.7051999997,4671100.1866],[965995.9493000004,4670197.6939],[967946.1809,4669036.199899999],[967986.6785000004,4667580.7118999995],[968859.1705999998,4667103.2148],[974106.875,4665650.054],[976356.2752999999,4667299.703400001],[975415.869,4669292.688100001],[972856.1414999999,4670215.183800001]]]},"properties":{"OBJECTID":5653,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69028,"PRO_COM_T":"069028","COMUNE":"Cupello","COMUNE_A":"","CC_UTS":0,"Shape_Leng":33140.8253172,"Shape_Le_1":33140.8253172,"Shape_Area":48429432.7301}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[970268.3776000002,4659812.065400001],[967897.4210000001,4661066.266799999],[966946.1801000005,4662099.759400001],[966099.6858000001,4660970.7698],[965956.6842,4658845.288000001],[966472.6787,4658037.7939],[967420.1710000001,4658184.7914],[969850.8995000003,4657280.6296],[969721.0274999999,4658786.283399999],[970268.3776000002,4659812.065400001]]]},"properties":{"OBJECTID":5654,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69029,"PRO_COM_T":"069029","COMUNE":"Dogliola","COMUNE_A":"","CC_UTS":0,"Shape_Leng":15172.6198328,"Shape_Le_1":15172.6198328,"Shape_Area":11812036.0933}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[925856.2824999997,4692501.0812],[925543.3106000004,4691184.067600001],[924230.3207,4690471.574999999],[925045.8043999998,4688946.591600001],[926008.1953999996,4688839.5108],[927536.2594999997,4687945.091700001],[928915.2801000001,4688777.084100001],[929702.7741999999,4689550.076199999],[928512.0018999996,4690250.754799999],[928322.2904000003,4693033.0502],[927353.7675000001,4693103.6665],[925856.2824999997,4692501.0812]]]},"properties":{"OBJECTID":5655,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69030,"PRO_COM_T":"069030","COMUNE":"Fara Filiorum Petri","COMUNE_A":"","CC_UTS":0,"Shape_Leng":19284.5686073,"Shape_Le_1":19284.5686073,"Shape_Area":14856718.7133}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[921134.0744000003,4671663.2356],[923498.3039999995,4671130.237199999],[923764.3586999997,4670237.2404],[926240.2792999996,4669555.747199999],[927700.5175999999,4670020.241599999],[928614.5114000002,4671194.730699999],[931890.523,4673513.7027],[932820.9804999996,4674640.696799999],[931025.9970000004,4675942.188100001],[929145.0126999998,4676015.1897],[928160.2702000001,4675390.6961],[926584.7827000003,4674907.702],[924441.3006999996,4675016.203600001],[922950.8124000002,4674353.710899999],[922333.3163999999,4673393.719699999],[920963.3277000003,4673286.722200001],[920630.7289000005,4671933.733899999],[921134.0744000003,4671663.2356]]]},"properties":{"OBJECTID":5656,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69031,"PRO_COM_T":"069031","COMUNE":"Fara San Martino","COMUNE_A":"","CC_UTS":0,"Shape_Leng":31051.9097081,"Shape_Le_1":31051.9097081,"Shape_Area":44888846.1679}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[932352.0055999998,4692253.5507],[932106.2572999997,4692050.5526],[930864.0169000002,4691430.0592],[931030.7644999996,4690589.066],[931513.2593,4689634.5734],[931907.5033999998,4687136.5942],[932885.494,4686193.6008],[933975.2348999996,4686012.101199999],[933905.4879999999,4688409.580700001],[934056.2422000002,4692052.5502],[932782.5012999997,4691650.055199999],[932352.0055999998,4692253.5507]]]},"properties":{"OBJECTID":5657,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69032,"PRO_COM_T":"069032","COMUNE":"Filetto","COMUNE_A":"","CC_UTS":0,"Shape_Leng":17796.657337,"Shape_Le_1":17796.657337,"Shape_Area":13508869.4715}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[953779.0399000002,4693818.1515],[952529.3402000004,4693443.0164],[950575.1026999997,4690334.545],[949132.3655000003,4691167.0397],[948489.8701999998,4690831.043],[947630.3764000004,4689882.052100001],[947951.3727000002,4689065.808800001],[947553.8743000003,4687875.0688000005],[947610.8739999998,4687869.5689],[948623.6375000002,4688988.348200001],[951053.3468000004,4689087.804199999],[952006.8383,4688505.058],[952709.5810000002,4687287.067399999],[955393.7928999998,4687705.986199999],[956646.5521,4690072.0395],[957511.0455,4690828.2815000005],[954441.0729999999,4692524.021299999],[953779.0399000002,4693818.1515]]]},"properties":{"OBJECTID":5658,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69033,"PRO_COM_T":"069033","COMUNE":"Fossacesia","COMUNE_A":"","CC_UTS":0,"Shape_Leng":30683.520099,"Shape_Le_1":30683.520099,"Shape_Area":30249851.0915}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[956434.0111999996,4656708.3181],[955510.0186000001,4656454.3213],[955006.2714,4655325.331499999],[953605.2818999998,4654397.841],[953706.6933000004,4651911.575099999],[954472.2702000001,4650850.8697999995],[957012.2488000002,4650916.366],[956927.5027999999,4653313.346000001],[957314.5026000002,4655661.3258],[956434.0111999996,4656708.3181]]]},"properties":{"OBJECTID":5659,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69034,"PRO_COM_T":"069034","COMUNE":"Fraine","COMUNE_A":"","CC_UTS":0,"Shape_Leng":16627.9994731,"Shape_Le_1":16627.9994731,"Shape_Area":16542532.5975}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[930255.5149999997,4709170.612400001],[930088.5494999997,4708820.6752],[930623.0449000001,4708698.4255],[932087.2865000004,4709419.422499999],[933234.7675999999,4708140.9186],[932708.7717000004,4707043.9300999995],[933747.0130000003,4706654.432600001],[933875.7589999996,4705487.9394000005],[935029.0016999999,4707024.426100001],[936317.9955000002,4707198.9300999995],[938077.6470999997,4706655.1282],[937918.4809999997,4708476.412699999],[935228.9393999996,4710264.2894],[932158.3937999997,4712563.763499999],[931408.2896999996,4711684.8961],[931216.7949000001,4710486.9145],[930255.5149999997,4709170.612400001]]]},"properties":{"OBJECTID":5660,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69035,"PRO_COM_T":"069035","COMUNE":"Francavilla al Mare","COMUNE_A":"","CC_UTS":0,"Shape_Leng":26858.0451271,"Shape_Le_1":26858.0451271,"Shape_Area":22875204.9573}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[967986.6785000004,4667580.7118999995],[966996.6864999998,4667358.2151],[965360.4480999997,4665527.232999999],[965117.8820000002,4664838.3050999995],[966553.5432000002,4664283.114399999],[967279.6791000003,4663419.7478],[966946.1801000005,4662099.759400001],[967897.4210000001,4661066.266799999],[970268.3776000002,4659812.065400001],[972409.1354999999,4662947.5787],[969383.1632000003,4664598.2355],[968463.4231000002,4666298.2223000005],[968859.1705999998,4667103.2148],[967986.6785000004,4667580.7118999995]]]},"properties":{"OBJECTID":5661,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69036,"PRO_COM_T":"069036","COMUNE":"Fresagrandinaria","COMUNE_A":"","CC_UTS":0,"Shape_Leng":23765.939019,"Shape_Le_1":23765.939019,"Shape_Area":25034941.1091}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[941366.4310999997,4692407.038699999],[941418.6804,4692093.541099999],[943786.2697000001,4690952.228599999],[945005.9271,4693373.426000001],[946173.3946000002,4694971.511399999],[945276.9027000004,4695657.0067],[944671.4063999997,4694610.5162],[943485.6654000003,4693841.0241],[943109.6700999998,4695252.512700001],[941922.1789999995,4694508.520300001],[941366.4310999997,4692407.038699999]]]},"properties":{"OBJECTID":5662,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69037,"PRO_COM_T":"069037","COMUNE":"Frisa","COMUNE_A":"","CC_UTS":0,"Shape_Leng":16906.073889,"Shape_Le_1":16906.073889,"Shape_Area":11563347.4293}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[965352.7077000001,4672751.673],[964609.9638,4672581.6756],[964554.7133999998,4671825.1822],[963297.2216999996,4670498.1941],[961984.2326999996,4670571.6951],[961437.9861000003,4669667.203400001],[961992.4792,4668084.715399999],[961101.9825999998,4664983.7425],[962333.4727999996,4664992.241900001],[964505.9538000003,4664441.2432],[965117.8820000002,4664838.3050999995],[965360.4480999997,4665527.232999999],[963711.2127,4666410.7272],[963967.9638,4668805.7072],[964819.7066000002,4668883.7051],[965602.1989000002,4667976.7117],[966996.6864999998,4667358.2151],[967986.6785000004,4667580.7118999995],[967946.1809,4669036.199899999],[965995.9493000004,4670197.6939],[965392.7051999997,4671100.1866],[965352.7077000001,4672751.673]]]},"properties":{"OBJECTID":5663,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69038,"PRO_COM_T":"069038","COMUNE":"Furci","COMUNE_A":"","CC_UTS":0,"Shape_Leng":31829.5401865,"Shape_Le_1":31829.5401865,"Shape_Area":25896060.3309}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[934012.4561999999,4649370.8937],[934185.1056000004,4649429.073899999],[935798.6780000003,4650756.7292],[933827.9446,4651873.886600001],[930757.9742,4654917.865],[928798.4885,4653279.380899999],[928704.7374,4651707.644200001],[929975.2271999996,4652071.889599999],[932399.7056999998,4650779.8981],[934012.4561999999,4649370.8937]]]},"properties":{"OBJECTID":5664,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69039,"PRO_COM_T":"069039","COMUNE":"Gamberale","COMUNE_A":"","CC_UTS":0,"Shape_Leng":19341.5455089,"Shape_Le_1":19341.5455089,"Shape_Area":15505414.5529}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[934008.2171,4671771.2195],[932520.2274000002,4670032.7357],[932794.7247000001,4669657.238500001],[933774.9644999998,4667918.752],[935319.9517000001,4667940.25],[936179.1925999997,4666038.2656],[937626.9287,4664924.272399999],[939549.9161,4667800.7458999995],[938605.4266999997,4670052.2282],[938613.1789999995,4671542.716600001],[938171.6834000004,4672435.209000001],[936128.9504000004,4672508.210899999],[934008.2171,4671771.2195]]]},"properties":{"OBJECTID":5665,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69040,"PRO_COM_T":"069040","COMUNE":"Gessopalena","COMUNE_A":"","CC_UTS":0,"Shape_Leng":24156.4648589,"Shape_Le_1":24156.4648589,"Shape_Area":31733079.276}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[958370.2655999996,4672964.179400001],[957732.2692999998,4671636.191299999],[958291.5137999998,4670204.204500001],[957289.7680000002,4667583.2259],[957622.7621999998,4665379.2436999995],[958742.7515000002,4664329.751],[961101.9825999998,4664983.7425],[961992.4792,4668084.715399999],[961437.9861000003,4669667.203400001],[961984.2326999996,4670571.6951],[963297.2216999996,4670498.1941],[964554.7133999998,4671825.1822],[964609.9638,4672581.6756],[963274.4753999999,4673391.669600001],[962493.7302000001,4671960.682700001],[961658.2368000001,4671578.1872000005],[959274.9172,4673938.296700001],[958370.2655999996,4672964.179400001]]]},"properties":{"OBJECTID":5666,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69041,"PRO_COM_T":"069041","COMUNE":"Gissi","COMUNE_A":"","CC_UTS":0,"Shape_Leng":34407.3753154,"Shape_Le_1":34407.3753154,"Shape_Area":36633800.2147}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[935031.2367000002,4695020.524499999],[936568.2260999996,4696503.5109],[936222.9856000002,4698054.663899999],[936863.9764999999,4699114.988299999],[936124.2348999996,4701059.972999999],[933879.9998000003,4697873.0023],[935031.2367000002,4695020.524499999]]]},"properties":{"OBJECTID":5667,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69042,"PRO_COM_T":"069042","COMUNE":"Giuliano Teatino","COMUNE_A":"","CC_UTS":0,"Shape_Leng":14706.7697277,"Shape_Le_1":14706.7697277,"Shape_Area":10036224.9767}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[937994.1961000003,4681400.6349],[938424.1946999999,4683398.1173],[939445.1869000001,4684135.6097],[939675.6880999999,4686680.088099999],[939048.9424999999,4686036.5942],[937616.4544000002,4686042.095899999],[936511.9643999999,4686758.0912999995],[935529.9726,4686762.092499999],[933975.2348999996,4686012.101199999],[932885.494,4686193.6008],[931907.5033999998,4687136.5942],[931469.506,4686210.102700001],[930440.9341000002,4686270.398],[930298.7674000002,4687295.0955],[929465.2748999996,4688217.088300001],[929475.0223000003,4686245.8312],[927318.0362999998,4682863.135],[924414.6127000004,4681499.039100001],[924218.5590000004,4680421.1589],[926064.7936000004,4680378.6569],[926910.2877000002,4681353.6478],[929480.2679000003,4682677.1337],[930387.7603000002,4682645.6329],[932492.9917000001,4681743.1379],[931364.75,4680745.147700001],[931672.9957999997,4679479.1579],[932510.2390000001,4679374.158],[933294.2352999998,4681693.138],[934769.4738999996,4682405.1303],[936457.4583,4681063.1394],[937994.1961000003,4681400.6349]]]},"properties":{"OBJECTID":5668,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69043,"PRO_COM_T":"069043","COMUNE":"Guardiagrele","COMUNE_A":"","CC_UTS":0,"Shape_Leng":52490.070252,"Shape_Le_1":52490.070252,"Shape_Area":56137277.8243}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[952294.8059999999,4664868.2546999995],[952610.3006999996,4662698.272600001],[953859.0384,4661286.7828],[954737.2810000004,4661248.2820999995],[956455.2674000002,4661841.274800001],[955064.5318999998,4664000.7586],[954852.6431999998,4665284.3440000005],[953658.5460999999,4665957.743899999],[952796.0528999995,4665631.748],[952294.8059999999,4664868.2546999995]]]},"properties":{"OBJECTID":5669,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69044,"PRO_COM_T":"069044","COMUNE":"Guilmi","COMUNE_A":"","CC_UTS":0,"Shape_Leng":14200.8391904,"Shape_Le_1":14200.8391904,"Shape_Area":12694828.3017}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[921948.8163999999,4670668.992900001],[923925.2988,4669747.748299999],[925852.5301999999,4667613.763900001],[927225.2675999999,4666634.270500001],[929290.2495999997,4666057.2729],[929811.4945999999,4665445.7774],[930746.4867000002,4665438.2763],[932674.7220999999,4666549.764799999],[932520.2251000004,4667962.2532],[932794.7247000001,4669657.238500001],[932520.2274000002,4670032.7357],[930960.4907999998,4670308.735300001],[928614.5114000002,4671194.730699999],[927700.5175999999,4670020.241599999],[926240.2792999996,4669555.747199999],[923764.3586999997,4670237.2404],[923498.3039999995,4671130.237199999],[921134.0744000003,4671663.2356],[921948.8163999999,4670668.992900001]]]},"properties":{"OBJECTID":5670,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69045,"PRO_COM_T":"069045","COMUNE":"Lama dei Peligni","COMUNE_A":"","CC_UTS":0,"Shape_Leng":31228.6448117,"Shape_Le_1":31228.6448117,"Shape_Area":31348700.2805}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[949928.5972999996,4682035.1142],[951615.8350999998,4683234.102700001],[951056.3398000002,4683500.6008],[947108.5480000004,4686901.9318],[947553.8743000003,4687875.0688000005],[947951.3727000002,4689065.808800001],[947630.3764000004,4689882.052100001],[948489.8701999998,4690831.043],[947691.8788999999,4692071.7849],[946107.7640000004,4693170.475],[946570.1419000002,4694386.268100001],[946173.3946000002,4694971.511399999],[945005.9271,4693373.426000001],[943786.2697000001,4690952.228599999],[941418.6804,4692093.541099999],[940690.6838999996,4689964.059900001],[940592.1836000001,4689241.5657],[941691.1747000003,4689161.565400001],[941749.0141000003,4687854.004799999],[942687.6640999997,4687499.5776],[942951.9102999996,4686148.5886],[943798.6529000001,4685511.5934],[944992.6387,4682434.1172],[947011.3687000005,4679783.636600001],[949928.5972999996,4682035.1142]]]},"properties":{"OBJECTID":5671,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69046,"PRO_COM_T":"069046","COMUNE":"Lanciano","COMUNE_A":"","CC_UTS":0,"Shape_Leng":48112.5249294,"Shape_Le_1":48112.5249294,"Shape_Area":66724095.9497}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[968859.1705999998,4667103.2148],[968463.4231000002,4666298.2223000005],[969383.1632000003,4664598.2355],[972409.1354999999,4662947.5787],[973381.2127,4664490.897500001],[974106.875,4665650.054],[968859.1705999998,4667103.2148]]]},"properties":{"OBJECTID":5672,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69047,"PRO_COM_T":"069047","COMUNE":"Lentella","COMUNE_A":"","CC_UTS":0,"Shape_Leng":15036.6337623,"Shape_Le_1":15036.6337623,"Shape_Area":12674466.9608}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[929885.7400000002,4662175.8047],[929301.2448000005,4662045.306500001],[927658.5115999999,4664360.2896],[922486.5581,4667449.269300001],[923953.7929999996,4665027.787799999],[928383.5007999996,4660418.321799999],[929912.7355000004,4658630.3346],[931042.9752000002,4657914.8390999995],[931602.7235000003,4660358.3179],[930077.7374,4661344.3115],[929885.7400000002,4662175.8047]]]},"properties":{"OBJECTID":5673,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69048,"PRO_COM_T":"069048","COMUNE":"Lettopalena","COMUNE_A":"","CC_UTS":0,"Shape_Leng":27857.2832024,"Shape_Le_1":27857.2832024,"Shape_Area":21215992.1652}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[957852.0037000002,4660243.786499999],[958694.2459000004,4659598.290899999],[959947.4831999997,4657841.304],[960873.6786000002,4658001.0956999995],[962148.2142000003,4659506.469699999],[962523.2152000004,4660533.7784],[960664.7308,4660493.781099999],[958701.7472999999,4660809.7807],[957852.0037000002,4660243.786499999]]]},"properties":{"OBJECTID":5674,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69049,"PRO_COM_T":"069049","COMUNE":"Liscia","COMUNE_A":"","CC_UTS":0,"Shape_Leng":12195.2858587,"Shape_Le_1":12195.2858587,"Shape_Area":8239574.1532}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[933879.9998000003,4697873.0023],[936124.2348999996,4701059.972999999],[937078.483,4702836.964299999],[937054.2344000004,4704037.9541],[937798.9759,4704728.442399999],[937357.7308999998,4705626.934900001],[938077.6470999997,4706655.1282],[936317.9955000002,4707198.9300999995],[935029.0016999999,4707024.426100001],[933875.7589999996,4705487.9394000005],[934848.9994000001,4704130.9495],[934909.2474999996,4703038.9584],[934375.0007999996,4701839.4695999995],[932757.0142999999,4701761.4725],[933238.568,4700861.778899999],[932734.7604,4698737.4967],[933879.9998000003,4697873.0023]]]},"properties":{"OBJECTID":5675,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69050,"PRO_COM_T":"069050","COMUNE":"Miglianico","COMUNE_A":"","CC_UTS":0,"Shape_Leng":26640.024994,"Shape_Le_1":26640.024994,"Shape_Area":22601264.9852}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[948307.8359000003,4662145.782500001],[947872.5873999996,4660355.7982],[947930.3355999999,4659279.8071],[947380.0888999999,4658227.8166000005],[948412.3623000002,4653294.8277],[949866.5626999997,4654001.849099999],[950757.0582999997,4656412.3277],[951977.8011999996,4658870.305500001],[953134.0427999999,4659868.295700001],[953859.0384,4661286.7828],[952610.3006999996,4662698.272600001],[952294.8059999999,4664868.2546999995],[949574.0768999998,4663388.770500001],[948307.8359000003,4662145.782500001]]]},"properties":{"OBJECTID":5676,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69051,"PRO_COM_T":"069051","COMUNE":"Montazzoli","COMUNE_A":"","CC_UTS":0,"Shape_Leng":28607.8466926,"Shape_Le_1":28607.8466926,"Shape_Area":39126316.5364}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[948412.3623000002,4653294.8277],[947380.0888999999,4658227.8166000005],[947930.3355999999,4659279.8071],[947872.5873999996,4660355.7982],[946901.8455999997,4660457.2984],[946629.3469000002,4659616.3059],[944813.3623000002,4659876.806],[945182.6054999996,4656838.8309],[945802.8492999999,4655733.840299999],[946814.0899,4655310.3418000005],[947310.0822999999,4652523.364700001],[948412.3623000002,4653294.8277]]]},"properties":{"OBJECTID":5677,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69052,"PRO_COM_T":"069052","COMUNE":"Monteferrante","COMUNE_A":"","CC_UTS":0,"Shape_Leng":21282.6580519,"Shape_Le_1":21282.6580519,"Shape_Area":15205267.1439}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[939451.9082000004,4660630.306299999],[939867.6536999997,4659833.8123],[942789.1271000002,4658024.324100001],[943361.3723999998,4658044.3234],[943028.1288000001,4661087.797900001],[942605.3833999997,4661901.2918],[939451.9082000004,4660630.306299999]]]},"properties":{"OBJECTID":5678,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69053,"PRO_COM_T":"069053","COMUNE":"Montelapiano","COMUNE_A":"","CC_UTS":0,"Shape_Leng":12410.7652986,"Shape_Le_1":12410.7652986,"Shape_Area":8291527.52511}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[937964.1714000003,4661298.802300001],[938431.6693000002,4662696.790200001],[935649.4731999999,4663801.327400001],[934415.4530999996,4662783.294500001],[932880.7159000002,4662789.2963],[933209.1878000004,4661862.6654],[931602.7235000003,4660358.3179],[931042.9752000002,4657914.8390999995],[929912.7355000004,4658630.3346],[929917.2335000001,4656851.3495000005],[928798.4885,4653279.380899999],[930757.9742,4654917.865],[931239.7230000002,4657404.3432],[932201.4659000002,4658242.335000001],[933504.9552999996,4658496.8313],[934505.4467000002,4657898.836100001],[935408.4403999997,4659033.325200001],[937964.1714000003,4661298.802300001]]]},"properties":{"OBJECTID":5679,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69054,"PRO_COM_T":"069054","COMUNE":"Montenerodomo","COMUNE_A":"","CC_UTS":0,"Shape_Leng":34862.5501389,"Shape_Le_1":34862.5501389,"Shape_Area":29720079.0753}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[970160.4205999998,4674852.149599999],[970098.4225000003,4676319.136399999],[968197.9424,4679519.612],[966780.4543000003,4679709.612199999],[966558.2049000002,4678696.6208999995],[966534.7163000004,4676552.729800001],[964985.4636000004,4675226.6521000005],[964751.4641000004,4674142.6613],[963274.4753999999,4673391.669600001],[964609.9638,4672581.6756],[965352.7077000001,4672751.673],[967713.9380000001,4673151.6657],[970160.4205999998,4674852.149599999]]]},"properties":{"OBJECTID":5680,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69055,"PRO_COM_T":"069055","COMUNE":"Monteodorisio","COMUNE_A":"","CC_UTS":0,"Shape_Leng":23789.7984526,"Shape_Le_1":23789.7984526,"Shape_Area":25333120.0958}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[947553.8743000003,4687875.0688000005],[947108.5480000004,4686901.9318],[951056.3398000002,4683500.6008],[951615.8350999998,4683234.102700001],[952257.0811999999,4684628.0897],[951756.0867999997,4685689.081599999],[952160.0845999997,4686645.5732],[950015.1042999998,4688115.0638999995],[947610.8739999998,4687869.5689],[947553.8743000003,4687875.0688000005]]]},"properties":{"OBJECTID":5681,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69056,"PRO_COM_T":"069056","COMUNE":"Mozzagrogna","COMUNE_A":"","CC_UTS":0,"Shape_Leng":16174.6771443,"Shape_Le_1":16174.6771443,"Shape_Area":14331772.7238}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[934056.2422000002,4692052.5502],[933905.4879999999,4688409.580700001],[933975.2348999996,4686012.101199999],[935529.9726,4686762.092499999],[936511.9643999999,4686758.0912999995],[937616.4544000002,4686042.095899999],[939048.9424999999,4686036.5942],[939675.6880999999,4686680.088099999],[940315.6834000004,4687223.582800001],[940592.1836000001,4689241.5657],[940690.6838999996,4689964.059900001],[939580.1920999996,4689341.0660999995],[937305.9617999997,4689376.0701],[935467.9775999999,4690315.5633000005],[935684.2275,4691849.0502],[934606.2370999996,4692490.5459],[935029.7346999999,4693349.0383],[934099.2430999996,4693961.5342999995],[934056.2422000002,4692052.5502]]]},"properties":{"OBJECTID":5682,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69057,"PRO_COM_T":"069057","COMUNE":"Orsogna","COMUNE_A":"","CC_UTS":0,"Shape_Leng":29300.3465278,"Shape_Le_1":29300.3465278,"Shape_Area":25236355.2769}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[941922.1789999995,4694508.520300001],[943109.6700999998,4695252.512700001],[943485.6654000003,4693841.0241],[944671.4063999997,4694610.5162],[945276.9027000004,4695657.0067],[944791.1573999999,4696214.502699999],[945686.6518000001,4697647.489700001],[946820.6429000003,4698012.985300001],[947207.8916999996,4698774.9804],[948480.9420999996,4698811.380000001],[947070.6438999996,4700329.4662],[946006.0855,4702401.680299999],[945708.6595999999,4703662.9408],[943914.6770000001,4705239.681600001],[942387.8541000001,4705812.973200001],[937918.4809999997,4708476.412699999],[938077.6470999997,4706655.1282],[937357.7308999998,4705626.934900001],[937798.9759,4704728.442399999],[939936.2073999997,4704177.4429],[939386.4583999999,4701208.4682],[939744.7038000003,4699994.9778],[940117.4507999998,4700011.977],[941922.1789999995,4694508.520300001]]]},"properties":{"OBJECTID":5683,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69058,"PRO_COM_T":"069058","COMUNE":"Ortona","COMUNE_A":"","CC_UTS":0,"Shape_Leng":46745.1184843,"Shape_Le_1":46745.1184843,"Shape_Area":70859735.8313}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[953928.0607000003,4679088.1346],[954404.5584000004,4680684.1197999995],[956382.0438000001,4682171.605],[956693.7925000004,4683053.5973000005],[955047.0894999998,4686571.749],[955393.7928999998,4687705.986199999],[952709.5810000002,4687287.067399999],[952160.0845999997,4686645.5732],[951756.0867999997,4685689.081599999],[952257.0811999999,4684628.0897],[951615.8350999998,4683234.102700001],[949928.5972999996,4682035.1142],[953049.8175999997,4678550.6404],[953928.0607000003,4679088.1346]]]},"properties":{"OBJECTID":5684,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69059,"PRO_COM_T":"069059","COMUNE":"Paglieta","COMUNE_A":"","CC_UTS":0,"Shape_Leng":25774.9136444,"Shape_Le_1":25774.9136444,"Shape_Area":33500901.2164}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[928704.7374,4651707.644200001],[928798.4885,4653279.380899999],[929917.2335000001,4656851.3495000005],[929912.7355000004,4658630.3346],[928383.5007999996,4660418.321799999],[923953.7929999996,4665027.787799999],[922486.5581,4667449.269300001],[922443.5587999998,4667720.517000001],[921370.8168000001,4666857.5254999995],[921433.8152000001,4665963.0329],[920777.0686999997,4664315.297499999],[920846.3159999996,4662471.812899999],[921610.3091000002,4662051.3156],[922611.8600000003,4656346.124299999],[921742.5509000001,4656006.8663],[921323.0538999997,4655554.3706],[922519.2917999998,4653713.8847],[923058.7850000001,4651778.4004],[923811.5270999996,4650555.4098000005],[926358.1980999997,4650038.238],[928704.7374,4651707.644200001]]]},"properties":{"OBJECTID":5685,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69060,"PRO_COM_T":"069060","COMUNE":"Palena","COMUNE_A":"","CC_UTS":0,"Shape_Leng":44786.0137886,"Shape_Le_1":44786.0137886,"Shape_Area":93830655.6423}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[963149.9804999996,4654878.378900001],[964965.1864999998,4653967.830499999],[964385.1933000004,4655531.3181],[964639.4448999995,4658652.291099999],[965956.6842,4658845.288000001],[966099.6858000001,4660970.7698],[966946.1801000005,4662099.759400001],[967279.6791000003,4663419.7478],[966553.5432000002,4664283.114399999],[965117.8820000002,4664838.3050999995],[964505.9538000003,4664441.2432],[962292.2188999997,4661832.267899999],[962523.2152000004,4660533.7784],[962148.2142000003,4659506.469699999],[960873.6786000002,4658001.0956999995],[963149.9804999996,4654878.378900001]]]},"properties":{"OBJECTID":5686,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69061,"PRO_COM_T":"069061","COMUNE":"Palmoli","COMUNE_A":"","CC_UTS":0,"Shape_Leng":28677.9915609,"Shape_Le_1":28677.9915609,"Shape_Area":32603582.2799}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[932510.2390000001,4679374.158],[931672.9957999997,4679479.1579],[931833.2437000005,4678729.413899999],[930633.5027999999,4677864.672800001],[928735.5180000002,4677579.177100001],[927381.2785999998,4676979.183800001],[928160.2702000001,4675390.6961],[929145.0126999998,4676015.1897],[931025.9970000004,4675942.188100001],[932820.9804999996,4674640.696799999],[932983.4793999996,4674698.1963],[934271.7204999998,4676078.183700001],[934412.4714000002,4677830.1688],[932510.2390000001,4679374.158]]]},"properties":{"OBJECTID":5687,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69062,"PRO_COM_T":"069062","COMUNE":"Palombaro","COMUNE_A":"","CC_UTS":0,"Shape_Leng":20397.9580162,"Shape_Le_1":20397.9580162,"Shape_Area":17306027.8417}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[942455.6414999999,4667401.246099999],[941325.1496000001,4666331.756200001],[940393.6542999996,4663900.7776],[939308.4133000001,4663874.779100001],[938431.6693000002,4662696.790200001],[937964.1714000003,4661298.802300001],[939053.4122000001,4661197.302100001],[941335.8959999997,4663448.7805],[942283.8877999997,4663285.2806],[942229.3896000003,4664445.7707],[943283.1317999996,4665250.762700001],[942455.6414999999,4667401.246099999]]]},"properties":{"OBJECTID":5688,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69063,"PRO_COM_T":"069063","COMUNE":"Pennadomo","COMUNE_A":"","CC_UTS":0,"Shape_Leng":19591.1538333,"Shape_Le_1":19591.1538333,"Shape_Area":10797695.4182}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[922950.8124000002,4674353.710899999],[924441.3006999996,4675016.203600001],[926584.7827000003,4674907.702],[928160.2702000001,4675390.6961],[927381.2785999998,4676979.183800001],[928735.5180000002,4677579.177100001],[930633.5027999999,4677864.672800001],[931833.2437000005,4678729.413899999],[931672.9957999997,4679479.1579],[931364.75,4680745.147700001],[932492.9917000001,4681743.1379],[930387.7603000002,4682645.6329],[929480.2679000003,4682677.1337],[926910.2877000002,4681353.6478],[926064.7936000004,4680378.6569],[924218.5590000004,4680421.1589],[924174.8092,4680209.160700001],[923784.8123000003,4680154.661599999],[922954.8181999996,4679341.419199999],[922298.8224,4678288.6788],[922922.8142999997,4675795.198899999],[922950.8124000002,4674353.710899999]]]},"properties":{"OBJECTID":5689,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69064,"PRO_COM_T":"069064","COMUNE":"Pennapiedimonte","COMUNE_A":"","CC_UTS":0,"Shape_Leng":33022.5403673,"Shape_Le_1":33022.5403673,"Shape_Area":47065126.3692}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[943707.8914999999,4675838.674000001],[944918.8809000002,4675322.926899999],[948142.8529000003,4674665.1779],[947789.8575999998,4675955.4178],[945616.8518000003,4677431.098200001],[943707.8914999999,4675838.674000001]]]},"properties":{"OBJECTID":5690,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69065,"PRO_COM_T":"069065","COMUNE":"Perano","COMUNE_A":"","CC_UTS":0,"Shape_Leng":11604.5347995,"Shape_Le_1":11604.5347995,"Shape_Area":6569413.16964}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[934505.4467000002,4657898.836100001],[933504.9552999996,4658496.8313],[932201.4659000002,4658242.335000001],[931239.7230000002,4657404.3432],[930757.9742,4654917.865],[933827.9446,4651873.886600001],[935798.6780000003,4650756.7292],[937137.6668999996,4651967.8818],[937905.2474999996,4653226.206700001],[936208.9289999995,4654401.3629],[935478.4358999999,4655331.3555],[935824.6841000002,4656751.343800001],[934505.4467000002,4657898.836100001]]]},"properties":{"OBJECTID":5691,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69066,"PRO_COM_T":"069066","COMUNE":"Pizzoferrato","COMUNE_A":"","CC_UTS":0,"Shape_Leng":22874.2956892,"Shape_Le_1":22874.2956892,"Shape_Area":31004441.642}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[937305.9617999997,4689376.0701],[939580.1920999996,4689341.0660999995],[940690.6838999996,4689964.059900001],[941418.6804,4692093.541099999],[941366.4310999997,4692407.038699999],[940416.6901000002,4693246.5327],[939379.9488000004,4693376.033],[937305.9617999997,4689376.0701]]]},"properties":{"OBJECTID":5692,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69067,"PRO_COM_T":"069067","COMUNE":"Poggiofiorito","COMUNE_A":"","CC_UTS":0,"Shape_Leng":13352.1271093,"Shape_Le_1":13352.1271093,"Shape_Area":10049424.8044}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[957773.2768999999,4677777.1403],[958868.4962999998,4677378.319399999],[961308.4977000002,4678068.1329],[962285.4896,4678084.1315],[964007.7263000002,4678876.6227],[966558.2049000002,4678696.6208999995],[966780.4543000003,4679709.612199999],[966393.4619000005,4683047.585999999],[965623.9685000004,4682881.5879999995],[963403.9844000004,4681309.6032],[962027.2452999996,4680893.1084],[959504.7660999997,4680717.1131],[959028.0190000003,4679896.6206],[957365.0312999999,4678708.1326],[957773.2768999999,4677777.1403]]]},"properties":{"OBJECTID":5693,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69068,"PRO_COM_T":"069068","COMUNE":"Pollutri","COMUNE_A":"","CC_UTS":0,"Shape_Leng":26053.6506028,"Shape_Le_1":26053.6506028,"Shape_Area":26106485.5432}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[920869.3399,4683005.6414],[923784.8123000003,4680154.661599999],[924174.8092,4680209.160700001],[923460.1745999996,4681341.931299999],[924415.8115999997,4683718.1317],[925501.0539999995,4684967.119999999],[926967.9971000003,4687627.577099999],[927536.2594999997,4687945.091700001],[926008.1953999996,4688839.5108],[925045.8043999998,4688946.591600001],[924233.9587000003,4687487.5243999995],[923669.6513,4687453.3029],[922379.0834999997,4687123.1074],[921981.5854000002,4685923.617799999],[920674.0954,4685306.124399999],[921235.3277000003,4683393.9366],[920869.3399,4683005.6414]]]},"properties":{"OBJECTID":5694,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69069,"PRO_COM_T":"069069","COMUNE":"Pretoro","COMUNE_A":"","CC_UTS":0,"Shape_Leng":28043.0296992,"Shape_Le_1":28043.0296992,"Shape_Area":25918085.5583}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[938882.6562999999,4655287.3517],[938025.9145,4655608.8511],[936387.6798999999,4656963.841700001],[935824.6841000002,4656751.343800001],[935478.4358999999,4655331.3555],[936208.9289999995,4654401.3629],[937905.2474999996,4653226.206700001],[938302.744,4653391.2042],[938882.6562999999,4655287.3517]]]},"properties":{"OBJECTID":5695,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69070,"PRO_COM_T":"069070","COMUNE":"Quadri","COMUNE_A":"","CC_UTS":0,"Shape_Leng":10997.886095,"Shape_Le_1":10997.886095,"Shape_Area":7388368.91494}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[927536.2594999997,4687945.091700001],[926967.9971000003,4687627.577099999],[925501.0539999995,4684967.119999999],[924415.8115999997,4683718.1317],[923460.1745999996,4681341.931299999],[924174.8092,4680209.160700001],[924218.5590000004,4680421.1589],[924414.6127000004,4681499.039100001],[927318.0362999998,4682863.135],[929475.0223000003,4686245.8312],[929465.2748999996,4688217.088300001],[928915.2801000001,4688777.084100001],[927536.2594999997,4687945.091700001]]]},"properties":{"OBJECTID":5696,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69071,"PRO_COM_T":"069071","COMUNE":"Rapino","COMUNE_A":"","CC_UTS":0,"Shape_Leng":23208.2150363,"Shape_Le_1":23208.2150363,"Shape_Area":20609727.2485}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[929624.2883000001,4700843.4827],[932757.0142999999,4701761.4725],[934375.0007999996,4701839.4695999995],[934909.2474999996,4703038.9584],[934848.9994000001,4704130.9495],[933875.7589999996,4705487.9394000005],[933747.0130000003,4706654.432600001],[932708.7717000004,4707043.9300999995],[931372.9530999996,4705179.0251],[929551.551,4704037.969900001],[930122.7107999995,4703302.1666],[928934.5449000001,4701568.977499999],[929624.2883000001,4700843.4827]]]},"properties":{"OBJECTID":5697,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69072,"PRO_COM_T":"069072","COMUNE":"Ripa Teatina","COMUNE_A":"","CC_UTS":0,"Shape_Leng":20583.5882152,"Shape_Le_1":20583.5882152,"Shape_Area":20396052.6576}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[923669.6513,4687453.3029],[924233.9587000003,4687487.5243999995],[925045.8043999998,4688946.591600001],[924230.3207,4690471.574999999],[925543.3106000004,4691184.067600001],[925856.2824999997,4692501.0812],[925003.0689000003,4693941.0463],[924826.5702999998,4693564.550000001],[921730.3443,4692924.057600001],[921888.8415000001,4691670.5678],[921188.3476999998,4690996.076300001],[921765.0619000001,4689167.893999999],[923669.6513,4687453.3029]]]},"properties":{"OBJECTID":5698,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69073,"PRO_COM_T":"069073","COMUNE":"Roccamontepiano","COMUNE_A":"","CC_UTS":0,"Shape_Leng":19325.5342926,"Shape_Le_1":19325.5342926,"Shape_Area":18128771.8062}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[953779.0399000002,4693818.1515],[953565.8340999996,4694828.755100001],[951484.8531999998,4696554.492799999],[949071.8706,4694814.009500001],[948346.8760000002,4694610.509500001],[947691.8788999999,4692071.7849],[948489.8701999998,4690831.043],[949132.3655000003,4691167.0397],[950575.1026999997,4690334.545],[952529.3402000004,4693443.0164],[953779.0399000002,4693818.1515]]]},"properties":{"OBJECTID":5699,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69074,"PRO_COM_T":"069074","COMUNE":"Rocca San Giovanni","COMUNE_A":"","CC_UTS":0,"Shape_Leng":20872.100724,"Shape_Le_1":20872.100724,"Shape_Area":21663195.9293}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[940025.4225000003,4675090.686899999],[937981.1881999997,4674571.1938000005],[938171.6834000004,4672435.209000001],[938613.1789999995,4671542.716600001],[938605.4266999997,4670052.2282],[939549.9161,4667800.7458999995],[942348.3931,4667512.2458999995],[942911.1412000004,4670212.221899999],[942187.2079999996,4670975.6910999995],[942475.8978000004,4672711.201300001],[939747.1711999997,4673261.700099999],[939335.4250999996,4673688.696900001],[940025.4225000003,4675090.686899999]]]},"properties":{"OBJECTID":5700,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69075,"PRO_COM_T":"069075","COMUNE":"Roccascalegna","COMUNE_A":"","CC_UTS":0,"Shape_Leng":23271.7062212,"Shape_Le_1":23271.7062212,"Shape_Area":22940228.0675}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[954737.2810000004,4661248.2820999995],[953859.0384,4661286.7828],[953134.0427999999,4659868.295700001],[951977.8011999996,4658870.305500001],[950757.0582999997,4656412.3277],[949866.5626999997,4654001.849099999],[951305.5488,4652453.860300001],[953706.6933000004,4651911.575099999],[953605.2818999998,4654397.841],[955006.2714,4655325.331499999],[955510.0186000001,4656454.3213],[956434.0111999996,4656708.3181],[956031.0166999996,4658182.306700001],[956244.2663000003,4659379.2961],[954860.0983999996,4660481.625600001],[954737.2810000004,4661248.2820999995]]]},"properties":{"OBJECTID":5701,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69076,"PRO_COM_T":"069076","COMUNE":"Roccaspinalveti","COMUNE_A":"","CC_UTS":0,"Shape_Leng":25734.6386991,"Shape_Le_1":25734.6386991,"Shape_Area":33033611.6564}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[947310.0822999999,4652523.364700001],[946814.0899,4655310.3418000005],[945802.8492999999,4655733.840299999],[945182.6054999996,4656838.8309],[944090.8653999995,4657472.328],[943367.8717,4656865.334000001],[944088.1138000004,4655909.8407000005],[944878.8575999998,4655796.3418000005],[945286.102,4654433.3518],[944362.6074999999,4652643.368000001],[946154.5909000002,4651562.8741999995],[946169.8589000003,4650771.4058],[947770.0768999998,4651226.375],[947310.0822999999,4652523.364700001]]]},"properties":{"OBJECTID":5702,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69077,"PRO_COM_T":"069077","COMUNE":"Roio del Sangro","COMUNE_A":"","CC_UTS":0,"Shape_Leng":20229.1270213,"Shape_Le_1":20229.1270213,"Shape_Area":11946848.5966}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[941678.9627,4651998.210000001],[942156.2483000001,4650741.386],[943499.7348999996,4649005.8989],[943517.0257000001,4648334.0715],[944820.8479000004,4648207.404100001],[944937.0987,4649735.891000001],[946191.3389999997,4650442.7173],[946169.8589000003,4650771.4058],[946154.5909000002,4651562.8741999995],[944362.6074999999,4652643.368000001],[945286.102,4654433.3518],[944878.8575999998,4655796.3418000005],[944088.1138000004,4655909.8407000005],[943248.1195999999,4655137.3476],[943298.8683000002,4654054.8576],[942020.8788999999,4653595.3621],[941678.9627,4651998.210000001]]]},"properties":{"OBJECTID":5703,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69078,"PRO_COM_T":"069078","COMUNE":"Rosello","COMUNE_A":"","CC_UTS":0,"Shape_Leng":22110.0151758,"Shape_Le_1":22110.0151758,"Shape_Area":19063475.6464}},
+{"type":"Feature","geometry":{"type":"MultiPolygon","coordinates":[[[[958701.7472999999,4660809.7807],[960664.7308,4660493.781099999],[962523.2152000004,4660533.7784],[962292.2188999997,4661832.267899999],[964505.9538000003,4664441.2432],[962333.4727999996,4664992.241900001],[961101.9825999998,4664983.7425],[958742.7515000002,4664329.751],[959324.2451,4663162.2601],[958355.0016999999,4661967.771299999],[958701.7472999999,4660809.7807]]],[[[966996.6864999998,4667358.2151],[965602.1989000002,4667976.7117],[964819.7066000002,4668883.7051],[963967.9638,4668805.7072],[963711.2127,4666410.7272],[965360.4480999997,4665527.232999999],[966996.6864999998,4667358.2151]]]]},"properties":{"OBJECTID":5704,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69079,"PRO_COM_T":"069079","COMUNE":"San Buono","COMUNE_A":"","CC_UTS":0,"Shape_Leng":29739.3328058,"Shape_Le_1":29739.3328058,"Shape_Area":25474607.8215}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[962898.9965000004,4645277.2695],[963658.1882999996,4647194.888699999],[964373.6835000003,4648083.214199999],[961937.2055000002,4649264.8737],[960682.4642000003,4647835.3873],[961080.0318,4646444.6435],[962898.9965000004,4645277.2695]]]},"properties":{"OBJECTID":5705,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69080,"PRO_COM_T":"069080","COMUNE":"San Giovanni Lipioni","COMUNE_A":"","CC_UTS":0,"Shape_Leng":11597.8131108,"Shape_Le_1":11597.8131108,"Shape_Area":8795072.79182}},
+{"type":"Feature","geometry":{"type":"MultiPolygon","coordinates":[[[[924556.5876000002,4706742.941199999],[926614.3196,4706088.943],[929618.2988,4709575.910599999],[927129.1580999997,4711023.7106],[926516.8876999998,4710265.486199999],[925402.8355999999,4711231.401900001],[925249.0855999999,4710029.9122],[924335.5917999996,4708955.4223],[924556.5876000002,4706742.941199999]]],[[[929066.3011999996,4706973.9343],[930623.0449000001,4708698.4255],[930088.5494999997,4708820.6752],[929066.3011999996,4706973.9343]]]]},"properties":{"OBJECTID":5706,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69081,"PRO_COM_T":"069081","COMUNE":"San Giovanni Teatino","COMUNE_A":"","CC_UTS":0,"Shape_Leng":24751.3098819,"Shape_Le_1":24751.3098819,"Shape_Area":17856328.5127}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[929702.7741999999,4689550.076199999],[928915.2801000001,4688777.084100001],[929465.2748999996,4688217.088300001],[930298.7674000002,4687295.0955],[930440.9341000002,4686270.398],[931469.506,4686210.102700001],[931907.5033999998,4687136.5942],[931513.2593,4689634.5734],[931030.7644999996,4690589.066],[929702.7741999999,4689550.076199999]]]},"properties":{"OBJECTID":5707,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69082,"PRO_COM_T":"069082","COMUNE":"San Martino sulla Marrucina","COMUNE_A":"","CC_UTS":0,"Shape_Leng":11692.1660595,"Shape_Le_1":11692.1660595,"Shape_Area":7362738.18855}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[976356.2752999999,4667299.703400001],[977485.5998999998,4667936.196599999],[978693.0924000004,4669876.6787],[976970.1079000002,4670819.173],[978173.4269000003,4673763.205499999],[975807.8733999999,4674757.6427],[975678.3728,4673875.6493],[974646.1292000003,4672246.1643],[972856.1414999999,4670215.183800001],[975415.869,4669292.688100001],[976356.2752999999,4667299.703400001]]]},"properties":{"OBJECTID":5708,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69083,"PRO_COM_T":"069083","COMUNE":"San Salvo","COMUNE_A":"","CC_UTS":0,"Shape_Leng":22244.5503629,"Shape_Le_1":22244.5503629,"Shape_Area":19895500.8347}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[947610.8739999998,4687869.5689],[950015.1042999998,4688115.0638999995],[952160.0845999997,4686645.5732],[952709.5810000002,4687287.067399999],[952006.8383,4688505.058],[951053.3468000004,4689087.804199999],[948623.6375000002,4688988.348200001],[947610.8739999998,4687869.5689]]]},"properties":{"OBJECTID":5709,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69084,"PRO_COM_T":"069084","COMUNE":"Santa Maria Imbaro","COMUNE_A":"","CC_UTS":0,"Shape_Leng":12491.2496314,"Shape_Le_1":12491.2496314,"Shape_Area":5630316.89496}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[945799.3777000001,4678800.646500001],[947011.3687000005,4679783.636600001],[944992.6387,4682434.1172],[942635.4080999997,4682100.6229],[941254.1703000003,4682705.6195],[940005.6829000004,4684438.106799999],[939445.1869000001,4684135.6097],[938424.1946999999,4683398.1173],[937994.1961000003,4681400.6349],[938280.6936999997,4681029.638499999],[941037.6705,4680818.1369],[943516.398,4679139.1479],[944497.3876999998,4678136.1536],[945799.3777000001,4678800.646500001]]]},"properties":{"OBJECTID":5710,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69085,"PRO_COM_T":"069085","COMUNE":"Sant'Eusanio del Sangro","COMUNE_A":"","CC_UTS":0,"Shape_Leng":25112.7243754,"Shape_Le_1":25112.7243754,"Shape_Area":24162195.0833}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[946173.3946000002,4694971.511399999],[946570.1419000002,4694386.268100001],[947573.6333999997,4695337.0067],[948346.8760000002,4694610.509500001],[949071.8706,4694814.009500001],[951484.8531999998,4696554.492799999],[948480.9420999996,4698811.380000001],[947207.8916999996,4698774.9804],[946820.6429000003,4698012.985300001],[945686.6518000001,4697647.489700001],[944791.1573999999,4696214.502699999],[945276.9027000004,4695657.0067],[946173.3946000002,4694971.511399999]]]},"properties":{"OBJECTID":5711,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69086,"PRO_COM_T":"069086","COMUNE":"San Vito Chietino","COMUNE_A":"","CC_UTS":0,"Shape_Leng":17955.5843435,"Shape_Le_1":17955.5843435,"Shape_Area":17255264.3986}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[959274.9172,4673938.296700001],[961658.2368000001,4671578.1872000005],[962493.7302000001,4671960.682700001],[963274.4753999999,4673391.669600001],[964751.4641000004,4674142.6613],[964985.4636000004,4675226.6521000005],[966534.7163000004,4676552.729800001],[966558.2049000002,4678696.6208999995],[964007.7263000002,4678876.6227],[962285.4896,4678084.1315],[961308.4977000002,4678068.1329],[958868.4962999998,4677378.319399999],[957773.2768999999,4677777.1403],[956880.8014000002,4675282.293500001],[957640.5229000002,4673953.6719],[959274.9172,4673938.296700001]]]},"properties":{"OBJECTID":5712,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69087,"PRO_COM_T":"069087","COMUNE":"Scerni","COMUNE_A":"","CC_UTS":0,"Shape_Leng":31180.3182486,"Shape_Le_1":31180.3182486,"Shape_Area":41320221.2141}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[956443.7494000001,4647644.394200001],[954907.7620000001,4647417.3981],[952336.7814999996,4645756.4153],[952765.4425999997,4644096.0956],[953267.2682999996,4641508.616800001],[954204.6328999996,4639471.466],[953473.2622999996,4638105.978499999],[956066.6567000002,4637654.6458],[957348.2311000004,4639286.6304],[959575.3397000004,4641078.445599999],[959567.2166999998,4642456.768100001],[956950.9929,4645868.408500001],[956443.7494000001,4647644.394200001]]]},"properties":{"OBJECTID":5713,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69088,"PRO_COM_T":"069088","COMUNE":"Schiavi di Abruzzo","COMUNE_A":"","CC_UTS":0,"Shape_Leng":28544.1528401,"Shape_Le_1":28544.1528401,"Shape_Area":45717579.799}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[922443.5587999998,4667720.517000001],[922486.5581,4667449.269300001],[927658.5115999999,4664360.2896],[929301.2448000005,4662045.306500001],[929885.7400000002,4662175.8047],[929811.4945999999,4665445.7774],[929290.2495999997,4666057.2729],[927225.2675999999,4666634.270500001],[925852.5301999999,4667613.763900001],[923925.2988,4669747.748299999],[921948.8163999999,4670668.992900001],[921921.3152000001,4669472.0030000005],[922443.5587999998,4667720.517000001]]]},"properties":{"OBJECTID":5714,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69089,"PRO_COM_T":"069089","COMUNE":"Taranta Peligna","COMUNE_A":"","CC_UTS":0,"Shape_Leng":25994.5774869,"Shape_Le_1":25994.5774869,"Shape_Area":21696731.7022}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[938572.4623999996,4699094.9868],[939744.7038000003,4699994.9778],[939386.4583999999,4701208.4682],[939936.2073999997,4704177.4429],[937798.9759,4704728.442399999],[937054.2344000004,4704037.9541],[937078.483,4702836.964299999],[936124.2348999996,4701059.972999999],[936863.9764999999,4699114.988299999],[938572.4623999996,4699094.9868]]]},"properties":{"OBJECTID":5715,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69090,"PRO_COM_T":"069090","COMUNE":"Tollo","COMUNE_A":"","CC_UTS":0,"Shape_Leng":16703.297814,"Shape_Le_1":16703.297814,"Shape_Area":14958464.4859}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[958573.5247999998,4681538.1076],[959269.1661,4682133.7656],[958857.2779999999,4685879.571],[960440.0168000003,4687335.0569],[961697.2560999999,4687108.5572999995],[962955.9967,4687735.050799999],[959169.0849000001,4689627.361300001],[957511.0455,4690828.2815000005],[956646.5521,4690072.0395],[955393.7928999998,4687705.986199999],[955047.0894999998,4686571.749],[956693.7925000004,4683053.5973000005],[956935.2890999997,4682077.605],[958573.5247999998,4681538.1076]]]},"properties":{"OBJECTID":5716,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69091,"PRO_COM_T":"069091","COMUNE":"Torino di Sangro","COMUNE_A":"","CC_UTS":0,"Shape_Leng":29489.2674936,"Shape_Le_1":29489.2674936,"Shape_Area":32048459.156}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[946905.6069999998,4669639.2215],[946351.8156000003,4668496.645300001],[946450.6074000001,4666836.7456],[945967.6106000002,4666087.252800001],[947717.8443,4664678.262499999],[949673.3266000003,4663791.767000001],[951082.5663000001,4664973.5053],[951881.0615999997,4666580.740900001],[951529.3154999996,4667309.735200001],[951833.3150000004,4668959.221000001],[950086.5811000001,4670119.7137],[948538.5942000002,4670337.2136],[946963.3565999996,4669702.720899999],[946905.6069999998,4669639.2215]]]},"properties":{"OBJECTID":5717,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69092,"PRO_COM_T":"069092","COMUNE":"Tornareccio","COMUNE_A":"","CC_UTS":0,"Shape_Leng":21392.2081911,"Shape_Le_1":21392.2081911,"Shape_Area":28024057.0357}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[957037.7485999996,4650910.365900001],[957677.9916000003,4649593.3762],[956607.4983000001,4647801.8927],[957856.4863999998,4646730.4001],[961080.0318,4646444.6435],[960682.4642000003,4647835.3873],[961937.2055000002,4649264.8737],[961093.2159000002,4651826.8532],[962255.4590999996,4653408.8399],[960667.9722999996,4653560.8401],[959172.7319999998,4651910.354800001],[957037.7485999996,4650910.365900001]]]},"properties":{"OBJECTID":5718,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69093,"PRO_COM_T":"069093","COMUNE":"Torrebruna","COMUNE_A":"","CC_UTS":0,"Shape_Leng":23163.2851507,"Shape_Le_1":23163.2851507,"Shape_Area":23537130.7301}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[929551.551,4704037.969900001],[931372.9530999996,4705179.0251],[932708.7717000004,4707043.9300999995],[933234.7675999999,4708140.9186],[932087.2865000004,4709419.422499999],[930623.0449000001,4708698.4255],[929066.3011999996,4706973.9343],[927931.8071999997,4704761.4526],[929551.551,4704037.969900001]]]},"properties":{"OBJECTID":5719,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69094,"PRO_COM_T":"069094","COMUNE":"Torrevecchia Teatina","COMUNE_A":"","CC_UTS":0,"Shape_Leng":16406.3514956,"Shape_Le_1":16406.3514956,"Shape_Area":14770675.4864}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[942348.3931,4667512.2458999995],[939549.9161,4667800.7458999995],[937626.9287,4664924.272399999],[936179.1925999997,4666038.2656],[935319.9517000001,4667940.25],[933774.9644999998,4667918.752],[932794.7247000001,4669657.238500001],[932520.2251000004,4667962.2532],[932674.7220999999,4666549.764799999],[930746.4867000002,4665438.2763],[931386.9808,4664959.7796],[932880.7159000002,4662789.2963],[934415.4530999996,4662783.294500001],[935649.4731999999,4663801.327400001],[938431.6693000002,4662696.790200001],[939308.4133000001,4663874.779100001],[940393.6542999996,4663900.7776],[941325.1496000001,4666331.756200001],[942455.6414999999,4667401.246099999],[942348.3931,4667512.2458999995]]]},"properties":{"OBJECTID":5720,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69095,"PRO_COM_T":"069095","COMUNE":"Torricella Peligna","COMUNE_A":"","CC_UTS":0,"Shape_Leng":36757.7794954,"Shape_Le_1":36757.7794954,"Shape_Area":36132230.4962}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[947691.8788999999,4692071.7849],[948346.8760000002,4694610.509500001],[947573.6333999997,4695337.0067],[946570.1419000002,4694386.268100001],[946107.7640000004,4693170.475],[947691.8788999999,4692071.7849]]]},"properties":{"OBJECTID":5721,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69096,"PRO_COM_T":"069096","COMUNE":"Treglio","COMUNE_A":"","CC_UTS":0,"Shape_Leng":11346.5202832,"Shape_Le_1":11346.5202832,"Shape_Area":4752524.81186}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[966129.9250999996,4653010.670399999],[968038.0869000005,4654132.9594],[969756.3986,4656019.473300001],[969812.9823000003,4656545.468900001],[969850.8995000003,4657280.6296],[967420.1710000001,4658184.7914],[966472.6787,4658037.7939],[965956.6842,4658845.288000001],[964639.4448999995,4658652.291099999],[964385.1933000004,4655531.3181],[964965.1864999998,4653967.830499999],[966129.9250999996,4653010.670399999]]]},"properties":{"OBJECTID":5722,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69097,"PRO_COM_T":"069097","COMUNE":"Tufillo","COMUNE_A":"","CC_UTS":0,"Shape_Leng":18610.2476341,"Shape_Le_1":18610.2476341,"Shape_Area":21511426.4182}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[932391.2620999999,4697870.0044],[931749.6841000002,4697291.7619],[930825.2758999998,4698581.0002],[929754.0336999996,4697868.507300001],[930323.4846999999,4696875.897299999],[929631.0318,4695159.030300001],[931091.7095999997,4693619.823799999],[930937.5180000002,4692922.546700001],[932106.2572999997,4692050.5526],[932352.0055999998,4692253.5507],[932725.1903999997,4693562.298800001],[931882.7629000004,4695071.027899999],[932912.5069000004,4697261.0085],[932629.2598000001,4697715.005100001],[932391.2620999999,4697870.0044]]]},"properties":{"OBJECTID":5723,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69098,"PRO_COM_T":"069098","COMUNE":"Vacri","COMUNE_A":"","CC_UTS":0,"Shape_Leng":18469.5083596,"Shape_Le_1":18469.5083596,"Shape_Area":12093775.3933}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[966393.4619000005,4683047.585999999],[966780.4543000003,4679709.612199999],[968197.9424,4679519.612],[970098.4225000003,4676319.136399999],[970160.4205999998,4674852.149599999],[970697.6401000004,4673733.0251],[970718.6615000004,4671974.671599999],[971623.1535,4671593.673599999],[972856.1414999999,4670215.183800001],[974646.1292000003,4672246.1643],[975678.3728,4673875.6493],[975807.8733999999,4674757.6427],[973414.8953,4676628.8794],[972811.9013999999,4677582.872099999],[973089.4024,4679463.6076],[972688.1580999997,4680716.598099999],[972300.4161,4684521.316500001],[970493.4305999996,4685000.0637],[966355.3854999999,4686554.0320999995],[966653.4632000001,4685685.0627],[966109.7156999996,4684206.5756],[966393.4619000005,4683047.585999999]]]},"properties":{"OBJECTID":5724,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69099,"PRO_COM_T":"069099","COMUNE":"Vasto","COMUNE_A":"","CC_UTS":0,"Shape_Leng":44645.97164,"Shape_Le_1":44645.97164,"Shape_Area":71296311.6208}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[960440.0168000003,4687335.0569],[958857.2779999999,4685879.571],[959269.1661,4682133.7656],[958573.5247999998,4681538.1076],[960145.7620999999,4681748.603700001],[961260.7555999998,4683695.5866],[961546.2551999995,4685503.570699999],[959921.5185000002,4685324.574200001],[960440.0168000003,4687335.0569]]]},"properties":{"OBJECTID":5725,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69100,"PRO_COM_T":"069100","COMUNE":"Villalfonsina","COMUNE_A":"","CC_UTS":0,"Shape_Leng":19828.6480633,"Shape_Le_1":19828.6480633,"Shape_Area":9116969.37633}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[932734.7604,4698737.4967],[933238.568,4700861.778899999],[932757.0142999999,4701761.4725],[929624.2883000001,4700843.4827],[929248.9844000004,4699997.237],[929754.0336999996,4697868.507300001],[930825.2758999998,4698581.0002],[931749.6841000002,4697291.7619],[932391.2620999999,4697870.0044],[932734.7604,4698737.4967]]]},"properties":{"OBJECTID":5726,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69101,"PRO_COM_T":"069101","COMUNE":"Villamagna","COMUNE_A":"","CC_UTS":0,"Shape_Leng":16914.0771005,"Shape_Le_1":16914.0771005,"Shape_Area":12643281.6909}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[943634.6283999998,4664909.2651],[943283.1317999996,4665250.762700001],[942229.3896000003,4664445.7707],[942283.8877999997,4663285.2806],[942605.3833999997,4661901.2918],[943028.1288000001,4661087.797900001],[943361.3723999998,4658044.3234],[942789.1271000002,4658024.324100001],[942282.1293000001,4656430.3379999995],[943248.1195999999,4655137.3476],[944088.1138000004,4655909.8407000005],[943367.8717,4656865.334000001],[944090.8653999995,4657472.328],[945182.6054999996,4656838.8309],[944813.3623000002,4659876.806],[944625.8662,4661703.2908],[943983.3743000003,4663910.2731],[943634.6283999998,4664909.2651]]]},"properties":{"OBJECTID":5727,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69102,"PRO_COM_T":"069102","COMUNE":"Villa Santa Maria","COMUNE_A":"","CC_UTS":0,"Shape_Leng":26963.9416425,"Shape_Le_1":26963.9416425,"Shape_Area":16403725.0848}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[944625.8662,4661703.2908],[944813.3623000002,4659876.806],[946629.3469000002,4659616.3059],[946901.8455999997,4660457.2984],[946453.6009,4661631.7892],[945500.3596999999,4662100.2871],[944625.8662,4661703.2908]]]},"properties":{"OBJECTID":5728,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69103,"PRO_COM_T":"069103","COMUNE":"Pietraferrazzana","COMUNE_A":"","CC_UTS":0,"Shape_Leng":8219.62015895,"Shape_Le_1":8219.62015895,"Shape_Area":4408003.44066}},
+{"type":"Feature","geometry":{"type":"Polygon","coordinates":[[[942282.1293000001,4656430.3379999995],[942789.1271000002,4658024.324100001],[939867.6536999997,4659833.8123],[940436.1473000003,4658130.3269],[940462.1897999998,4656805.6526999995],[941729.3831000002,4655799.343900001],[942282.1293000001,4656430.3379999995]]]},"properties":{"OBJECTID":5729,"COD_RIP":4,"COD_REG":13,"COD_PROV":69,"COD_CM":0,"COD_UTS":69,"PRO_COM":69104,"PRO_COM_T":"069104","COMUNE":"Fallo","COMUNE_A":"","CC_UTS":0,"Shape_Leng":10910.2282014,"Shape_Le_1":10910.2282014,"Shape_Area":6102519.37926}}
+]};
+    const WHATSAPP = "393208677770";
+    const properties = [
+      {city:"Montesilvano",title:"Trilocale con terrazzo panoramico",address:"Via Giuseppe di Vittorio 33 · Centro-Spiaggia",price:92000,sqm:94,rooms:3,type:"Appartamento · nuda proprietà",url:"https://www.idealista.it/pro/living-gruppo-immobiliare/immobile/35734490/",image:"https://img4.idealista.it/blur/WEB_DETAIL_TOP-L-L/0/id.pro.it.image.master/60/98/da/801039366.jpg"},
+      {city:"Loreto Aprutino",title:"Villa plurifamiliare con uliveto e vigneto",address:"Contrada Rielli 1",price:430000,sqm:575,rooms:11,type:"Villa",url:"https://www.idealista.it/pro/living-gruppo-immobiliare/immobile/34954310/",image:"https://img4.idealista.it/blur/WEB_DETAIL_TOP-L-L/0/id.pro.it.image.master/94/c0/d6/775526807.jpg"},
+      {city:"San Giovanni Teatino",title:"Villa indipendente panoramica",address:"Via Lazio 10 · Sambuceto",price:495000,sqm:364,rooms:6,type:"Villa",url:"https://www.idealista.it/pro/living-gruppo-immobiliare/immobile/30589805/",image:"https://img4.idealista.it/blur/WEB_DETAIL_TOP-L-L/0/id.pro.it.image.master/f3/53/81/627450182.jpg"},
+      {city:"Città Sant'Angelo",title:"Villa indipendente da ristrutturare",address:"Gaglierano 67",price:180000,sqm:228,rooms:5,type:"Villa",url:"https://www.idealista.it/pro/living-gruppo-immobiliare/immobile/32426540/",image:"https://img4.idealista.it/blur/WEB_DETAIL_TOP-L-L/0/id.pro.it.image.master/56/8f/14/684019188.jpg"},
+      {city:"Loreto Aprutino",title:"Azienda agricola con casale e uliveto",address:"Contrada Paterno 20",price:220000,sqm:456,rooms:4,type:"Casale / cascina",url:"https://www.idealista.it/pro/living-gruppo-immobiliare/immobile/36585379/",image:"https://img4.idealista.it/blur/WEB_DETAIL_TOP-L-L/0/id.pro.it.image.master/a9/7e/9d/829821876.jpg"},
+      {city:"Montesilvano",title:"Casa indipendente da recuperare",address:"Via Danubio 57 · Villa Carmine",price:100000,sqm:199,rooms:5,type:"Casa indipendente",url:"https://www.idealista.it/pro/living-gruppo-immobiliare/immobile/36090095/",image:"https://img4.idealista.it/blur/WEB_DETAIL_TOP-L-L/0/id.pro.it.image.master/24/49/fc/813934654.jpg"},
+      {city:"Città Sant'Angelo",title:"Dimore Santa Chiara · bilocale su due livelli",address:"Vico Basiliano · Centro storico",price:130000,sqm:60,rooms:2,type:"Appartamento su due piani",url:"https://www.idealista.it/pro/living-gruppo-immobiliare/immobile/35883327/",image:"https://img4.idealista.it/blur/WEB_DETAIL_TOP-L-L/0/id.pro.it.image.master/62/b7/dd/806255652.jpg"},
+      {city:"Città Sant'Angelo",title:"Dimore Santa Chiara · trilocale",address:"Corso Umberto I 35 · Centro storico",price:130000,sqm:67,rooms:3,type:"Appartamento",url:"https://www.idealista.it/pro/living-gruppo-immobiliare/immobile/35830207/",image:"https://img4.idealista.it/blur/WEB_DETAIL_TOP-L-L/0/id.pro.it.image.master/24/45/f2/804408839.jpg"},
+      {city:"Città Sant'Angelo",title:"Dimore Santa Chiara · trilocale",address:"Vico Lupinato 6 · Centro storico",price:130000,sqm:65,rooms:3,type:"Appartamento",url:"https://www.idealista.it/pro/living-gruppo-immobiliare/immobile/35883727/",image:"https://img4.idealista.it/blur/WEB_DETAIL_TOP-L-L/0/id.pro.it.image.master/dd/e7/30/806266513.jpg"},
+      {city:"Città Sant'Angelo",title:"Dimore Santa Chiara · quadrilocale su due livelli",address:"Vico Basiliano · Centro storico",price:195000,sqm:115,rooms:4,type:"Appartamento su due piani",url:"https://www.idealista.it/pro/living-gruppo-immobiliare/immobile/35885725/",image:"https://img4.idealista.it/blur/WEB_DETAIL_TOP-L-L/0/id.pro.it.image.master/8e/66/63/806320150.jpg"},
+      {city:"Montebello di Bertona",title:"Azienda agrituristica in masseria",address:"Contrada Campo delle Piane 47",price:1200000,sqm:1250,rooms:24,type:"Masseria",url:"https://www.idealista.it/pro/living-gruppo-immobiliare/immobile/28281660/",image:"https://img4.idealista.it/blur/WEB_DETAIL_TOP-L-L/0/id.pro.it.image.master/fe/10/c2/546234541.jpg"},
+      {city:"Pescara",title:"Quadrilocale a reddito",address:"Viale Vittoria Colonna 48 · Porta Nuova",price:155000,sqm:115,rooms:4,type:"Appartamento",url:"https://www.idealista.it/pro/living-gruppo-immobiliare/immobile/34175869/",image:"https://img4.idealista.it/blur/WEB_DETAIL_TOP-L-L/0/id.pro.it.image.master/f9/b9/dc/744305145.jpg"},
+      {city:"Penne",title:"Casa indipendente nel borgo",address:"Scesa de Dura 8 · Centro",price:200000,sqm:337,rooms:7,type:"Casa indipendente",url:"https://www.idealista.it/pro/living-gruppo-immobiliare/immobile/33465802/",image:"https://img4.idealista.it/blur/WEB_DETAIL_TOP-L-L/0/id.pro.it.image.master/36/ed/aa/718815274.jpg"},
+      {city:"Pescara",title:"Villa di prestigio con grande parco",address:"Strada Colle Scorrano 92 · Colli",price:395000,sqm:632,rooms:10,type:"Villa",url:"https://www.idealista.it/pro/living-gruppo-immobiliare/immobile/36261790/",image:"https://img4.idealista.it/blur/WEB_DETAIL_TOP-L-L/0/id.pro.it.image.master/00/b4/8b/819802257.jpg"}
+    ];
+
+    const propertyGrid = document.getElementById("property-grid");
+    const propertyCount = document.getElementById("property-count");
+    const zoneContact = document.getElementById("zone-contact");
+    const zoneContactCopy = document.getElementById("zone-contact-copy");
+    const zoneContactLink = document.getElementById("zone-contact-link");
+    const euro = new Intl.NumberFormat("it-IT", {style:"currency",currency:"EUR",maximumFractionDigits:0});
+
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>'"]/g, function(character) {
+        return {"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[character];
+      });
+    }
+
+    function renderProperties() {
+      const chosenFeatures = typeof features === "undefined" ? [] : features.filter(function(feature) {
+        return selected.has(String(feature.properties.PRO_COM));
+      });
+      const chosenCities = new Set(chosenFeatures.map(function(feature) {
+        return normalizeText(feature.properties.COMUNE);
+      }));
+      const chosenNames = chosenFeatures.map(function(feature) {
+        return feature.properties.COMUNE;
+      });
+
+      if (!chosenCities.size) {
+        propertyCount.textContent = "Nessuna zona selezionata";
+        propertyGrid.innerHTML = '<div class="catalog-empty"><strong>Scegli una zona sulla mappa.</strong><br>Gli immobili disponibili appariranno qui automaticamente.</div>';
+        zoneContact.classList.remove("show");
+        return;
+      }
+
+      const term = normalizeText(document.getElementById("property-search").value.trim());
+      const maxPrice = Number(document.getElementById("property-price").value) || Infinity;
+      const minSize = Number(document.getElementById("property-size").value) || 0;
+      const minRooms = Number(document.getElementById("property-rooms").value) || 0;
+      const visible = properties.filter(function(property) {
+        const haystack = normalizeText([property.city, property.title, property.address, property.type].join(" "));
+        return chosenCities.has(normalizeText(property.city)) && haystack.includes(term) && property.price <= maxPrice && property.sqm >= minSize && property.rooms >= minRooms;
+      });
+
+      propertyCount.textContent = visible.length + (visible.length === 1 ? " immobile trovato" : " immobili trovati");
+      const contactMessage = encodeURIComponent("Ciao Living, sto cercando casa nelle seguenti zone: " + chosenNames.join(", ") + ". Vorrei essere ricontattato.");
+      zoneContactLink.href = "https://wa.me/" + WHATSAPP + "?text=" + contactMessage;
+      zoneContactCopy.textContent = "Zone selezionate: " + chosenNames.join(", ") + ".";
+      zoneContact.classList.add("show");
+      if (!visible.length) {
+        propertyGrid.innerHTML = '<div class="catalog-empty"><strong>Al momento non risultano immobili in queste zone.</strong><br>Contatta Living: potrà cercare una soluzione adatta alle tue esigenze.</div>';
+        return;
+      }
+
+      propertyGrid.innerHTML = visible.map(function(property) {
+        const message = encodeURIComponent("Ciao Living, vorrei informazioni su: " + property.title + " a " + property.city + ". " + property.url);
+        return '<article class="property-card">' +
+          '<img class="property-image" src="' + property.image + '" alt="' + escapeHtml(property.title) + '" loading="lazy">' +
+          '<div class="property-body"><p class="property-city">' + escapeHtml(property.city) + '</p>' +
+          '<h3 class="property-title">' + escapeHtml(property.title) + '</h3>' +
+          '<p class="property-address">' + escapeHtml(property.address) + '</p>' +
+          '<div class="property-facts"><span>' + property.sqm + ' m²</span><span>' + property.rooms + ' locali</span><span>' + escapeHtml(property.type) + '</span></div>' +
+          '<p class="property-price">' + euro.format(property.price) + '</p>' +
+          '<div class="property-actions"><a class="property-link" href="' + property.url + '" target="_blank" rel="noopener">Vedi annuncio ↗</a>' +
+          '<a class="whatsapp-link" href="https://wa.me/' + WHATSAPP + '?text=' + message + '" target="_blank" rel="noopener" aria-label="Chiedi informazioni su WhatsApp">WhatsApp</a></div></div></article>';
+      }).join("");
+    }
+
+    document.querySelectorAll("#property-search, #property-price, #property-size, #property-rooms").forEach(function(control) {
+      control.addEventListener("input", renderProperties);
+      control.addEventListener("change", renderProperties);
+    });
+
+    const SVG_NS = "http://www.w3.org/2000/svg";
+    const PROVINCES = { 68: "Pescara", 69: "Chieti" };
+    const COLORS = { 68: "#fbfaf6", 69: "#e9e7e1" };
+    const ACCENT = "#dc603d";
+    const selected = new Set();
+    let activeProvince = "all";
+    let searchTerm = "";
+    let searchOpen = false;
+
+    const svg = document.getElementById("province-map");
+    const list = document.getElementById("municipality-list");
+    const counter = document.getElementById("counter");
+    const mapCount = document.getElementById("map-selection-count");
+    const resetButton = document.getElementById("reset-map");
+    const confirmButton = document.getElementById("confirm");
+    const success = document.getElementById("success");
+    const summaryTitle = document.getElementById("summary-title");
+    const selectedNames = document.getElementById("selected-names");
+    const tooltip = document.getElementById("tooltip");
+    const searchInput = document.getElementById("search-input");
+    const searchPicker = document.getElementById("search-picker");
+
+    const propertyCounts = properties.reduce(function(counts, property) {
+      const city = normalizeText(property.city);
+      counts.set(city, (counts.get(city) || 0) + 1);
+      return counts;
+    }, new Map());
+
+    const features = GEOJSON.features.slice().sort(function(a, b) {
+      return a.properties.COMUNE.localeCompare(b.properties.COMUNE, "it");
+    });
+
+    const byCode = new Map(features.map(function(feature) {
+      return [String(feature.properties.PRO_COM), feature];
+    }));
+
+    function ringsFor(feature) {
+      return feature.geometry.type === "Polygon"
+        ? [feature.geometry.coordinates]
+        : feature.geometry.coordinates;
+    }
+
+    function walkCoordinates(value, callback) {
+      if (typeof value[0] === "number") callback(value);
+      else value.forEach(function(item) { walkCoordinates(item, callback); });
+    }
+
+    let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+    features.forEach(function(feature) {
+      walkCoordinates(feature.geometry.coordinates, function(point) {
+        minX = Math.min(minX, point[0]);
+        minY = Math.min(minY, point[1]);
+        maxX = Math.max(maxX, point[0]);
+        maxY = Math.max(maxY, point[1]);
+      });
+    });
+
+    const viewWidth = 900, viewHeight = 860, padding = 30;
+    const scale = Math.min((viewWidth - padding * 2) / (maxX - minX), (viewHeight - padding * 2) / (maxY - minY));
+    const renderedWidth = (maxX - minX) * scale;
+    const renderedHeight = (maxY - minY) * scale;
+    const offsetX = (viewWidth - renderedWidth) / 2;
+    const offsetY = (viewHeight - renderedHeight) / 2;
+
+    function project(point) {
+      return [
+        offsetX + (point[0] - minX) * scale,
+        viewHeight - offsetY - (point[1] - minY) * scale
+      ];
+    }
+
+    function pathData(feature) {
+      return ringsFor(feature).map(function(polygon) {
+        return polygon.map(function(ring) {
+          return ring.map(function(point, index) {
+            const projected = project(point);
+            return (index === 0 ? "M" : "L") + projected[0].toFixed(2) + "," + projected[1].toFixed(2);
+          }).join(" ") + " Z";
+        }).join(" ");
+      }).join(" ");
+    }
+
+    function normalizeText(value) {
+      return value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+    }
+
+    function renderMap() {
+      const fragment = document.createDocumentFragment();
+      features.forEach(function(feature) {
+        const properties = feature.properties;
+        const code = String(properties.PRO_COM);
+        const province = String(properties.COD_PROV);
+        const path = document.createElementNS(SVG_NS, "path");
+        path.setAttribute("d", pathData(feature));
+        path.setAttribute("fill-rule", "evenodd");
+        path.setAttribute("class", "map-area");
+        path.setAttribute("data-code", code);
+        path.setAttribute("data-province", province);
+        path.setAttribute("role", "button");
+        path.setAttribute("tabindex", "0");
+        path.setAttribute("aria-label", properties.COMUNE + ", non selezionato");
+        path.setAttribute("aria-pressed", "false");
+        path.style.fill = COLORS[province];
+        path.style.stroke = "#1b1b18";
+        path.style.strokeWidth = "1.05";
+        fragment.appendChild(path);
+      });
+      svg.appendChild(fragment);
+
+      const numberFragment = document.createDocumentFragment();
+      features.forEach(function(feature) {
+        const code = String(feature.properties.PRO_COM);
+        const path = svg.querySelector('path[data-code="' + code + '"]');
+        const bounds = path.getBBox();
+        const label = document.createElementNS(SVG_NS, "text");
+        label.setAttribute("class", "property-map-count");
+        label.setAttribute("data-count-code", code);
+        label.setAttribute("x", (bounds.x + bounds.width / 2).toFixed(2));
+        label.setAttribute("y", (bounds.y + bounds.height / 2).toFixed(2));
+        label.setAttribute("visibility", "hidden");
+        label.setAttribute("aria-hidden", "true");
+        label.textContent = String(propertyCounts.get(normalizeText(feature.properties.COMUNE)) || 0);
+        numberFragment.appendChild(label);
+      });
+      svg.appendChild(numberFragment);
+    }
+
+    function toggle(code) {
+      if (selected.has(code)) selected.delete(code);
+      else selected.add(code);
+      success.classList.remove("show");
+      updateInterface();
+    }
+
+    function updateMapStyles() {
+      svg.querySelectorAll(".map-area").forEach(function(path) {
+        const code = path.getAttribute("data-code");
+        const province = path.getAttribute("data-province");
+        const feature = byCode.get(code);
+        const isSelected = selected.has(code);
+        const isMuted = activeProvince !== "all" && province !== activeProvince;
+        path.classList.toggle("selected", isSelected);
+        path.classList.toggle("muted-area", isMuted && !isSelected);
+        path.style.fill = isSelected ? ACCENT : COLORS[province];
+        path.style.stroke = isSelected ? "#fffdf8" : "#1b1b18";
+        path.style.strokeWidth = isSelected ? "1.7" : "1.05";
+        path.setAttribute("aria-pressed", isSelected ? "true" : "false");
+        path.setAttribute("aria-label", feature.properties.COMUNE + (isSelected ? ", selezionato" : ", non selezionato"));
+      });
+      svg.querySelectorAll(".property-map-count").forEach(function(label) {
+        label.setAttribute("visibility", selected.has(label.getAttribute("data-count-code")) ? "visible" : "hidden");
+      });
+    }
+
+    function visibleFeatures() {
+      return features.filter(function(feature) {
+        const provinceMatch = activeProvince === "all" || String(feature.properties.COD_PROV) === activeProvince;
+        const textMatch = normalizeText(feature.properties.COMUNE).includes(normalizeText(searchTerm));
+        return provinceMatch && textMatch;
+      });
+    }
+
+    function renderList() {
+      const visible = visibleFeatures();
+      list.innerHTML = "";
+      list.classList.toggle("open", searchOpen);
+      searchInput.setAttribute("aria-expanded", searchOpen ? "true" : "false");
+      if (!searchOpen) return;
+      if (!visible.length) {
+        const empty = document.createElement("div");
+        empty.className = "empty";
+        empty.textContent = "Nessun comune trovato.";
+        list.appendChild(empty);
+        return;
+      }
+
+      const fragment = document.createDocumentFragment();
+      visible.forEach(function(feature) {
+        const code = String(feature.properties.PRO_COM);
+        const province = String(feature.properties.COD_PROV);
+        const row = document.createElement("button");
+        row.type = "button";
+        row.setAttribute("role", "option");
+        row.className = "municipality-row" + (selected.has(code) ? " selected" : "");
+        row.setAttribute("aria-selected", selected.has(code) ? "true" : "false");
+        row.addEventListener("click", function() {
+          toggle(code);
+          searchInput.value = feature.properties.COMUNE;
+          searchTerm = "";
+          searchOpen = false;
+          renderList();
+        });
+
+        const name = document.createElement("span");
+        name.textContent = feature.properties.COMUNE;
+
+        const tag = document.createElement("span");
+        tag.className = "province-tag";
+        tag.textContent = province === "68" ? "PE" : "CH";
+
+        row.appendChild(name);
+        row.appendChild(tag);
+        fragment.appendChild(row);
+      });
+      list.appendChild(fragment);
+    }
+
+    function updateSummary() {
+      const chosen = features.filter(function(feature) {
+        return selected.has(String(feature.properties.PRO_COM));
+      });
+      const count = chosen.length;
+      counter.textContent = count + "/150";
+      mapCount.textContent = count === 0 ? "Nessuna zona scelta" : count + (count === 1 ? " zona scelta" : " zone scelte");
+      resetButton.hidden = count === 0;
+      confirmButton.disabled = count === 0;
+      confirmButton.textContent = count === 0 ? "Invia le zone a Living" : "Invia " + count + (count === 1 ? " zona a Living" : " zone a Living");
+      if (count === 0) {
+        summaryTitle.textContent = "Nessuna zona selezionata";
+        selectedNames.textContent = "Scegli almeno un comune per impostare la ricerca.";
+      } else {
+        summaryTitle.textContent = "Zone selezionate";
+        selectedNames.textContent = chosen.map(function(feature) { return feature.properties.COMUNE; }).join(", ");
+      }
+    }
+
+    function updateInterface() {
+      updateMapStyles();
+      renderList();
+      updateSummary();
+      renderProperties();
+    }
+
+    svg.addEventListener("click", function(event) {
+      const path = event.target.closest && event.target.closest("path[data-code]");
+      if (path) toggle(path.getAttribute("data-code"));
+    });
+
+    svg.addEventListener("keydown", function(event) {
+      const path = event.target.closest && event.target.closest("path[data-code]");
+      if (path && (event.key === "Enter" || event.key === " ")) {
+        event.preventDefault();
+        toggle(path.getAttribute("data-code"));
+      }
+    });
+
+    svg.addEventListener("pointermove", function(event) {
+      const path = event.target.closest && event.target.closest("path[data-code]");
+      if (!path || window.innerWidth <= 620) {
+        tooltip.classList.remove("show");
+        return;
+      }
+      const feature = byCode.get(path.getAttribute("data-code"));
+      const bounds = svg.parentElement.getBoundingClientRect();
+      const listingCount = propertyCounts.get(normalizeText(feature.properties.COMUNE)) || 0;
+      tooltip.innerHTML = feature.properties.COMUNE + "<small>" + listingCount + (listingCount === 1 ? " immobile disponibile" : " immobili disponibili") + " · Provincia di " + PROVINCES[feature.properties.COD_PROV] + "</small>";
+      tooltip.style.left = (event.clientX - bounds.left) + "px";
+      tooltip.style.top = (event.clientY - bounds.top) + "px";
+      tooltip.classList.add("show");
+    });
+
+    svg.addEventListener("pointerleave", function() { tooltip.classList.remove("show"); });
+
+    document.querySelectorAll(".filter-btn").forEach(function(button) {
+      button.addEventListener("click", function() {
+        activeProvince = button.getAttribute("data-province");
+        document.querySelectorAll(".filter-btn").forEach(function(item) {
+          item.classList.toggle("active", item === button);
+        });
+        updateMapStyles();
+        renderList();
+      });
+    });
+
+    searchInput.addEventListener("focus", function() {
+      searchOpen = true;
+      renderList();
+    });
+
+    searchInput.addEventListener("input", function(event) {
+      searchTerm = event.target.value.trim();
+      searchOpen = true;
+      renderList();
+    });
+
+    searchInput.addEventListener("keydown", function(event) {
+      if (event.key === "Escape") {
+        searchOpen = false;
+        renderList();
+      } else if (event.key === "Enter") {
+        const first = list.querySelector(".municipality-row");
+        if (first) {
+          event.preventDefault();
+          first.click();
+        }
+      }
+    });
+
+    document.addEventListener("pointerdown", function(event) {
+      if (!searchPicker.contains(event.target)) {
+        searchOpen = false;
+        renderList();
+      }
+    });
+
+    resetButton.addEventListener("click", function() {
+      selected.clear();
+      success.classList.remove("show");
+      updateInterface();
+    });
+
+    confirmButton.addEventListener("click", function() {
+      if (!selected.size) return;
+      const chosen = features.filter(function(feature) {
+        return selected.has(String(feature.properties.PRO_COM));
+      }).map(function(feature) { return feature.properties.COMUNE; });
+      const message = encodeURIComponent("Ciao Living, non ho trovato la casa giusta tra gli immobili disponibili. Vorrei cercare nelle seguenti zone: " + chosen.join(", ") + ". Potete aiutarmi?");
+      success.classList.add("show");
+      window.open("https://wa.me/" + WHATSAPP + "?text=" + message, "_blank", "noopener");
+    });
+
+    renderMap();
+    updateInterface();
+  </script>
+<script>
+(function () {
+  const details = document.getElementById("custom-details");
+  const form = document.getElementById("custom-form");
+  const zones = document.getElementById("custom-zones");
+
+  function selectedNamesForCustomForm() {
+    try {
+      return features
+        .filter(function(feature) {
+          return selected.has(String(feature.properties.PRO_COM));
+        })
+        .map(function(feature) {
+          return feature.properties.COMUNE;
+        });
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function syncZones() {
+    const names = selectedNamesForCustomForm();
+    if (zones && names.length) zones.value = names.join(", ");
+  }
+
+  if (details) {
+    details.addEventListener("toggle", function() {
+      if (details.open) syncZones();
+    });
+  }
+
+  if (form) {
+    form.addEventListener("submit", function(event) {
+      event.preventDefault();
+      if (!form.reportValidity()) return;
+
+      syncZones();
+      const data = new FormData(form);
+
+      function value(key, fallback) {
+        const v = String(data.get(key) || "").trim();
+        return v || fallback;
+      }
+      function yesNo(key) {
+        return data.get(key) ? "Sì" : "No";
+      }
+
+      const message = [
+        "Buongiorno Living, sto cercando una casa con queste caratteristiche:",
+        "",
+        "Zone: " + value("zones", "Non indicate"),
+        "Camere minime: " + value("bedrooms", "Indifferente"),
+        "Bagni minimi: " + value("bathrooms", "Indifferente"),
+        "Mq min/max: " + value("sqm_min", "—") + " / " + value("sqm_max", "—"),
+        "Piano: " + value("floor", "Indifferente"),
+        "Ascensore: " + value("elevator", "Indifferente"),
+        "Garage: " + yesNo("garage"),
+        "Posto auto: " + yesNo("parking"),
+        "Cantina: " + yesNo("cellar"),
+        "Terrazzo/balcone: " + yesNo("terrace"),
+        "Giardino: " + yesNo("garden"),
+        "Budget min/max: € " + value("budget_min", "—") + " / € " + value("budget_max", "—"),
+        "Condizioni: " + value("condition", "Indifferente"),
+        "",
+        "DATI CLIENTE",
+        value("name", "") + " " + value("surname", ""),
+        "Telefono: " + value("phone", ""),
+        "Email: " + value("email", "Non indicata"),
+        "Contatto preferito: " + value("contact_pref", "WhatsApp"),
+        "Note: " + value("notes", "Nessuna")
+      ].join("\\n");
+
+      window.location.href = "https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent(message);
+    });
+  }
+})();
+</script></body>
+</html>
