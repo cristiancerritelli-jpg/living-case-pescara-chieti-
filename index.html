@@ -1133,10 +1133,10 @@
 <label class="privacy"><input required="" type="checkbox"/> Acconsento all'invio dei dati a Living Gruppo Immobiliare per essere ricontattato.</label>
 </div>
 <div class="send-actions">
-<button class="send-custom whatsapp" id="share-whatsapp" type="button">CONDIVIDI PDF SU WHATSAPP</button>
+<button class="send-custom whatsapp" id="share-whatsapp" type="button">APRI CHAT WHATSAPP CON LIVING</button>
 <button class="send-custom email" id="share-email" type="button">CONDIVIDI PDF VIA EMAIL</button>
 </div>
-<p class="share-note">WhatsApp: il PDF viene creato sul telefono e si apre direttamente la chat di Living, anche se il numero non è salvato in rubrica; allega il PDF appena generato. Email: si apre il menu Condividi con il PDF pronto; scegli Mail/Gmail/Outlook e invia a <strong>info@living-gruppoimmobiliare.com</strong>.</p>
+<p class="share-note">WhatsApp: si apre direttamente la chat di Living, anche se il numero non è salvato in rubrica, con tutti i dati della richiesta già inseriti nel messaggio. Email: si apre il menu Condividi con il PDF pronto; scegli Mail/Gmail/Outlook e invia a <strong>info@living-gruppoimmobiliare.com</strong>.</p>
 <div class="share-status" id="share-status" role="status" aria-live="polite"></div>
 </form>
 </details>
@@ -1916,24 +1916,45 @@
   async function sharePdf(channel) {
     if (!form || !form.reportValidity()) return;
     setBusy(true);
-    setStatus("Sto preparando il PDF della richiesta...");
 
     try {
       const request = collectRequest();
+
+      if (channel === "whatsapp") {
+        setStatus("Apro direttamente la chat WhatsApp di Living con i dati della richiesta...");
+        const waMessage = [
+          "Buongiorno Living, ho compilato la mia richiesta immobiliare sul vostro sito.",
+          "",
+          "NOME: " + request.name + " " + request.surname,
+          "TELEFONO: " + request.phone,
+          "EMAIL: " + request.email,
+          "CONTATTO PREFERITO: " + request.contactPref,
+          "ZONE: " + request.zones,
+          "CAMERE: " + request.bedrooms,
+          "BAGNI: " + request.bathrooms,
+          "MQ: da " + request.sqmMin + " a " + request.sqmMax,
+          "PIANO: " + request.floor,
+          "ASCENSORE: " + request.elevator,
+          "GARAGE: " + request.garage,
+          "POSTO AUTO: " + request.parking,
+          "CANTINA: " + request.cellar,
+          "TERRAZZO/BALCONE: " + request.terrace,
+          "GIARDINO: " + request.garden,
+          "BUDGET: da " + request.budgetMin + " a " + request.budgetMax,
+          "CONDIZIONI IMMOBILE: " + request.condition,
+          "NOTE: " + request.notes,
+          "",
+          "Privacy: " + request.privacy,
+          "Richiesta compilata il " + request.createdAt
+        ].join("\n");
+        window.location.href = "https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent(waMessage);
+        return;
+      }
+
+      setStatus("Sto preparando il PDF della richiesta...");
       const pdf = createPdf(request);
       const file = new File([pdf.blob], pdf.filename, { type: "application/pdf" });
       const shareText = "Richiesta immobiliare Living. Inviare a " + EMAIL_TO;
-
-      if (channel === "whatsapp") {
-        pdf.doc.save(pdf.filename);
-        setStatus("PDF creato. Si apre direttamente la chat WhatsApp di Living: allega il PDF appena generato e invia.");
-        const waText = encodeURIComponent(
-          "Buongiorno Living, sono " + request.name + " " + request.surname +
-          ". Ho compilato la mia richiesta immobiliare sul vostro sito. Allego il PDF con tutti i dettagli."
-        );
-        window.location.href = "https://wa.me/" + WHATSAPP + "?text=" + waText;
-        return;
-      }
 
       if (navigator.share && (!navigator.canShare || navigator.canShare({ files: [file] }))) {
         setStatus("PDF pronto. Nel menu Condividi scegli Mail, Gmail o Outlook e invia a " + EMAIL_TO + ".");
@@ -1954,7 +1975,7 @@
         setStatus("Condivisione annullata. Il modulo resta compilato e puoi riprovare quando vuoi.");
       } else {
         console.error(error);
-        setStatus((error && error.message) ? error.message : "Non sono riuscito a creare o condividere il PDF. Riprova.");
+        setStatus((error && error.message) ? error.message : "Non sono riuscito a completare l'invio. Riprova.");
       }
     } finally {
       setBusy(false);
