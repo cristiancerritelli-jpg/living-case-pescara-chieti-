@@ -13,8 +13,8 @@
       --ink: #181815;
       --muted: #706d66;
       --line: #d5d0c6;
-      --accent: #dc603d;
-      --accent-dark: #be4728;
+      --accent: #47515d;
+      --accent-dark: #3d4651;
       --pe: #fbfaf6;
       --ch: #e9e7e1;
     }
@@ -95,7 +95,7 @@
       height: 8px;
       border-radius: 50%;
       background: var(--accent);
-      box-shadow: 0 0 0 4px rgba(220, 96, 61, .14);
+      box-shadow: 0 0 0 4px rgba(71, 81, 93, .14);
     }
 
     .page {
@@ -383,7 +383,7 @@
 
     #search-input:focus {
       border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(220, 96, 61, .13);
+      box-shadow: 0 0 0 3px rgba(71, 81, 93, .13);
     }
 
     .municipality-list {
@@ -483,9 +483,9 @@
       display: none;
       margin-top: 11px;
       padding: 12px;
-      border: 1px solid rgba(220, 96, 61, .38);
+      border: 1px solid rgba(71, 81, 93, .38);
       border-radius: 3px;
-      background: rgba(220, 96, 61, .08);
+      background: rgba(71, 81, 93, .08);
       color: #49362f;
       font-size: .75rem;
       line-height: 1.4;
@@ -538,7 +538,7 @@
 
     .catalog-tools input:focus, .catalog-tools select:focus {
       border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(220, 96, 61, .13);
+      box-shadow: 0 0 0 3px rgba(71, 81, 93, .13);
     }
 
     .results-line {
@@ -751,8 +751,8 @@
   
 /* === V6: modifiche minime, logica originale intatta === */
 .topbar {
-  background:#0b0b0b !important;
-  border-bottom-color:#242424 !important;
+  background:#47515d !important;
+  border-bottom-color:#3d4651 !important;
 }
 .living-logo {
   display:block;
@@ -913,7 +913,7 @@
   margin-top:14px;
   border:0;
   border-radius:3px;
-  background:#dc603d;
+  background:#47515d;
   color:#fff;
   font-weight:850;
   cursor:pointer;
@@ -958,7 +958,7 @@
   font-size: 1.05em;
   font-weight: 900;
 }
-.send-custom:hover { background: #dc603d; color: #fff; border-color: #dc603d; }
+.send-custom:hover { background: #3d4651; color: #fff; border-color: #3d4651; }
 .send-custom:disabled { opacity: .55; cursor: wait; }
 .share-note {
   margin: 10px 0 0;
@@ -970,9 +970,9 @@
   display: none;
   margin-top: 10px;
   padding: 10px 12px;
-  border: 1px solid rgba(220,96,61,.35);
+  border: 1px solid rgba(71,81,93,.35);
   border-radius: 3px;
-  background: rgba(220,96,61,.07);
+  background: rgba(71,81,93,.07);
   font-size: .75rem;
   line-height: 1.45;
 }
@@ -1140,14 +1140,14 @@ body.splash-active { overflow: hidden; }
   text-align: center;
 }
 .intro-logo-wrap {
-  width: min(560px, 82vw);
+  width: min(505px, 74vw);
   margin: 0 auto clamp(30px, 5vh, 54px);
 }
 .intro-logo {
   display: block;
   width: 100%;
   height: auto;
-  max-height: 160px;
+  max-height: 145px;
   object-fit: contain;
   filter: none;
 }
@@ -1258,7 +1258,7 @@ body.splash-active { overflow: hidden; }
 }
 @media (max-width: 620px) {
   .living-intro { padding-left: 17px; padding-right: 17px; }
-  .intro-logo-wrap { width: min(390px, 84vw); margin-bottom: 35px; }
+  .intro-logo-wrap { width: min(350px, 76vw); margin-bottom: 35px; }
   .intro-title { font-size: clamp(2.45rem, 12vw, 3.55rem); }
   .intro-subtitle { max-width: 360px; font-size: .9rem; }
   .intro-divider { margin-top: 23px; margin-bottom: 18px; }
@@ -1271,6 +1271,46 @@ body.splash-active { overflow: hidden; }
 @media (prefers-reduced-motion: reduce) {
   .living-intro, .intro-enter { transition: none !important; }
 }
+
+/* === Living brand theme: #47515D === */
+.topbar {
+  background: #47515d !important;
+  border-bottom-color: #3d4651 !important;
+}
+.top-note::before {
+  background: #fff !important;
+  box-shadow: 0 0 0 4px rgba(255,255,255,.14) !important;
+}
+.brand-icon,
+.tooltip,
+.filter-btn.active,
+.confirm,
+.property-link,
+.search-next,
+.zone-contact,
+.custom-details > summary,
+.send-custom.whatsapp,
+.language-option.active {
+  background: #47515d !important;
+  color: #fff !important;
+}
+.filter-btn.active { border-color: #47515d !important; }
+.confirm:hover,
+.property-link:hover { background: #3d4651 !important; }
+.map-area.selected:hover { fill: #3d4651 !important; }
+.zone-contact a,
+.catalog-cta { background: #47515d !important; }
+.zone-contact a:hover,
+.catalog-cta:hover { background: #3d4651 !important; }
+.send-custom { background: #47515d; }
+.send-custom.email {
+  background: #fffdf8;
+  color: #47515d;
+  border-color: #47515d;
+}
+.send-custom.contact { color: #47515d; }
+.send-custom:hover { background: #3d4651 !important; border-color: #3d4651 !important; color:#fff !important; }
+.language-option.active { background: #47515d !important; }
 
 </style>
 </head>
@@ -1742,7 +1782,7 @@ body.splash-active { overflow: hidden; }
     const SVG_NS = "http://www.w3.org/2000/svg";
     const PROVINCES = { 68: "Pescara", 69: "Chieti" };
     const COLORS = { 68: "#fbfaf6", 69: "#e9e7e1" };
-    const ACCENT = "#dc603d";
+    const ACCENT = "#47515d";
     const selected = new Set();
     let activeProvince = "all";
     let searchTerm = "";
@@ -2229,7 +2269,7 @@ body.splash-active { overflow: hidden; }
     doc.setTextColor(100, 96, 90);
     doc.text("Richiesta personalizzata di ricerca immobile", left, y);
     y += 7;
-    doc.setDrawColor(220, 96, 61);
+    doc.setDrawColor(71, 81, 93);
     doc.setLineWidth(0.8);
     doc.line(left, y, pageWidth - right, y);
     y += 9;
