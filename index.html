@@ -1151,7 +1151,7 @@
 <button class="send-custom email" id="share-email" type="button">CONDIVIDI PDF VIA EMAIL</button>
 <button class="send-custom contact" id="save-contact" type="button">AGGIUNGI LIVING AI CONTATTI</button>
 </div>
-<p class="share-note">WhatsApp: si apre direttamente la chat di Living, anche se il numero non è salvato in rubrica, con tutti i dati della richiesta già inseriti nel messaggio. Email: si apre il menu Condividi con il PDF pronto; scegli Mail/Gmail/Outlook e invia a <strong>info@living-gruppoimmobiliare.com</strong>. Contatti: viene aperta una scheda Living completa con telefono, email, sito e indirizzo dello studio; conferma il salvataggio nella rubrica.</p>
+<p class="share-note">WhatsApp: si apre direttamente la chat di Living, anche se il numero non è salvato in rubrica, con tutti i dati della richiesta già inseriti nel messaggio. Email: si apre il menu Condividi con il PDF pronto; scegli Mail/Gmail/Outlook e invia a <strong>info@living-gruppoimmobiliare.com</strong>. Contatti: si apre la scheda Living completa con telefono, email, sito e indirizzo dello studio; su iPhone scegli “Crea nuovo contatto” o aggiungilo a un contatto esistente.</p>
 <div class="share-status" id="share-status" role="status" aria-live="polite"></div>
 </form>
 </details>
@@ -1753,29 +1753,7 @@
   };
 
   function downloadLivingContact() {
-    const vcard = [
-      "BEGIN:VCARD",
-      "VERSION:3.0",
-      "FN:" + LIVING_CONTACT.name,
-      "ORG:" + LIVING_CONTACT.organization,
-      "TEL;TYPE=CELL,VOICE:" + LIVING_CONTACT.phone.replace(/\s+/g, ""),
-      "EMAIL;TYPE=INTERNET,WORK:" + LIVING_CONTACT.email,
-      "ADR;TYPE=WORK:;;" + LIVING_CONTACT.street + ";" + LIVING_CONTACT.city + ";" + LIVING_CONTACT.province + ";" + LIVING_CONTACT.postalCode + ";" + LIVING_CONTACT.country,
-      "URL:" + LIVING_CONTACT.website,
-      "NOTE:Agenzia immobiliare - Living Gruppo Immobiliare - Referente: Luca Cilli",
-      "END:VCARD"
-    ].join("\r\n");
-
-    const blob = new Blob([vcard], { type: "text/vcard;charset=utf-8" });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = "Living_Gruppo_Immobiliare_Luca_Cilli.vcf";
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-    setTimeout(function() { URL.revokeObjectURL(url); }, 1500);
-    setStatus("Scheda contatto Living pronta: aprila e conferma Aggiungi ai contatti.");
+    window.location.href = "Living_Gruppo_Immobiliare_Luca_Cilli.vcf";
   }
 
   function selectedNamesForCustomForm() {
