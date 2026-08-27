@@ -1961,6 +1961,34 @@
     return { doc: doc, blob: blob, filename: filename };
   }
 
+  function getWhatsappGreeting() {
+    const hour = new Date().getHours();
+    if (hour <= 13) return "Buongiorno";
+    if (hour <= 17) return "Buon pomeriggio";
+    return "Buonasera";
+  }
+
+  function isWhatsappServiceOpen() {
+    const hour = new Date().getHours();
+    return hour < 20;
+  }
+
+  function updateWhatsappAvailability() {
+    if (!whatsappButton) return;
+    if (isWhatsappServiceOpen()) {
+      whatsappButton.disabled = false;
+      whatsappButton.removeAttribute("aria-disabled");
+      whatsappButton.textContent = "APRI CHAT WHATSAPP CON LIVING";
+      whatsappButton.title = "";
+      return;
+    }
+
+    whatsappButton.disabled = true;
+    whatsappButton.setAttribute("aria-disabled", "true");
+    whatsappButton.textContent = "SERVIZIO WHATSAPP CHIUSO DOPO LE 20:00";
+    whatsappButton.title = "Il servizio WhatsApp di Living è chiuso dopo le 20:00. Riprova domani o usa l'invio via email.";
+  }
+
   async function sharePdf(channel) {
     if (!form || !form.reportValidity()) return;
     setBusy(true);
@@ -1969,9 +1997,15 @@
       const request = collectRequest();
 
       if (channel === "whatsapp") {
+        if (!isWhatsappServiceOpen()) {
+          setStatus("Il servizio WhatsApp di Living è chiuso dopo le 20:00. Riprova domani oppure usa l'invio via email.");
+          return;
+        }
+
         setStatus("Apro direttamente la chat WhatsApp di Living con i dati della richiesta...");
+        const greeting = getWhatsappGreeting();
         const waMessage = [
-          "Buongiorno Living, ho compilato la mia richiesta immobiliare sul vostro sito.",
+          greeting + " Sig. Luca Cilli, ho compilato la mia richiesta immobiliare sul vostro sito.",
           "",
           "NOME: " + request.name + " " + request.surname,
           "TELEFONO: " + request.phone,
@@ -2059,6 +2093,8 @@
       downloadLivingContact();
     });
   }
+
+  updateWhatsappAvailability();
 })();
 </script></body>
 </html>
