@@ -1136,7 +1136,7 @@
 <button class="send-custom whatsapp" id="share-whatsapp" type="button">CONDIVIDI PDF SU WHATSAPP</button>
 <button class="send-custom email" id="share-email" type="button">CONDIVIDI PDF VIA EMAIL</button>
 </div>
-<p class="share-note">Il PDF viene creato sul telefono. Si aprirà il menu Condividi: scegli WhatsApp oppure Mail/Gmail/Outlook. Per l'email, inviare a <strong>info@living-gruppoimmobiliare.com</strong>.</p>
+<p class="share-note">WhatsApp: il PDF viene creato sul telefono e si apre direttamente la chat di Living, anche se il numero non è salvato in rubrica; allega il PDF appena generato. Email: si apre il menu Condividi con il PDF pronto; scegli Mail/Gmail/Outlook e invia a <strong>info@living-gruppoimmobiliare.com</strong>.</p>
 <div class="share-status" id="share-status" role="status" aria-live="polite"></div>
 </form>
 </details>
@@ -1922,14 +1922,21 @@
       const request = collectRequest();
       const pdf = createPdf(request);
       const file = new File([pdf.blob], pdf.filename, { type: "application/pdf" });
-      const shareText = channel === "email"
-        ? "Richiesta immobiliare Living. Inviare a " + EMAIL_TO
-        : "Richiesta immobiliare Living di " + request.name + " " + request.surname;
+      const shareText = "Richiesta immobiliare Living. Inviare a " + EMAIL_TO;
+
+      if (channel === "whatsapp") {
+        pdf.doc.save(pdf.filename);
+        setStatus("PDF creato. Si apre direttamente la chat WhatsApp di Living: allega il PDF appena generato e invia.");
+        const waText = encodeURIComponent(
+          "Buongiorno Living, sono " + request.name + " " + request.surname +
+          ". Ho compilato la mia richiesta immobiliare sul vostro sito. Allego il PDF con tutti i dettagli."
+        );
+        window.location.href = "https://wa.me/" + WHATSAPP + "?text=" + waText;
+        return;
+      }
 
       if (navigator.share && (!navigator.canShare || navigator.canShare({ files: [file] }))) {
-        setStatus(channel === "email"
-          ? "PDF pronto. Nel menu Condividi scegli Mail, Gmail o Outlook e invia a " + EMAIL_TO + "."
-          : "PDF pronto. Nel menu Condividi scegli WhatsApp e seleziona Living.");
+        setStatus("PDF pronto. Nel menu Condividi scegli Mail, Gmail o Outlook e invia a " + EMAIL_TO + ".");
         await navigator.share({
           title: "Richiesta immobile - Living Gruppo Immobiliare",
           text: shareText,
@@ -1940,13 +1947,8 @@
       }
 
       pdf.doc.save(pdf.filename);
-      if (channel === "email") {
-        setStatus("Il PDF e' stato salvato. Si apre ora l'email a " + EMAIL_TO + ": allega il PDF appena creato.");
-        window.location.href = "mailto:" + EMAIL_TO + "?subject=" + encodeURIComponent("Richiesta immobile - " + request.name + " " + request.surname) + "&body=" + encodeURIComponent("Buongiorno Living, allego la mia richiesta personalizzata generata dal vostro sito.");
-      } else {
-        setStatus("Il PDF e' stato salvato. Si apre WhatsApp: allega il PDF appena creato alla chat.");
-        window.location.href = "https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent("Buongiorno Living, ho compilato la mia richiesta immobiliare. Allego il PDF generato dal sito.");
-      }
+      setStatus("Il PDF e' stato salvato. Si apre ora l'email a " + EMAIL_TO + ": allega il PDF appena creato.");
+      window.location.href = "mailto:" + EMAIL_TO + "?subject=" + encodeURIComponent("Richiesta immobile - " + request.name + " " + request.surname) + "&body=" + encodeURIComponent("Buongiorno Living, allego la mia richiesta personalizzata generata dal vostro sito.");
     } catch (error) {
       if (error && error.name === "AbortError") {
         setStatus("Condivisione annullata. Il modulo resta compilato e puoi riprovare quando vuoi.");
