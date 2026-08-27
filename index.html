@@ -903,6 +903,53 @@
   cursor:pointer;
 }
 
+
+.send-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 14px;
+}
+.send-custom {
+  min-height: 48px;
+  border: 0;
+  border-radius: 3px;
+  padding: 11px 14px;
+  cursor: pointer;
+  font-weight: 800;
+  letter-spacing: .025em;
+}
+.send-custom.whatsapp {
+  background: #181815;
+  color: #fff;
+}
+.send-custom.email {
+  background: #fffdf8;
+  color: #181815;
+  border: 1px solid #181815;
+}
+.send-custom:hover { background: #dc603d; color: #fff; border-color: #dc603d; }
+.send-custom:disabled { opacity: .55; cursor: wait; }
+.share-note {
+  margin: 10px 0 0;
+  color: #706d66;
+  font-size: .72rem;
+  line-height: 1.45;
+}
+.share-status {
+  display: none;
+  margin-top: 10px;
+  padding: 10px 12px;
+  border: 1px solid rgba(220,96,61,.35);
+  border-radius: 3px;
+  background: rgba(220,96,61,.07);
+  font-size: .75rem;
+  line-height: 1.45;
+}
+.share-status.show { display: block; }
+@media (max-width: 520px) {
+  .send-actions { grid-template-columns: 1fr; }
+}
 @media(max-width:620px) {
   .topbar { justify-content:center; }
   .top-note { display:none !important; }
@@ -1085,7 +1132,12 @@
 </div>
 <label class="privacy"><input required="" type="checkbox"/> Acconsento all'invio dei dati a Living Gruppo Immobiliare per essere ricontattato.</label>
 </div>
-<button class="send-custom" type="submit">INVIA RICHIESTA A LIVING</button>
+<div class="send-actions">
+<button class="send-custom whatsapp" id="share-whatsapp" type="button">CONDIVIDI PDF SU WHATSAPP</button>
+<button class="send-custom email" id="share-email" type="button">CONDIVIDI PDF VIA EMAIL</button>
+</div>
+<p class="share-note">Il PDF viene creato sul telefono. Si aprirà il menu Condividi: scegli WhatsApp oppure Mail/Gmail/Outlook. Per l'email, inviare a <strong>info@living-gruppoimmobiliare.com</strong>.</p>
+<div class="share-status" id="share-status" role="status" aria-live="polite"></div>
 </form>
 </details>
 </section><footer class="site-footer">
@@ -1661,11 +1713,16 @@
     renderMap();
     updateInterface();
   </script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js" crossorigin="anonymous"></script>
 <script>
 (function () {
   const details = document.getElementById("custom-details");
   const form = document.getElementById("custom-form");
   const zones = document.getElementById("custom-zones");
+  const whatsappButton = document.getElementById("share-whatsapp");
+  const emailButton = document.getElementById("share-email");
+  const statusBox = document.getElementById("share-status");
+  const EMAIL_TO = "info@living-gruppoimmobiliare.com";
 
   function selectedNamesForCustomForm() {
     try {
@@ -1686,6 +1743,222 @@
     if (zones && names.length) zones.value = names.join(", ");
   }
 
+  function setStatus(message) {
+    if (!statusBox) return;
+    statusBox.textContent = message;
+    statusBox.classList.add("show");
+  }
+
+  function setBusy(isBusy) {
+    [whatsappButton, emailButton].forEach(function(button) {
+      if (button) button.disabled = isBusy;
+    });
+  }
+
+  function cleanFilePart(value) {
+    return String(value || "")
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^a-zA-Z0-9_-]+/g, "_")
+      .replace(/^_+|_+$/g, "")
+      .slice(0, 45) || "Cliente";
+  }
+
+  function collectRequest() {
+    syncZones();
+    const data = new FormData(form);
+
+    function value(key, fallback) {
+      const v = String(data.get(key) || "").trim();
+      return v || fallback;
+    }
+    function yesNo(key) {
+      return data.get(key) ? "Si" : "No";
+    }
+
+    const now = new Date();
+    return {
+      name: value("name", ""),
+      surname: value("surname", ""),
+      phone: value("phone", ""),
+      email: value("email", "Non indicata"),
+      contactPref: value("contact_pref", "WhatsApp"),
+      zones: value("zones", "Non indicate"),
+      bedrooms: value("bedrooms", "Indifferente"),
+      bathrooms: value("bathrooms", "Indifferente"),
+      sqmMin: value("sqm_min", "Non indicati"),
+      sqmMax: value("sqm_max", "Non indicati"),
+      floor: value("floor", "Indifferente"),
+      elevator: value("elevator", "Indifferente"),
+      garage: yesNo("garage"),
+      parking: yesNo("parking"),
+      cellar: yesNo("cellar"),
+      terrace: yesNo("terrace"),
+      garden: yesNo("garden"),
+      budgetMin: value("budget_min", "Non indicato"),
+      budgetMax: value("budget_max", "Non indicato"),
+      condition: value("condition", "Indifferente"),
+      notes: value("notes", "Nessuna"),
+      createdAt: now.toLocaleString("it-IT"),
+      privacy: "Consenso fornito"
+    };
+  }
+
+  function createPdf(request) {
+    if (!window.jspdf || !window.jspdf.jsPDF) {
+      throw new Error("Libreria PDF non disponibile. Controlla la connessione e riprova.");
+    }
+
+    const jsPDF = window.jspdf.jsPDF;
+    const doc = new jsPDF({ unit: "mm", format: "a4" });
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const pageHeight = doc.internal.pageSize.getHeight();
+    const left = 18;
+    const right = 18;
+    const usableWidth = pageWidth - left - right;
+    let y = 18;
+
+    function ensureSpace(height) {
+      if (y + height > pageHeight - 18) {
+        doc.addPage();
+        y = 18;
+      }
+    }
+
+    function section(title) {
+      ensureSpace(13);
+      doc.setFillColor(24, 24, 21);
+      doc.rect(left, y, usableWidth, 8, "F");
+      doc.setTextColor(255, 255, 255);
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(10);
+      doc.text(title.toUpperCase(), left + 3, y + 5.4);
+      doc.setTextColor(24, 24, 21);
+      y += 12;
+    }
+
+    function row(label, rawValue) {
+      const value = String(rawValue == null ? "" : rawValue);
+      doc.setFontSize(9.5);
+      doc.setFont("helvetica", "bold");
+      const labelText = label + ":";
+      const labelWidth = 43;
+      const valueLines = doc.splitTextToSize(value, usableWidth - labelWidth - 2);
+      const h = Math.max(6, valueLines.length * 4.7 + 1);
+      ensureSpace(h);
+      doc.text(labelText, left, y);
+      doc.setFont("helvetica", "normal");
+      doc.text(valueLines, left + labelWidth, y);
+      y += h;
+    }
+
+    doc.setTextColor(24, 24, 21);
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(18);
+    doc.text("LIVING GRUPPO IMMOBILIARE", left, y);
+    y += 8;
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(11);
+    doc.setTextColor(100, 96, 90);
+    doc.text("Richiesta personalizzata di ricerca immobile", left, y);
+    y += 7;
+    doc.setDrawColor(220, 96, 61);
+    doc.setLineWidth(0.8);
+    doc.line(left, y, pageWidth - right, y);
+    y += 9;
+
+    section("Dati cliente");
+    row("Nome e cognome", (request.name + " " + request.surname).trim());
+    row("Telefono", request.phone);
+    row("Email", request.email);
+    row("Contatto preferito", request.contactPref);
+
+    section("Ricerca immobile");
+    row("Comuni / zone", request.zones);
+    row("Camere minime", request.bedrooms);
+    row("Bagni minimi", request.bathrooms);
+    row("Mq minimi", request.sqmMin);
+    row("Mq massimi", request.sqmMax);
+    row("Piano preferito", request.floor);
+    row("Ascensore", request.elevator);
+    row("Garage", request.garage);
+    row("Posto auto", request.parking);
+    row("Cantina", request.cellar);
+    row("Terrazzo / balcone", request.terrace);
+    row("Giardino", request.garden);
+
+    section("Budget e condizioni");
+    row("Budget minimo", request.budgetMin === "Non indicato" ? request.budgetMin : "Euro " + request.budgetMin);
+    row("Budget massimo", request.budgetMax === "Non indicato" ? request.budgetMax : "Euro " + request.budgetMax);
+    row("Condizioni", request.condition);
+    row("Note", request.notes);
+
+    section("Privacy e invio");
+    row("Consenso privacy", request.privacy);
+    row("Data richiesta", request.createdAt);
+    row("Email Living", EMAIL_TO);
+
+    ensureSpace(19);
+    y += 4;
+    doc.setFontSize(8.5);
+    doc.setTextColor(110, 106, 99);
+    const footer = doc.splitTextToSize(
+      "Documento generato dal modulo di ricerca immobiliare Living. I dati sono destinati esclusivamente alla gestione della richiesta del cliente.",
+      usableWidth
+    );
+    doc.text(footer, left, y);
+
+    const filename = "Richiesta_Living_" + cleanFilePart(request.name) + "_" + cleanFilePart(request.surname) + ".pdf";
+    const blob = doc.output("blob");
+    return { doc: doc, blob: blob, filename: filename };
+  }
+
+  async function sharePdf(channel) {
+    if (!form || !form.reportValidity()) return;
+    setBusy(true);
+    setStatus("Sto preparando il PDF della richiesta...");
+
+    try {
+      const request = collectRequest();
+      const pdf = createPdf(request);
+      const file = new File([pdf.blob], pdf.filename, { type: "application/pdf" });
+      const shareText = channel === "email"
+        ? "Richiesta immobiliare Living. Inviare a " + EMAIL_TO
+        : "Richiesta immobiliare Living di " + request.name + " " + request.surname;
+
+      if (navigator.share && (!navigator.canShare || navigator.canShare({ files: [file] }))) {
+        setStatus(channel === "email"
+          ? "PDF pronto. Nel menu Condividi scegli Mail, Gmail o Outlook e invia a " + EMAIL_TO + "."
+          : "PDF pronto. Nel menu Condividi scegli WhatsApp e seleziona Living.");
+        await navigator.share({
+          title: "Richiesta immobile - Living Gruppo Immobiliare",
+          text: shareText,
+          files: [file]
+        });
+        setStatus("PDF condiviso. Grazie, la richiesta e' pronta per Living.");
+        return;
+      }
+
+      pdf.doc.save(pdf.filename);
+      if (channel === "email") {
+        setStatus("Il PDF e' stato salvato. Si apre ora l'email a " + EMAIL_TO + ": allega il PDF appena creato.");
+        window.location.href = "mailto:" + EMAIL_TO + "?subject=" + encodeURIComponent("Richiesta immobile - " + request.name + " " + request.surname) + "&body=" + encodeURIComponent("Buongiorno Living, allego la mia richiesta personalizzata generata dal vostro sito.");
+      } else {
+        setStatus("Il PDF e' stato salvato. Si apre WhatsApp: allega il PDF appena creato alla chat.");
+        window.location.href = "https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent("Buongiorno Living, ho compilato la mia richiesta immobiliare. Allego il PDF generato dal sito.");
+      }
+    } catch (error) {
+      if (error && error.name === "AbortError") {
+        setStatus("Condivisione annullata. Il modulo resta compilato e puoi riprovare quando vuoi.");
+      } else {
+        console.error(error);
+        setStatus((error && error.message) ? error.message : "Non sono riuscito a creare o condividere il PDF. Riprova.");
+      }
+    } finally {
+      setBusy(false);
+    }
+  }
+
   if (details) {
     details.addEventListener("toggle", function() {
       if (details.open) syncZones();
@@ -1695,45 +1968,18 @@
   if (form) {
     form.addEventListener("submit", function(event) {
       event.preventDefault();
-      if (!form.reportValidity()) return;
+    });
+  }
 
-      syncZones();
-      const data = new FormData(form);
+  if (whatsappButton) {
+    whatsappButton.addEventListener("click", function() {
+      sharePdf("whatsapp");
+    });
+  }
 
-      function value(key, fallback) {
-        const v = String(data.get(key) || "").trim();
-        return v || fallback;
-      }
-      function yesNo(key) {
-        return data.get(key) ? "Sì" : "No";
-      }
-
-      const message = [
-        "Buongiorno Living, sto cercando una casa con queste caratteristiche:",
-        "",
-        "Zone: " + value("zones", "Non indicate"),
-        "Camere minime: " + value("bedrooms", "Indifferente"),
-        "Bagni minimi: " + value("bathrooms", "Indifferente"),
-        "Mq min/max: " + value("sqm_min", "—") + " / " + value("sqm_max", "—"),
-        "Piano: " + value("floor", "Indifferente"),
-        "Ascensore: " + value("elevator", "Indifferente"),
-        "Garage: " + yesNo("garage"),
-        "Posto auto: " + yesNo("parking"),
-        "Cantina: " + yesNo("cellar"),
-        "Terrazzo/balcone: " + yesNo("terrace"),
-        "Giardino: " + yesNo("garden"),
-        "Budget min/max: € " + value("budget_min", "—") + " / € " + value("budget_max", "—"),
-        "Condizioni: " + value("condition", "Indifferente"),
-        "",
-        "DATI CLIENTE",
-        value("name", "") + " " + value("surname", ""),
-        "Telefono: " + value("phone", ""),
-        "Email: " + value("email", "Non indicata"),
-        "Contatto preferito: " + value("contact_pref", "WhatsApp"),
-        "Note: " + value("notes", "Nessuna")
-      ].join("\\n");
-
-      window.location.href = "https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent(message);
+  if (emailButton) {
+    emailButton.addEventListener("click", function() {
+      sharePdf("email");
     });
   }
 })();
